@@ -127,7 +127,7 @@ CREATE TABLE responses_and_associated_drug_types (
     FOREIGN KEY (drug_type_id) REFERENCES drug_type(drug_type_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE requests_and_associated_branded_drugs (
+CREATE TABLE responses_and_associated_branded_drugs (
     response_id int,
     branded_drug_id int,
     PRIMARY KEY (response_id, branded_drug_id),
