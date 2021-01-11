@@ -1,11 +1,8 @@
 const routes = require('express').Router();
 
-const account = require('./account');
-const pharmacy = require('./pharmacy');
-const request = require('./request');
-
-routes.use('/account', account);
-routes.use('/pharmacy', pharmacy);
-routes.use('/request', request);
+routes.use('/account', require('./account'));
+routes.use('/pharmacy', require('./pharmacy'));
+routes.use('/request', require('./request'));
+routes.use('/signup', require('./signup'));
 
 module.exports = routes;
