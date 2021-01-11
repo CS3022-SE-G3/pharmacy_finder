@@ -79,7 +79,7 @@ CREATE TABLE response (
 
 ALTER TABLE response AUTO_INCREMENT = 70001;
 
-CREATE TABLE pahrmcay_drug_types (
+CREATE TABLE pharmacy_drug_types (
     pharmacy_id int,
     drug_type_id int,
     PRIMARY KEY (pharmacy_id, drug_type_id),
