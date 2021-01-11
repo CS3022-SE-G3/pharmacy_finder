@@ -39,18 +39,18 @@ router.post('/signup', async (request, response) => {
 
     try {
         const result = await enterCustomer(_.pick(request.body,
-        [
-            "customer_id",
-            "full_name",
-            "nic",
-            "email",
-            "address",
-            "gender",
-            "dob",
-            "contact_no",
-            "password"
-        ]
-        ))
+            [
+                "full_name",
+                "nic",
+                "email",
+                "address",
+                "gender",
+                "dob",
+                "contact_no",
+                "password"
+            ]
+        ));
+
     }
     catch (error) {
         console.log(error.message);

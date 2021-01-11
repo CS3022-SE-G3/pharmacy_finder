@@ -19,7 +19,7 @@ function validateCustomerAccount(customer) {
 
 function enterCustomer(customer) {
     return new Promise((resolve, reject) => {
-        const result = pool.query("INSERT INTO Customer VALUES (?,?,?,?,?,?,?,?,?)",
+        const result = pool.query("INSERT INTO Customer(`full_name`,`nic`,`email`,`address`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
             [
                 customer.full_name,
                 customer.nic,
@@ -32,7 +32,9 @@ function enterCustomer(customer) {
             ],
             function (error, results, fields) {
                 if (error) {
+                    console.log(result.sql);
                     reject(error);
+                    return;
                 };
                 resolve(console.log("Done"));
             }
