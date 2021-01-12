@@ -11,14 +11,12 @@ const {
 
 // URL: localhost3000/customer/account/signup, method is GET
 router.get('/', (request, response) => {
-    response.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
+    return response.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
 });
 
 // URL: localhost3000/customer/account/create, method is POST
 router.post('/', async (request, response) => {
-    const {
-        error
-    } = validateCustomerAccount(_.pick(request.body,
+    const { error } = validateCustomerAccount(_.pick(request.body,
         [
             "full_name",
             "nic",

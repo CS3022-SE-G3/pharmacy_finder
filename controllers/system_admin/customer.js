@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
 
@@ -12,7 +11,7 @@ function validateAccountId(accountId){
     // schema to validate
     const schema = Joi.object({
         
-        "accountId"    : Joi.number().integer().required(),
+        "accountId"    : Joi.number().integer().min(10001).required(),
         
     });
 
@@ -24,7 +23,7 @@ function validateAccountId(accountId){
  * 
  * @param {number} accountId - customerId
  */
-async function getCustomerAccountInfromation(accountId){
+async function getCustomerAccountInformation(accountId){
 
     try {
         const response = await new Promise((resolve, reject) => {
@@ -74,10 +73,7 @@ const view_customer_information = (req, res) => {
         console.error('ValidationError:system_admin-customer_account_id: '+error.details[0].message)
 
         // send bad request
-        res.status(400).json({
-            description:'Invalid account Id',
-            error:true,
-        })
+        res.status(400).send("Invalid Account ID provided");
 
         res.end()
 
@@ -86,17 +82,13 @@ const view_customer_information = (req, res) => {
     }
 
     // get the account information of the customer as requested
-    const result = getCustomerAccountInfromation(accountId);
+    const result = getCustomerAccountInformation(accountId);
 
     result.then((data) => {
 
         if(data.length === 0){
-            res.status(400).json({
-                description:'Account Id not found',
-                error:true
-            })
-
-            return
+            return res.status(400).send("Account ID not found");
+            
         }
         
         // send data to front end
@@ -107,10 +99,7 @@ const view_customer_information = (req, res) => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(200).json({
-            description:'Internal server error',
-            error:true
-        })
+        res.status(500).send("Internal Server Error")
     })
 
 }

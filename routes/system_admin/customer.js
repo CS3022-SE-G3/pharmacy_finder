@@ -10,5 +10,7 @@ const view_customer_information = require('../../controllers/system_admin/custom
  * route to view customer information by system admin
  */
 
-router.get('/viewcustomerinformation/:accountId',view_customer_information)
+router.get('/view/:accountId', view_customer_information);
+
+
 module.exports = router;
