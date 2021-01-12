@@ -1,13 +1,5 @@
 -------------Functions----------------------------
 
-CREATE OR REPLACE FUNCTION get_age( birthday date )
-RETURNS int
-AS $CODE$
-BEGIN
-RETURN date_part('year', age(birthday))::int;
-END
-$CODE$
-LANGUAGE plpgsql IMMUTABLE;
 
 -------------Tables-------------------------------
 
@@ -19,7 +11,6 @@ CREATE TABLE customer (
     address varchar(50),
     gender char(1),
     dob date,
-    age INT GENERATED ALWAYS AS (get_age(dob)) STORED,
     contact_no bigint,
     password varchar(70),
     PRIMARY KEY (customer_id)
