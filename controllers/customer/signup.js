@@ -1,6 +1,8 @@
 
-const { pool } = require('../../database/connection');
 const Joi = require('joi');
+const _ = require('lodash');
+const Customer = require('../../models/Customer');
+const { generatePassword } = require('../password');
 
 function validateCustomerAccount(customer) {
     const schema = Joi.object({
@@ -17,30 +19,37 @@ function validateCustomerAccount(customer) {
 
 }
 
-function enterCustomer(customer) {
-    return new Promise((resolve, reject) => {
-        const result = pool.query("INSERT INTO Customer(`full_name`,`nic`,`email`,`address`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
-            [
-                customer.full_name,
-                customer.nic,
-                customer.email,
-                customer.address,
-                customer.gender,
-                customer.dob,
-                customer.contact_no,
-                customer.password
-            ],
-            function (error, results, fields) {
-                if (error) {
-                    console.log(result.sql);
-                    reject(error);
-                    return;
-                };
-                resolve(console.log("Done"));
-            }
-        )
-    })
+const signupCustomer = async (request, response) => {
+    const {error} = validateCustomerAccount(_.pick(request.body,
+        [
+            "full_name",
+            "nic",
+            "email",
+            "address",
+            "gender",
+            "dob",
+            "contact_no",
+            "password"
+        ]
+    ));
+
+    if (error) {
+        console.log("Customer error validation" + error.message[0]);
+        return response.status(400).send("Incorrect information entered");
+    }
+
+    request.body.password = await generatePassword(request.body.password);
+
+    try {
+        const result = await Customer.enterCustomer(request.body);
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).send("Internal server error" + error.message);
+    }
+
+    return response.status(200).send("OK");
+
 }
 
-exports.validateCustomerAccount = validateCustomerAccount;
-exports.enterCustomer = enterCustomer;
+exports.signupCustomer = signupCustomer;
