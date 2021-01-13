@@ -14,9 +14,7 @@ function getPharmacyInfo(pharmacyId) {
             [pharmacyId],
             function (error, results, fields) {
                 if (error) {
-                    console.log(result.sql);
-                    reject(error);
-                    return;
+                    reject (new Error(error.message));
                 }
                 console.log(results);
                 resolve(results);
