@@ -4,4 +4,9 @@
 const express = require('express');
 const router = express.Router();
 
+const {viewPharmacyInfo} = require('../../controllers/system_admin/pharmacy');
+
+router.get('/view/:pharmacyid', viewPharmacyInfo);
+
+
 module.exports = router;

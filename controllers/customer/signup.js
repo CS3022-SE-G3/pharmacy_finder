@@ -49,7 +49,6 @@ const signupCustomer = async (request, response) => {
     }
 
     return response.status(200).send("OK");
-
 }
 
 exports.signupCustomer = signupCustomer;
