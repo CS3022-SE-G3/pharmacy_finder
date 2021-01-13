@@ -18,7 +18,8 @@ function getPharmacyInfo(pharmacyId) {
                     reject(error);
                     return;
                 }
-                resolve(console.log("Done"));
+                console.log(results)
+                resolve(results);
             }
         )
     } )
