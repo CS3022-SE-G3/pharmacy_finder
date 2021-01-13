@@ -21,6 +21,8 @@ CREATE TABLE pharmacy (
     approved_state tinyint(1),
     name varchar(50),
     address varchar(70),
+    longitude numeric(10,6),
+    lattitude numeric(10,6),
     email varchar(50),
     contact_no bigint,
     password varchar (70),
