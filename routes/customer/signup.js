@@ -5,7 +5,7 @@ const { signupCustomer } = require('../../controllers/customer/signup');
 
 // URL: localhost3000/customer/signup, method is GET
 router.get('/', (request, response) => {
-    response.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
+    return response.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
 });
 
 // URL: localhost3000/customer/signup, method is POST
