@@ -4,7 +4,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {viewPharmacyInfo} = require('../../controllers/system_admin/pharmacy');
+const {viewPharmacyInfo,viewPendingPharmacies} = require('../../controllers/system_admin/pharmacy');
+
+router.get('/pendingpharmacies',viewPendingPharmacies);
 
 router.get('/view/:pharmacyid', viewPharmacyInfo);
 
