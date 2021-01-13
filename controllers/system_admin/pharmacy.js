@@ -25,7 +25,7 @@ function getPharmacyInfo(pharmacyId) {
 
 const view_pharmacy_info = async(req,res)=>{
     const pharmacyId = req.params.pharmacyid;
-    const {error} = validatePharmacyId({pharmacyIdId:pharmacyId});
+    const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error) {
         console.error('ValidationError:pharmacy-pharmacy_id: '+error.details[0].message);
         res.status(400).send("Invalid Account ID provided");
