@@ -3,10 +3,7 @@ const router = express.Router();
 const path = require('path');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const {
-    validateCustomerAccount,
-    enterCustomer
-} = require('../../controllers/customer/signup');
+const {validateCustomerAccount,enterCustomer} = require('../../controllers/customer/signup');
 
 
 // URL: localhost3000/customer/account/signup, method is GET
