@@ -29,10 +29,7 @@ async function getCustomerAccountInformation(accountId){
         const response = await new Promise((resolve, reject) => {
             // if query succces we gonna resolve the result
             // else we gonna reject it
-
-            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM Customer WHERE customer_id=?"; // query
-
-            // send th qry
+            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
             pool.query(qry,[accountId], (err, res) =>{
                 if (err){
                     reject (new Error(err.message));
@@ -60,7 +57,6 @@ async function getCustomerAccountInformation(accountId){
  */
 const view_customer_information = (req, res) => {
 
-    
     // get accountId from URL
     const accountId = req.params.accountId; 
 
