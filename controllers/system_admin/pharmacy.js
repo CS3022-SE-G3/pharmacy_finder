@@ -32,4 +32,20 @@ const viewPharmacyInfo = async(req,res)=>{
     }
 };
 
+const viewPendingPharmacies = async(req,res)=>{
+    try{
+        const pendingPharmacies = await Pharmacy.getPendingPharmacies();
+        console.log(pendingPharmacies);
+        if (pendingPharmacies.length===0){
+            return res.status(200).send("No pharmacies pending for approval");  //404 or 200?
+        }
+        return res.status(200).send(pendingPharmacies);
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).send("Internal Server Error");
+    }
+};
+
 exports.viewPharmacyInfo = viewPharmacyInfo;
+exports.viewPendingPharmacies = viewPendingPharmacies;
