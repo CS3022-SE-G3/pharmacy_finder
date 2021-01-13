@@ -3,7 +3,7 @@ const Joi = require('joi');
 
 function validatePharmacyId(pharmacyId){
     const schema = Joi.object({
-        "pharmacyId"    : Joi.number().integer().min(10001).required(),
+        pharmacyId    : Joi.number().integer().min(10001).required(),
     });
     return schema.validate(pharmacyId)
 }
