@@ -14,7 +14,29 @@ class Pharmacy{
             }
         )
     } )
-}
+    }
+
+    //send pharmacy information for the customers
+    static getPharmacyInformation(pharmacyName){
+        try{
+            return new Promise((resolve,reject)=>{
+                const result = pool.query('SELECT name,address,email,contact_no FROM pharmacy WHERE name = ?',
+                [pharmacyName],
+                function (error, results) {
+                    if (error) {
+                        reject (new Error(error.message));
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+            )
+            })
+        }catch{
+            console.log(error)
+        }
+        
+    
+    }
 
 }
 
