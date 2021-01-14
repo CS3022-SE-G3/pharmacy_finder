@@ -21,12 +21,7 @@ function validateCustomerAccount(customer) {
         "dob"                   : Joi.date().required(),
         "contact_no"            : Joi.number().integer().required(),
         "password"              : Joi.string().required(),
-        "password_confirmation" : Joi.any().equal(Joi.ref('password'))
-            .required()
-            .label('Confirm password')
-            .messages({
-                'any.only': '{{#label}} does not match'
-            })
+        "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validateAsync(customer);
 
