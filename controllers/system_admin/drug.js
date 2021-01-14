@@ -128,6 +128,7 @@ const updateDrugDetails = async (request, response) => {
 */
 const viewDeleteDrugPrompt = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
+    return response.status(200).send("Delete form placeholder");
 }
 
 /** 

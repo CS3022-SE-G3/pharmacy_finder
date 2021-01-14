@@ -20,22 +20,23 @@ const {
 router.get('/', viewAllDrugs);
 
 /**
- * @description Promt form to add a branded drug
+ * @description Prompt form to add a branded drug
  * @URL localhost:3000/system_admin/drug/add
  * @method GET
  * @todo return results in response body along with the html file
+ * This is to get all the drug types to display in the form
  */
 router.get('/add', viewAddDrugForm);
 
 /**
  * @description Add a new branded drug
- * @URL localhost3000/system_admin/drug/add
+ * @URL localhost:3000/system_admin/drug/add
  * @method POST
  */
 router.post('/add', addNewDrug);
 
 /**
- * @description Promt form to update a branded drug's details
+ * @description Prompt form to update a branded drug's details
  * @URL localhost:3000/system_admin/drug/update
  * @method GET
  * @todo return results in response body along with the html file
@@ -44,7 +45,7 @@ router.get('/update', viewUpdateDrugForm);
 
 /**
  * @description Update existing branded drug's details
- * @URL localhost:3000/system_admin/drug
+ * @URL localhost:3000/system_admin/drug/update
  * @method PUT
  */
 router.put('/update', updateDrugDetails);

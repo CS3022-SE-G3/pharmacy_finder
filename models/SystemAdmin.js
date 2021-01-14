@@ -61,7 +61,7 @@ class SystemAdmin{
                         return;
                     };
                     console.log(results);
-                    resolve(results[0]);
+                    resolve(results);
                 }
             )
         })
@@ -77,11 +77,12 @@ class SystemAdmin{
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
+                        console.log(error);
                         reject(error);
                         return;
                     };
                     console.log(results);
-                    resolve(results[0]);
+                    resolve(results);
                 }
             )
         })

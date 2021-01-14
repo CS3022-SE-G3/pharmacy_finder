@@ -29,7 +29,7 @@ router.get('/add', viewAddDrugTypeForm);
 
 /**
  * @description Add a new drug type
- * @URL localhost3000/system_admin/drug_type/add
+ * @URL localhost:3000/system_admin/drug_type/add
  * @method POST
  */
 router.post('/add', addNewDrugType);

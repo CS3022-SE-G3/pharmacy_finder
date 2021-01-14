@@ -56,6 +56,7 @@ const viewAllDrugTypes = async (request, response) => {
 */
 const viewAddDrugTypeForm = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
+    return response.status(200).send("Drug type add placeholder");
 }
 
 /** 
@@ -64,10 +65,12 @@ const viewAddDrugTypeForm = async (request, response) => {
 */
 const viewUpdateDrugTypeForm = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
+    return response.status(200).send("Update form placeholder")
 }
 
 /**
  * @description Validate and update drug type details
+ * @todo check if the id actually exists in the table first? the put won't work if the id doesnt exist but maybe its better for UX
  */
 const updateDrugTypeDetails = async (request, response) => {
 
@@ -103,6 +106,7 @@ const updateDrugTypeDetails = async (request, response) => {
 */
 const viewDeleteDrugTypePrompt = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
+    return response.status(200).send("delete form placeholder");
 }
 
 /** 
