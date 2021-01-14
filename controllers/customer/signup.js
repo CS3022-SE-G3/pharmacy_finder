@@ -1,8 +1,13 @@
-
 const Joi = require('joi');
 const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
+const lookup = async (id) => {
+    const user = await db.get('user', id);
+    if (!user) {
+        throw new Error('Invalid user id');
+    }
+};
 
 function validateCustomerAccount(customer) {
     const schema = Joi.object({

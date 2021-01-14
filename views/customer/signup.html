@@ -11,31 +11,34 @@
 
         <form action="/customer/signup" method="POST">
 
-            Full Name: <input type="text" id="full_name" name="full_name">
+            Full Name: <input type="text" id="full_name" name="full_name" required>
             <br>
 
-            NIC: <input type="text" id="nic" name="nic">
+            NIC: <input type="text" id="nic" name="nic" required>
             <br>
 
-            Address: <input type="text" id="address" name="address">
+            Address: <input type="text" id="address" name="address" required>
             <br>
 
             Gender:
-            <input type="radio" id="gender" name="gender" value="Male">
+            <input type="radio" id="gender" name="gender" value="Male" required>
             <label for="Male"> Male</label><br>
-            <input type="radio" id="gender" name="gender" value="Female">
+            <input type="radio" id="gender" name="gender" value="Female" required>
             <label for="Female"> Female</label><br>
             <br>
-            Date of Birth: <input type="date" id="dob" name="dob">
+            Date of Birth: <input type="date" id="dob" name="dob" required>
             <br>
 
-            Contact Number : <input type="text" id="contact_no" name="contact_no">
+            Contact Number : <input type="text" id="contact_no" name="contact_no" required>
             <br>
 
-            Email Address: <input type="email" id="email" name="email">
+            Email Address: <input type="email" id="email" name="email" required>
             <br>
 
-            Password: <input type="password" id="password" name="password">
+            Password: <input type="password" id="password" name="password" required>
+            <br>
+
+            Repeat password: <input type="password" id="password" name="password" required>
             <br>
 
 
