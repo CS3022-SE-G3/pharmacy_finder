@@ -39,7 +39,7 @@ const signupCustomer = async (request, response) => {
     ));
 
     if (error) {
-        console.log("Customer error validation" + error.message[0]);
+        console.log("Customer error validation" + error.message);
         return response.status(400).send("Incorrect information entered");
     }
 
