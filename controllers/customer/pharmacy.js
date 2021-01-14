@@ -14,7 +14,7 @@ function validatePharmacyName(pharmacyName){
     // schema to validate
     const schema = Joi.object({
         
-        "pharmacyName"    : Joi.string().required(),
+        "pharmacyName"    : Joi.string().trim().min(3).required(),
         
     });
 
@@ -23,7 +23,7 @@ function validatePharmacyName(pharmacyName){
 }
 
 
-const view_pharmacy_information = (req, res) => {
+const viewPharmacyInformation = (req, res) => {
 
     // get pharmacyID from URL
     const pharmacyName = req.params.name; 
@@ -51,7 +51,7 @@ const view_pharmacy_information = (req, res) => {
     result.then((data) => {
 
         if(data.length === 0){
-            return res.status(400).send(" ID not found");
+            return res.status(400).send("Pharmacy not registered");
             
         }
         
@@ -69,4 +69,4 @@ const view_pharmacy_information = (req, res) => {
 
 }
 
-module.exports = view_pharmacy_information;
+module.exports.viewPharmacyInformation = viewPharmacyInformation;
