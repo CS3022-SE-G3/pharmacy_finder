@@ -20,17 +20,32 @@ const {
 
 // URL: localhost3000/system_admin/drug, method is GET 
 /**@todo return the results in response body */
-router.get('/', (request, response) => {
-    const { error, results } = getAllDrugs();
-    return response.send(results);
+router.get('/', async (request, response) => {
+    try
+    {
+        const result = await getAllDrugs();
+        console.log(result);
+        return response.status(200).send(result);
+    }
+    catch (error) {
+        return response.status(500).send("internal server error");
+    }
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
 });
 
 // URL: localhost3000/system_admin/drug/create, method is GET 
 /**@todo return the results in response body */
-router.get('/create', (request, response) => {
-    const { error, results } = getAllDrugTypes();
-    return response.send(results);
+router.get('/create', async (request, response) => {
+    try
+    {
+        const result = await getAllDrugTypes();
+        console.log(result);
+        return response.status(200).send(result);
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).send("internal server error");
+    }
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
 });
 
@@ -57,19 +72,27 @@ router.post('/create', async (request, response) => {
                 "drug_type_id"
             ]
         ));
+    return response.status(200).send(request.body);
+
 
     } catch (error) {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");
     }
-    return response.status(200).send(request.body);
 });
 
 // URL: localhost3000/system_admin/drug/update, method is GET 
 /**@todo return the results in response body */
 router.get('/update', (request, response) => {
-    const { error, results } = getAllDrugTypes();
-    return response.send(results);
+    try
+    {
+        const results = getAllDrugTypes();
+        return response.status(200).send(results);
+
+    }
+    catch (error) {
+        return response.status(500).send("Internal Server Error");
+    }
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
 });
 
@@ -121,12 +144,11 @@ router.put('/delete', async (request, response) => {
                 "branded_drug_id"
             ]
         ));
-
+    return response.status(200).send(request.body);
     } catch (error) {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");
     }
-    return response.status(200).send(request.body);
 });
 
 module.exports = router;

@@ -33,7 +33,8 @@ function getAllDrugs() { //TODO: fix
                     reject(error);
                     return;
                 };
-                resolve(results);
+                console.log(results);
+                resolve(results[0]);
             }
         )
     })
