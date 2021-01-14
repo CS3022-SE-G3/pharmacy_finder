@@ -124,7 +124,7 @@ const updateDrugDetails = async (request, response) => {
 
 /** 
  * @description return delete branded drug prompt
- * @todo return results in response body along with the html file
+ * @todo return the html file
 */
 const viewDeleteDrugPrompt = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
@@ -149,7 +149,7 @@ const deleteDrug = async (request, response) => {
 }
 
 /**
- * @description Valitdate drug details
+ * @description Valitdate branded drug details
  */
 function validateAddNewDrugDetails(drug) {
     const schema = Joi.object({
@@ -162,7 +162,7 @@ function validateAddNewDrugDetails(drug) {
 }
 
 /**
- * @description Valitdate drug details
+ * @description Valitdate branded drug details
  */
 function validateUpdateDrugDetails(drug) {
     const schema = Joi.object({

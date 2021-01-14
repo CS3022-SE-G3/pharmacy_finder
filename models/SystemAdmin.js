@@ -27,6 +27,27 @@ class SystemAdmin{
     }
 
     /**
+     * @description Add a drug type to the database
+     */
+    static enterDrugType(drug) {
+        return new Promise((resolve, reject) => {
+            const query = pool.query("INSERT INTO drug_type(`drug_type_name`) VALUES (?)",
+                [
+                    drug.drug_type_name
+                ],
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(query.sql);
+                        reject(error);
+                        return;
+                    };
+                    resolve(console.log("Done"));
+                }
+            )
+        })
+    }
+
+    /**
      * @description Get all branded drugs from the database
      */
     static getAllDrugs() { 
@@ -91,6 +112,28 @@ class SystemAdmin{
     }
 
     /**
+     * @description Update a drug type's details in the database
+     */
+    static updateDrugType(drug) {
+        return new Promise((resolve, reject) => {
+            const query = pool.query("UPDATE drug_type SET drug_type_name = ? WHERE drug_type_id = ?",
+                [
+                    drug.drug_type_name,
+                    drug.drug_type_id
+                ],
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(query.sql);
+                        reject(error);
+                        return;
+                    };
+                    resolve(console.log("Done"));
+                }
+            )
+        })
+    }
+
+    /**
      * @description Delete a branded drug from the database
      */
     static deleteDrug(drug) {
@@ -99,6 +142,29 @@ class SystemAdmin{
                 [
                     true,
                     drug.branded_drug_id
+                ],
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(query.sql);
+                        reject(error);
+                        return;
+                    };
+                    resolve(console.log("Done"));
+                }
+            )
+        })
+    }
+
+    /**
+     * @description Delete a drug type from the database
+     * @todo Add 'is_deleted' to drug_type table
+     */
+    static deleteDrugType(drug) {
+        return new Promise((resolve, reject) => {
+            const query = pool.query("UPDATE drug_type SET is_deleted = ? WHERE drug_type_id = ?",
+                [
+                    true,
+                    drug.drug_type_id
                 ],
                 function (error, results, fields) {
                     if (error) {
