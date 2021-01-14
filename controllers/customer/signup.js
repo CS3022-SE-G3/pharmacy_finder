@@ -2,30 +2,40 @@ const Joi = require('joi');
 const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
-const lookup = async (id) => {
-    const user = await db.get('user', id);
-    if (!user) {
-        throw new Error('Invalid user id');
+const { lookupEmail } = require('../lookup.js');
+
+const lookup = async (email) => {
+    const user = await lookupEmail(email);
+    if (user) {
+        throw new Joi.ValidationError('Email already registered');
     }
 };
 
 function validateCustomerAccount(customer) {
     const schema = Joi.object({
-        "full_name"     : Joi.string().required(),
-        "nic"           : Joi.string().required(),
-        "email"         : Joi.string().email().required(),           
-        "address"       : Joi.string().required(),
-        "gender"        : Joi.string().required(),
-        "dob"           : Joi.date().required(),
-        "contact_no"    : Joi.number().integer().required(),
-        "password"      : Joi.string().required()
+        "full_name"             : Joi.string().required(),
+        "nic"                   : Joi.string().required(),
+        "email"                 : Joi.string().email().required().external(lookup),           
+        "address"               : Joi.string().required(),
+        "gender"                : Joi.string().required(),
+        "dob"                   : Joi.date().required(),
+        "contact_no"            : Joi.number().integer().required(),
+        "password"              : Joi.string().required(),
+        "password_confirmation" : Joi.any().equal(Joi.ref('password'))
+            .required()
+            .label('Confirm password')
+            .messages({
+                'any.only': '{{#label}} does not match'
+            })
     });
-    return schema.validate(customer);
+    return schema.validateAsync(customer);
 
 }
 
 const signupCustomer = async (request, response) => {
-    const {error} = validateCustomerAccount(_.pick(request.body,
+    try
+    {
+        await validateCustomerAccount(_.pick(request.body,
         [
             "full_name",
             "nic",
@@ -34,13 +44,14 @@ const signupCustomer = async (request, response) => {
             "gender",
             "dob",
             "contact_no",
-            "password"
+            "password",
+            "password_confirmation"
         ]
-    ));
+    ));}
 
-    if (error) {
+    catch (error) {
         console.log("Customer error validation" + error.message);
-        return response.status(400).send("Incorrect information entered");
+        return response.status(400).send(error.message);
     }
 
     request.body.password = await generatePassword(request.body.password);
