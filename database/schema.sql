@@ -3,14 +3,14 @@
 
 CREATE TABLE customer (
     customer_id int auto_increment,
-    full_name varchar(50),
-    nic varchar(30),
-    email varchar(50),
-    address varchar(50),
-    gender char(1),
-    dob date,
-    contact_no bigint,
-    password varchar(70),
+    full_name varchar(50) NOT NULL,
+    nic varchar(30) NOT NULL,
+    email varchar(50) NOT NULL,
+    address varchar(50) NOT NULL,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    dob date NOT NULL,
+    contact_no bigint NOT NULL,
+    password varchar(70) NOT NULL,
     PRIMARY KEY (customer_id)
 );
 
@@ -18,12 +18,14 @@ ALTER TABLE customer AUTO_INCREMENT = 10001;
 
 CREATE TABLE pharmacy (
     pharmacy_id int auto_increment,
-    approved_state tinyint(1),
-    name varchar(50),
+    approved_state ENUM('Not Approved', 'Approved') NOT NULL DEFAULT 'Not Approved',
+    name varchar(50) NOT NULL,
     address varchar(70),
-    email varchar(50),
-    contact_no bigint,
-    password varchar (70),
+    longitude numeric(10,6) NOT NULL,
+    latitude numeric(10,6) NOT NULL,
+    email varchar(50) NOT NULL,
+    contact_no bigint NOT NULL,
+    password varchar (50) NOT NULL,
     PRIMARY KEY (pharmacy_id)
 );
 
@@ -31,17 +33,17 @@ ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
 
 CREATE TABLE drug_type (
     drug_type_id int auto_increment,
-    drug_type_name varchar(50),
-    PRIMARY KEY (drug_type_id),
+    drug_type_name varchar(50) NOT NULL,
+    PRIMARY KEY (drug_type_id)
 );
 
-ALTER TABLE Drug_Type AUTO_INCREMENT = 40001;
+ALTER TABLE drug_type AUTO_INCREMENT = 40001;
 
 CREATE TABLE branded_drug (
     branded_drug_id int auto_increment,
-    brand_name varchar(50),
-    manufacturer varchar(50),
-    drug_type_id int,
+    brand_name varchar(50) NOT NULL,
+    manufacturer varchar(50) NOT NULL,
+    drug_type_id int NOT NULL,
     PRIMARY KEY (branded_drug_id),
     FOREIGN KEY (drug_type_id) REFERENCES drug_type(drug_type_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -50,7 +52,7 @@ ALTER TABLE branded_drug AUTO_INCREMENT = 50001;
 
 CREATE TABLE requests (
     request_id int auto_increment,
-    customer_id int,
+    customer_id int NOT NULL,
     PRIMARY KEY (request_id),
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -59,8 +61,8 @@ ALTER TABLE requests AUTO_INCREMENT = 60001;
 
 CREATE TABLE response (
     response_id int auto_increment,
-    request_id int,
-    pharmacy_id int,
+    request_id int NOT NULL,
+    pharmacy_id int NOT NULL,
     PRIMARY KEY(response_id),
     FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE
