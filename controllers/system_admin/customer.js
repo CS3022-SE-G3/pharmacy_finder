@@ -1,6 +1,7 @@
 const express = require('express');
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
+const systemAdmin = require('../../models/systemAdmin');
 
 /**
  * 
@@ -19,35 +20,7 @@ function validateAccountId(accountId){
     return schema.validate(accountId)
 }
 
-/**
- * 
- * @param {number} accountId - customerId
- */
-async function getCustomerAccountInformation(accountId){
 
-    try {
-        const response = await new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
-            pool.query(qry,[accountId], (err, res) =>{
-                if (err){
-                    reject (new Error(err.message));
-                } 
-                // else
-                console.log(res)
-                resolve(res);
-            })
-        }
-        )
-
-        return response;
-
-    } catch (error) {
-        console.log(error)
-    }
-
-}
 /**
  * 
  * @param {request} req - request to API
@@ -78,7 +51,7 @@ const view_customer_information = (req, res) => {
     }
 
     // get the account information of the customer as requested
-    const result = getCustomerAccountInformation(accountId);
+    const result = systemAdmin.getCustomerAccountInformation(accountId);
 
     result.then((data) => {
 

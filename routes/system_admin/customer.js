@@ -5,7 +5,7 @@ const view_customer_information = require('../../controllers/system_admin/custom
 
 /**
  * @view_customer_information  - module that handle system admin's request to view customer information
- * @route - localhost:3000/system_admin/customer/viewcustomerinformation/{account id of the customer}
+ * @route - localhost:3000/system_admin/customer/view/{account id of the customer}
  * 
  * route to view customer information by system admin
  */
