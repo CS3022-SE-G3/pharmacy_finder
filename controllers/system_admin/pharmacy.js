@@ -47,5 +47,33 @@ const viewPendingPharmacies = async(req,res)=>{
     }
 };
 
+const approvePharmacy = async (req,res)=>{
+    const pharmacyId = req.params.pharmacyid;
+    const {error} = validatePharmacyId({pharmacyId:pharmacyId});
+    if (error) {
+        console.error('Validation Error: pharmacy_id: '+error.details[0].message);
+        res.status(400).send("Invalid Account ID provided");
+        res.end();
+        return;
+    }
+    try{
+        const pharmacy = await Pharmacy.getPharmacyInfo(pharmacyId);
+        if (pharmacy.length===0){
+            return res.status(404).send("Pharmacy not registered");
+        }
+        if (pharmacy[0].approved_state==='Approved'){
+            return res.status(409).send("Pharmacy already approved");
+        }
+        const approveResult = await Pharmacy.setApprovalState("Approved",pharmacyId);
+        //Notify Pharmacy
+        return res.status(200).json({message:"Pharmacy Approval Successful",result: approveResult });
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).send("Internal Server Error");
+    }
+};
+
 exports.viewPharmacyInfo = viewPharmacyInfo;
 exports.viewPendingPharmacies = viewPendingPharmacies;
+exports.approvePharmacy = approvePharmacy;

@@ -1,9 +1,6 @@
 
-const express = require('express');
-const router = express.Router();
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
-const customer = require('../../models/Customer');
+const Customer = require('../../models/Customer');
 
 /**
  * 
@@ -23,7 +20,7 @@ function validateCustomerId(customerId){
 }
 
 
-const view_broadcasted_requests = (req, res) => {
+const viewBroadcastedRequests = (req, res) => {
 
     // get customerId from URL
     const customerId = req.params.id; 
@@ -46,7 +43,7 @@ const view_broadcasted_requests = (req, res) => {
     }
 
     // get the information of the broadcasted requests as requested
-    const result = customer.getBroadcastedRequests(customerId);
+    const result = Customer.getBroadcastedRequests(customerId);
 
     result.then((data) => {
 
@@ -69,4 +66,4 @@ const view_broadcasted_requests = (req, res) => {
 
 }
 
-module.exports = view_broadcasted_requests;
+module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
