@@ -10,7 +10,10 @@ const lookup = async (email) => {
         throw new Joi.ValidationError('Email already registered');
     }
 };
-
+/**
+ * 
+ * @todo add regex for NIC 
+ */
 function validateCustomerAccount(customer) {
     const schema = Joi.object({
         "full_name"             : Joi.string().required(),

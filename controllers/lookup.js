@@ -3,7 +3,7 @@ const { pool } = require('../database/connection');
 function lookupEmail(email) {
     {
         return new Promise((resolve, reject) => {
-            const result = pool.query('SELECT * FROM pharmacy WHERE `email` = ?',
+            const result = pool.query('SELECT * FROM customer WHERE `email` = ?',
                 [email],
                 function (error, results, fields) {
                     if (error) {
