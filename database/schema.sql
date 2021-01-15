@@ -126,6 +126,15 @@ CREATE TABLE responses_and_associated_branded_drugs (
     FOREIGN KEY (branded_drug_id) REFERENCES branded_drug(branded_drug_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE reported_pharmacies (
+    pharmacy_id int,
+    customer_id int,
+    reasons text NOT NULL,
+    PRIMARY KEY (pharmacy_id, customer_id),
+    FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 ----------------Session Table Schema------------------------------
 
 CREATE TABLE "session" (
