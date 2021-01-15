@@ -29,27 +29,7 @@ function validateAccountId(accountId){
  */
 const view_all_reported_pharmacies = (req, res) => {
 
-    // // get accountId from URL
-    // const accountId = req.params.accountId; 
-
-    // // validating
-    // const {error} = validateAccountId({accountId:accountId});
-
-    // if (error) {
-
-    //     // log the error
-    //     console.error('ValidationError:system_admin-customer_account_id: '+error.details[0].message)
-
-    //     // send bad request
-    //     res.status(400).send("Invalid Account ID provided");
-
-    //     res.end()
-
-    //     // stop execution
-    //     return
-    // }
-
-    // get the account information of the customer as requested
+    // get the reported pharamacy information of the pharamacy as requested
     const result = systemAdmin.getReportedPharmaciesInformation();
 
     result.then((data) => {
