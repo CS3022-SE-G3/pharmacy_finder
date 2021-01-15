@@ -2,6 +2,37 @@
 const Joi = require('joi');
 const Customer = require('../../models/Customer');
 
+// ======================================USE CASE: BROADCAST REQUESTS==================================================//
+
+// STEP 1 -  GET THE BROADCAST FORM TO FILL IN
+
+/**
+ * 
+ * @todo return the broadcast form
+ * @todo get all drugs and drug types? from system admin
+ */
+const getBroadcastForm = (request, response) => {
+    return response.send(200).send("Broadcast Form placeholder");
+    
+}
+
+// STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
+
+const createBroadcastRequest = (request, response) => {
+    
+}
+
+function validateBroadcast(broadcaset) {
+    const schema = Joi.object({
+        
+    });
+}
+// ======================================END OF USE CASE==================================================//
+
+
+
+
+// ======================================USE CASE: VIEW BROADCASTED REQUESTS==================================================//
 /**
  * 
  * @param {number} customerId
@@ -66,4 +97,8 @@ const viewBroadcastedRequests = (req, res) => {
 
 }
 
+// ====================================================END OF USE CASE======================================================//
+
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
+module.exports.getBroadcastForm = getBroadcastForm;
+module.exports.createBroadcastRequest = createBroadcastRequest;
