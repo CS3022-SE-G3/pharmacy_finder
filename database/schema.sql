@@ -58,6 +58,7 @@ CREATE TABLE requests (
 );
 
 ALTER TABLE requests AUTO_INCREMENT = 60001;
+ALTER TABLE requests ADD date_created DATE;
 
 CREATE TABLE response (
     response_id int auto_increment,
@@ -68,11 +69,10 @@ CREATE TABLE response (
     FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-ALTER TABLE response ADD date_created DATE;
-
 
 ALTER TABLE response AUTO_INCREMENT = 70001;
-ALTER TABLE requests ADD date_created DATE;
+ALTER TABLE response ADD date_created DATE;
+
 CREATE TABLE pharmacy_drug_types (
     pharmacy_id int,
     drug_type_id int,
