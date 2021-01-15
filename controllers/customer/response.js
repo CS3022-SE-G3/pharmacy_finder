@@ -1,9 +1,7 @@
 
-const express = require('express');
-const router = express.Router();
+
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
-const customer = require('../../models/Customer');
+const Customer = require('../../models/Customer');
 
 /**
  * 
@@ -23,7 +21,7 @@ function validateRequestId(requestId){
 }
 
 
-const view_responded_pharmacies = (req, res) => {
+const viewRespondedPharmacies = (req, res) => {
 
     // get requestId from URL
     const requestId = req.params.Id; 
@@ -46,7 +44,7 @@ const view_responded_pharmacies = (req, res) => {
     }
 
     // get the information of the responded pharmacies as requested
-    const result = customer.getRespondedPharmacies(requestId);
+    const result = Customer.getRespondedPharmacies(requestId);
 
     result.then((data) => {
 
@@ -69,4 +67,4 @@ const view_responded_pharmacies = (req, res) => {
 
 }
 
-module.exports = view_responded_pharmacies;
+module.exports.viewRespondedPharmacies = viewRespondedPharmacies;
