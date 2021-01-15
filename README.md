@@ -1,7 +1,7 @@
 # pharmacy_finder
 
 ### routes 
-  > view all reported parmacies table
+  1. view all reported parmacies table
       - gives all records in reportred_pharmacy tabel
       - localhost:3000/system_admin/report/view/reportedPharmacies
          - response format - array of objects
@@ -20,7 +20,7 @@
                      }
                  ]
              ```
-  > get infromation about customer
+  2. get infromation about customer
       - gives all records in reportred_pharmacy tabel
       - localhost:3000/system_admin/customer/view/{accountID}
          - response format - object
