@@ -23,10 +23,9 @@ router.get('/pending',viewPendingPharmacies);
 router.get('/view/:pharmacyid', viewPharmacyInfo);
 
 /**
- * @description Approve a pharmacy that is not already approved
+ * @description Approve a pharmacy that is not already approved and notify approval
  * @URL http://localhost:3000/system_admin/pharmacy/approve/{pharmacyid}
  * @method PUT
- * @todo notify the pharmacy of approval
  */
 router.put('/approve/:pharmacyid',approvePharmacy);
 
