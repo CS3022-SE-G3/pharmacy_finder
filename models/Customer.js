@@ -46,6 +46,30 @@ class Customer{
                 
             
     }
+    static getRespondedPharmacies(requestId){
+        try{
+            return new Promise((resolve,reject)=>{
+                const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
+                    [
+                        "Approved",
+                        requestId
+                    ],
+                    function (error, results) {
+                        if (error) {
+                            reject (new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+                
+            })
+        }catch{
+            console.log(error)
+        }
+                
+            
+    }
 }
 
 module.exports = Customer;

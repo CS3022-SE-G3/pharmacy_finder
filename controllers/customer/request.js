@@ -10,7 +10,7 @@ const customer = require('../../models/Customer');
  * @param {number} customerId
  */
 function validateCustomerId(customerId){
-
+    
     // schema to validate
     const schema = Joi.object({
         
