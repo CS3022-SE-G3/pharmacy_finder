@@ -6,7 +6,7 @@ const Pharmacy = require('../../models/Pharmacy');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
     auth: {
-        api_key: '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'
+        api_key: process.env.EMAIL_KEY
     }
 }));
 
@@ -16,9 +16,9 @@ function sendEmail(emailTo){
         from: 'finderpharmacy@gmail.com',
         subject: 'Pharmacy Approval',
         html: `
-                    <p>Your pharmacy has been approved</p>
+                    <p>Your pharmacy account has been approved</p>
                     <p>Thank you for choosing PharmacyFinder</p>
-                    <p>Click this <a href="http://localhost:3000/pharmacy/login">link</a> to Login and start using!</p>
+                    <p>Click this <a href="/pharmacy/login">link</a> to Login and begin using your account!</p>
                   `
     });
     console.log("Email sent to "+emailTo);
