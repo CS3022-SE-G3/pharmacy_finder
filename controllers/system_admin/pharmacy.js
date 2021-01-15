@@ -1,5 +1,28 @@
 const Joi = require('joi');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
 const Pharmacy = require('../../models/Pharmacy');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth: {
+        api_key: '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'
+    }
+}));
+
+function sendEmail(emailTo){
+    transporter.sendMail({
+        to: emailTo,
+        from: 'finderpharmacy@gmail.com',
+        subject: 'Pharmacy Approval',
+        html: `
+                    <p>Your pharmacy has been approved</p>
+                    <p>Thank you for choosing PharmacyFinder</p>
+                    <p>Click this <a href="http://localhost:3000/pharmacy/login">link</a> to Login and start using!</p>
+                  `
+    });
+    console.log("Email sent to "+emailTo);
+}
 
 function validatePharmacyId(pharmacyId){
     const schema = Joi.object({
@@ -65,7 +88,7 @@ const approvePharmacy = async (req,res)=>{
             return res.status(409).send("Pharmacy already approved");
         }
         const approveResult = await Pharmacy.setApprovalState("Approved",pharmacyId);
-        //Notify Pharmacy
+        sendEmail(pharmacy[0].email);
         return res.status(200).json({message:"Pharmacy Approval Successful",result: approveResult });
     }
     catch (error) {
