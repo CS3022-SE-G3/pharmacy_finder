@@ -64,11 +64,24 @@ class Pharmacy{
                         console.log(result.sql);
                         reject(error);
                         return;
-                    };
+                    }
                     resolve(console.log("Done"));
                 }
             )
         })
+    }
+    static setApprovalState(approvalState,pharmacyId){
+        return new Promise((resolve, reject) =>{
+            const result = pool.query('UPDATE pharmacy SET approved_state = ? WHERE pharmacy_id = ?',
+                [approvalState,pharmacyId],
+                function (error, results, fields) {
+                    if (error) {
+                        reject (new Error(error.message));
+                    }
+                    resolve(results);
+                }
+            )
+        } )
     }
 
 }
