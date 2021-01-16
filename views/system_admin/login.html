@@ -13,13 +13,21 @@
     <body>
 
         <h1> System Admin Log In Page</h1>
-        <form action="/system_admin/login" method="get">
-            <input type="submit" value="login">
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <form action="/system_admin/login" method="POST">
+            Username: <input type="text" id="username" name="username" required>
+            <br>
+
+            Password: <input type="password" id="password" name="password" required>
+            <br>
+
+            <button type="submit">Login</button>
         </form>
-        <br>
-        <br>
-        <br>
-        <br>
+
     </body>
 
 </html>

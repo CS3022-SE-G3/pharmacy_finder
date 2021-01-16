@@ -43,7 +43,7 @@ const signupCustomer = async (request, response) => {
             "dob",
             "contact_no",
             "password",
-            "password_confirmation"
+            "confirm_password"
         ]
     ));}
 

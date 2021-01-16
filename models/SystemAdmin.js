@@ -1,7 +1,7 @@
 const { pool } = require('../database/connection');
 
 
-class SystemAdmin{
+class SystemAdmin {
 
     /**
      * @description Add a branded drug to the database
@@ -50,7 +50,7 @@ class SystemAdmin{
     /**
      * @description Get all branded drugs from the database
      */
-    static getAllDrugs() { 
+    static getAllDrugs() {
         return new Promise((resolve, reject) => {
             const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ?",
                 [false],
@@ -184,49 +184,49 @@ class SystemAdmin{
  *  @description - getting customer infromation from database from accountID
  *  @param {number} accountId - customerId
  */
-    static async getCustomerAccountInformation(accountId){
+    static async getCustomerAccountInformation(accountId) {
 
-    try {
-        const response = await new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
-            pool.query(qry,[accountId], (err, res) =>{
-                if (err){
-                    reject (new Error(err.message));
-                } 
-                // else
-                console.log(res)
-                resolve(res);
-            })
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
+                pool.query(qry, [accountId], (err, res) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    }
+                    // else
+                    console.log(res)
+                    resolve(res);
+                })
+            }
+            )
+
+            return response;
+
+        } catch (error) {
+            console.log(error)
         }
-        )
-
-        return response;
-
-    } catch (error) {
-        console.log(error)
-    }
     }
 
- /**
- *  
- *  @description - getting customer infromation from database from accountID
- *  @todo delete report
- */
-    static async getReportedPharmaciesInformation(){
+    /**
+    *  
+    *  @description - getting customer infromation from database from accountID
+    *  @todo delete report
+    */
+    static async getReportedPharmaciesInformation() {
 
         try {
             const response = await new Promise((resolve, reject) => {
                 // if query succces we gonna resolve the result
                 // else we gonna reject it
                 const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
-                pool.query(qry, (err, res) =>{
-                    if (err){
+                pool.query(qry, (err, res) => {
+                    if (err) {
                         // testing - pass
                         console.log(err)
-                        reject (new Error(err.message));
-                    } 
+                        reject(new Error(err.message));
+                    }
                     // else
                     // testing -pass
                     console.log('qry reault')
@@ -241,11 +241,25 @@ class SystemAdmin{
             console.log(response)
             return response;
 
-            } catch (error) {
-                console.log(error)
-                return (error)
-            }
+        } catch (error) {
+            console.log(error)
+            return (error)
         }
+    }
+
+    static getSysAdminInfo(username) {
+        return new Promise((resolve, reject) => {
+            const result = pool.query('SELECT * FROM system_admin WHERE username = ?',
+                [username],
+                function (error, results) {
+                    if (error) {
+                        reject(new Error(error.message));
+                    }
+                    resolve(results);
+                }
+            )
+        })
+    }
 
 }
 

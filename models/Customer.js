@@ -138,6 +138,20 @@ class Customer{
 
         return customerLocation;
     }
+
+    static getCustomerInfoByEmail(email){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT * FROM customer WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
 }
 
 module.exports = Customer;
