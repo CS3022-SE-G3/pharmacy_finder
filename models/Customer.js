@@ -33,7 +33,7 @@ class Customer{
                 [customerId],
                 function (error, results) {
                     if (error) {
-                        reject (new Error(error.message));
+                        reject (error);
                     }
                     console.log(results);
                     resolve(results);
@@ -46,9 +46,9 @@ class Customer{
                 
             
     }
-    static getRespondedPharmacies(requestId){
-        try{
-            return new Promise((resolve,reject)=>{
+    static getRespondedPharmacies(requestId) {
+        try {
+            return new Promise((resolve, reject) => {
                 const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
                     [
                         "Approved",
@@ -56,12 +56,17 @@ class Customer{
                     ],
                     function (error, results) {
                         if (error) {
-                            reject (new Error(error.message));
+                            reject(new Error(error.message));
                         }
-                }
-                                          )
+                    }
                 )
             }
+            )
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     static enterRequest(customerID) {
         try {
@@ -120,9 +125,10 @@ class Customer{
                 )
                 
             })
-        }catch{
+        } catch (error) {
             console.log(error)
         }
+    }
                 
     //branded drugs
     static enterBrandedDrugs(brandedDrugs) {
