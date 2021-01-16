@@ -34,7 +34,7 @@
                      "dob":"2020-12-30T18:30:00.000Z",
                      "contact_no":1234123412
                  }
-                 ```
+                ```
   3. delete record of reported pharmacy
       - delete record of an reported pharmacy
       - localhost:3000/system_admin/report/delete
@@ -68,7 +68,8 @@
                 "pharmacy_id":30090,
                 
                 "customer_id":10099
-            }```
+            }
+            ```
       - response
             ```javascript
             {
