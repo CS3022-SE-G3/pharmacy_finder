@@ -1,6 +1,7 @@
 
 const Joi = require('joi');
 const Customer = require('../../models/Customer');
+const Lookup = require('../../models/Lookup');
 
 // ======================================USE CASE: BROADCAST REQUESTS==================================================//
 
@@ -13,12 +14,55 @@ const Customer = require('../../models/Customer');
  */
 const getBroadcastForm = (request, response) => {
     return response.send(200).send("Broadcast Form placeholder");
-    
 }
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
 
-const createBroadcastRequest = (request, response) => {
+const createBroadcastRequest = async (request, response) => {
+    const customerID = request.body.id;
+    const customerLocation = await Customer.getLocation(customerID);
+    const drugTypes = []
+    const brandedDrugs = []
+
+    const tempDrugTypes = request.body.drug_types;
+    const tempBrandedDrugs = request.body.branded_drugs;
+
+    const pharmacies = await Lookup.lookupPharmacies(customerLocation, tempBrandedDrugs, tempDrugTypes);
+    console.log(pharmacies);
+    console.log(tempDrugTypes);
+    console.log(tempBrandedDrugs);
+    
+    try
+    {
+        const id = await Customer.enterRequest(customerID);
+        console.log(id);
+
+        tempDrugTypes.forEach(function (drugType) {
+            drugTypes.push([id, drugType]);
+        });
+
+        tempBrandedDrugs.forEach(function (brandedDrug) {
+            brandedDrugs.push([id, brandedDrug]);
+        });
+        
+        console.log(pharmacies);
+        console.log(drugTypes);
+        console.log(brandedDrugs);
+
+        const id1 = await Customer.enterPharmacies(pharmacies);
+        const id2 = await Customer.enterDrugTypes(drugTypes);
+        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+
+        // const id1 = await Customer.enterPharmacies([[id, '30001'],[id,'30002']]);     //pharmacies
+        // const id2 = await Customer.enterDrugTypes([[id,'40001'], [id,'40002']]);      //drug types
+        // const id3 = await Customer.enterBrandedDrugs([[id,'50001'],[id, '50002']]);      //branded drugs
+
+        response.status(200).send("OK");
+    }
+    catch (error) {
+        response.status(500).send("Internal Server error");
+        console.log(error);
+    }
     
 }
 

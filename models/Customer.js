@@ -1,5 +1,5 @@
 const { pool } = require('../database/connection');
-
+const Lookup = require('./Lookup');
 class Customer{
 
     static enterCustomer(customer) {
@@ -45,6 +45,98 @@ class Customer{
         }
                 
             
+    }
+
+    static enterRequest(customerID) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('SELECT insert_request (?,?) AS id',
+                    [customerID, Lookup.getDate()],
+                    function (error, results) {
+                        if (error) {
+                            reject(new Error(error.message));
+                        }
+                        console.log(results[0].id);
+                        resolve(results[0].id);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+        
+    }
+    //pharmacies
+    static enterPharmacies(pharmacies) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_pharmacies (request_id,pharmacy_id) VALUES ?',
+                    [pharmacies],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+                            reject(new Error(error.message));
+                        }
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+
+    }
+    //drug types
+    static enterDrugTypes(drugTypes) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_drug_types  (request_id,drug_type_id) VALUES ?',
+                    [drugTypes],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+
+    }
+    //branded drugs
+    static enterBrandedDrugs(brandedDrugs) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_branded_drugs  (request_id,branded_drug_id) VALUES ?',
+                    [brandedDrugs],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+    }
+
+    static getLocation(customerID) {
+        const customerLocation = [];
+        /**
+         * @todo Get live location or look up the address in the table and convert it to latitude and longitude
+         */
+
+        return customerLocation;
     }
 }
 
