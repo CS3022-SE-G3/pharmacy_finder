@@ -69,9 +69,9 @@
                 
                 "customer_id":10099
             }
-        ```    
-      - response
-            ```javascript
+          ```    
+        - response
+        ```javascript
             {
                 "fieldCount": 0,
                 "affectedRows": 0,
