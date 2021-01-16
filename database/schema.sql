@@ -58,6 +58,7 @@ CREATE TABLE requests (
 );
 
 ALTER TABLE requests AUTO_INCREMENT = 60001;
+ALTER TABLE requests ADD date_created DATE;
 
 CREATE TABLE response (
     response_id int auto_increment,
@@ -68,7 +69,9 @@ CREATE TABLE response (
     FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 ALTER TABLE response AUTO_INCREMENT = 70001;
+ALTER TABLE response ADD date_created DATE;
 
 CREATE TABLE pharmacy_drug_types (
     pharmacy_id int,
@@ -124,6 +127,15 @@ CREATE TABLE responses_and_associated_branded_drugs (
     PRIMARY KEY (response_id, branded_drug_id),
     FOREIGN KEY (response_id) REFERENCES response(response_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (branded_drug_id) REFERENCES branded_drug(branded_drug_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE reported_pharmacies (
+    pharmacy_id int,
+    customer_id int,
+    reasons text NOT NULL,
+    PRIMARY KEY (pharmacy_id, customer_id),
+    FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 ----------------Session Table Schema------------------------------

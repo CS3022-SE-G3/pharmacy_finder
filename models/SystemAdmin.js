@@ -179,6 +179,74 @@ class SystemAdmin{
         })
     }
 
+    /**
+ *  
+ *  @description - getting customer infromation from database from accountID
+ *  @param {number} accountId - customerId
+ */
+    static async getCustomerAccountInformation(accountId){
+
+    try {
+        const response = await new Promise((resolve, reject) => {
+            // if query succces we gonna resolve the result
+            // else we gonna reject it
+            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
+            pool.query(qry,[accountId], (err, res) =>{
+                if (err){
+                    reject (new Error(err.message));
+                } 
+                // else
+                console.log(res)
+                resolve(res);
+            })
+        }
+        )
+
+        return response;
+
+    } catch (error) {
+        console.log(error)
+    }
+    }
+
+ /**
+ *  
+ *  @description - getting customer infromation from database from accountID
+ *  @todo delete report
+ */
+    static async getReportedPharmaciesInformation(){
+
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
+                pool.query(qry, (err, res) =>{
+                    if (err){
+                        // testing - pass
+                        console.log(err)
+                        reject (new Error(err.message));
+                    } 
+                    // else
+                    // testing -pass
+                    console.log('qry reault')
+                    console.log(res)
+                    resolve(res);
+                })
+            }
+            )
+
+            // testing - pass
+            console.log(`response to view reported pharamcy qry `)
+            console.log(response)
+            return response;
+
+            } catch (error) {
+                console.log(error)
+                return (error)
+            }
+        }
+
 }
 
 module.exports = SystemAdmin;

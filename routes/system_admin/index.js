@@ -7,5 +7,6 @@ routes.use('/drug', require('./drug'));
 routes.use('/drug_type', require('./drug_type'));
 routes.use('/pharmacy', require('./pharmacy'));
 routes.use('/report', require('./report'));
+routes.use('/login', require('./login'));
 
 module.exports = routes;

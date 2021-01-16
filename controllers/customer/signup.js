@@ -2,15 +2,18 @@ const Joi = require('joi');
 const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
-const { lookupEmail } = require('../lookup.js');
+const Lookup = require('../../models/lookup.js');
 
 const lookup = async (email) => {
-    const user = await lookupEmail(email);
+    const user = await Lookup.lookupEmail(email);
     if (user) {
         throw new Joi.ValidationError('Email already registered');
     }
 };
-
+/**
+ * 
+ * @todo add regex for NIC 
+ */
 function validateCustomerAccount(customer) {
     const schema = Joi.object({
         "full_name"             : Joi.string().required(),
