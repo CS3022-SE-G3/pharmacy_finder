@@ -3,6 +3,7 @@ const ifLoggedIn = (req, res, next) => {
         next();
     } 
     else {
+        console.log("Not logged In");
        res.redirect('/');
     }
 };
