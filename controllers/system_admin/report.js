@@ -27,7 +27,7 @@ function validateAccountId(accountId){
  *
  *  
  */
-const view_all_reported_pharmacies = (req, res) => {
+const viewAllReportedPharmacies = (req, res) => {
 
     // get the reported pharamacy information of the pharamacy as requested
     const result = systemAdmin.getReportedPharmaciesInformation();
@@ -41,16 +41,15 @@ const view_all_reported_pharmacies = (req, res) => {
         }
         
         // send data to front end
-        res.status(200).json(data)
-        res.end()
+        return res.status(200).send(data);
     })
     .catch(error => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
+        return res.status(500).send("Internal Server Error");
     })
 
 }
 
-module.exports = view_all_reported_pharmacies;
+module.exports = viewAllReportedPharmacies;

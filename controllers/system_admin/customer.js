@@ -27,7 +27,7 @@ function validateAccountId(accountId){
  *
  *  
  */
-const view_customer_information = (req, res) => {
+const viewCustomerInformation = (req, res) => {
 
     // get accountId from URL
     const accountId = req.params.accountId; 
@@ -72,4 +72,4 @@ const view_customer_information = (req, res) => {
 
 }
 
-module.exports = view_customer_information;
+module.exports = viewCustomerInformation;

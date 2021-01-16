@@ -1,7 +1,7 @@
 // view customer info
 const express = require('express');
 const router = express.Router();
-const view_all_reported_pharmacies = require('../../controllers/system_admin/report');
+const viewAllReportedPharmacies = require('../../controllers/system_admin/report');
 
 /**
  * 
@@ -11,7 +11,7 @@ const view_all_reported_pharmacies = require('../../controllers/system_admin/rep
  * @method GET
  */
 
-router.get('/view/reportedPharmacies', view_all_reported_pharmacies);
+router.get('/view/reportedPharmacies', viewAllReportedPharmacies);
 
 
 module.exports = router;

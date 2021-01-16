@@ -1,7 +1,7 @@
 // view customer info
 const express = require('express');
 const router = express.Router();
-const view_customer_information = require('../../controllers/system_admin/customer');
+const viewCustomerInformation = require('../../controllers/system_admin/customer');
 
 /**
  * 
@@ -11,7 +11,7 @@ const view_customer_information = require('../../controllers/system_admin/custom
  * @method GET
  */
 
-router.get('/view/:accountId', view_customer_information);
+router.get('/view/:accountId', viewCustomerInformation);
 
 
 module.exports = router;
