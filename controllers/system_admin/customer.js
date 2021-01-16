@@ -1,9 +1,10 @@
 const express = require('express');
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
+const systemAdmin = require('../../models/SystemAdmin');
 
 /**
- * 
+ * @description - validating account id that sent from database
  * @param {number} accountId - customerId
  */
 function validateAccountId(accountId){
@@ -20,42 +21,13 @@ function validateAccountId(accountId){
 }
 
 /**
- * 
- * @param {number} accountId - customerId
- */
-async function getCustomerAccountInformation(accountId){
-
-    try {
-        const response = await new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
-            pool.query(qry,[accountId], (err, res) =>{
-                if (err){
-                    reject (new Error(err.message));
-                } 
-                // else
-                console.log(res)
-                resolve(res);
-            })
-        }
-        )
-
-        return response;
-
-    } catch (error) {
-        console.log(error)
-    }
-
-}
-/**
- * 
+ * @description - handling system admin's request to view customer information.handles response and return customer infromation
  * @param {request} req - request to API
  * @param {response} res - response
  *
- *  handles response and return customer infromation
+ *  
  */
-const view_customer_information = (req, res) => {
+const viewCustomerInformation = (req, res) => {
 
     // get accountId from URL
     const accountId = req.params.accountId; 
@@ -78,7 +50,7 @@ const view_customer_information = (req, res) => {
     }
 
     // get the account information of the customer as requested
-    const result = getCustomerAccountInformation(accountId);
+    const result = systemAdmin.getCustomerAccountInformation(accountId);
 
     result.then((data) => {
 
@@ -100,4 +72,4 @@ const view_customer_information = (req, res) => {
 
 }
 
-module.exports = view_customer_information;
+module.exports = viewCustomerInformation;
