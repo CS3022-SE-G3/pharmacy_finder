@@ -34,3 +34,24 @@
                      "dob":"2020-12-30T18:30:00.000Z",
                      "contact_no":1234123412
                  }```
+  3. delete record of reported pharmacy
+      - delete record of an reported pharmacy
+      - localhost:3000/system_admin/report/delete
+      - request body -json
+            ```javascript
+            {
+                "pharmacy_id":30090,
+                "customer_id":100099
+            }```
+      - response
+            ```javascript
+            {
+                "fieldCount": 0,
+                "affectedRows": 0,
+                "insertId": 0,
+                "serverStatus": 2,
+                "warningCount": 0,
+                "message": "",
+                "protocol41": true,
+                "changedRows": 0
+            }```

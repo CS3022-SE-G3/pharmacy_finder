@@ -181,6 +181,38 @@ class SystemAdmin{
 
     /**
  *  
+ *  @description - delete record of reported paharamcy
+ *  @param {number} accountId - customerId
+ *  @param {number} pharamacyId - pharamacy Id
+ */
+    static async deleteRecord(pharamacyId,accountId){
+
+    try {
+        const response = await new Promise((resolve, reject) => {
+            // if query succces we gonna resolve the result
+            // else we gonna reject it
+            const qry = "DELETE FROM reported_pharmacies WHERE pharmacy_id=? AND customer_id=?"; // query
+            pool.query(qry,[pharamacyId,accountId], (err, res) =>{
+                if (err){
+                    reject (new Error(err.message));
+                } 
+                // else
+                console.log(res)
+                resolve(res);
+            })
+        }
+        )
+
+        return response;
+
+    } catch (error) {
+        console.log(error)
+    }
+    }
+
+
+    /**
+ *  
  *  @description - getting customer infromation from database from accountID
  *  @param {number} accountId - customerId
  */
