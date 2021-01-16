@@ -244,7 +244,7 @@ class SystemAdmin{
  /**
  *  
  *  @description - getting customer infromation from database from accountID
- *  @todo delete report
+ *  
  */
     static async getReportedPharmaciesInformation(){
 
@@ -261,7 +261,6 @@ class SystemAdmin{
                     } 
                     // else
                     // testing -pass
-                    console.log('qry reault')
                     console.log(res)
                     resolve(res);
                 })
@@ -269,8 +268,77 @@ class SystemAdmin{
             )
 
             // testing - pass
-            console.log(`response to view reported pharamcy qry `)
-            console.log(response)
+            return response;
+
+            } catch (error) {
+                return (error)
+            }
+        }
+
+
+        /**
+ *  
+ *  @description - getting pharmacy is in the reported pharmacy list
+ *  @param {number} accountId - customerId
+ *  @param {number} pharamacyId - pharmacy Id
+ *  
+ */
+    static async getReportedPharmacyInformation(pharamacyId,accountId){
+
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons` FROM `reported_pharmacies` WHERE pharmacy_id=? AND customer_id=?"; // query
+                pool.query(qry,[pharamacyId,accountId], (err, res) =>{
+                    if (err){
+                        // testing - pass
+                        console.log(err)
+                        reject (new Error(err.message));
+                    } 
+                    // else
+                    // testing -pass
+                    resolve(res.length > 0);
+                })
+            }
+            )
+
+            // testing - pass
+            return response;
+
+            } catch (error) {
+                return (error)
+            }
+        }
+        
+
+        /**
+ *  
+ *  @description - deleting pharmacy account
+ *  @param {number} pharamacyId - pharmacy Id
+ *  
+ */
+    static async deleteAccount(pharamacyId){
+
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "DELETE FROM `pharmacy` WHERE pharmacy_id=?"; // query
+                pool.query(qry,[pharamacyId], (err, res) =>{
+                    if (err){
+                        // testing - pass
+                        console.log(err)
+                        reject (new Error(err.message));
+                    } 
+                    // else
+                    // testing -pass
+                    resolve(res);
+                })
+            }
+            )
+
+            // testing - pass
             return response;
 
             } catch (error) {
@@ -278,6 +346,7 @@ class SystemAdmin{
                 return (error)
             }
         }
+        
 
 }
 
