@@ -4,7 +4,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {viewPharmacyInfo,viewPendingPharmacies,approvePharmacy} = require('../../controllers/system_admin/pharmacy');
+const {viewPharmacyInfo,viewPendingPharmacies,approvePharmacy,getSearchPharmacy,postSearchPharmacy} = require('../../controllers/system_admin/pharmacy');
+
+router.get('/search',getSearchPharmacy);
+router.post('/search',postSearchPharmacy);
 
 /**
  * @description Load the data of all approval pending pharmacies
