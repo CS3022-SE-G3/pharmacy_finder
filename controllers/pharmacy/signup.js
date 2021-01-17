@@ -2,6 +2,8 @@ const Joi = require('joi');
 const _ = require('lodash');
 const Pharmacy = require('../../models/Pharmacy');
 const { generatePassword } = require('../password');
+const path = require('path');
+
 
 function validatePharmacyAccount(pharmacy) {
     const schema = Joi.object({
@@ -33,8 +35,13 @@ const signupPharmacy = async (request, response) => {
     ));
 
     if (error) {
-        console.log("Pharmacy error validation " + error.message);
-        return response.status(400).send("Incorrect information entered");
+        var err_msg = "Pharmacy error validation " + error.message;
+        console.log(err_msg);
+        return response.status(400).send(error.message);
+
+        var data = { error_msg: err_msg, post_body: request.body };
+        // return response.render('pharmacy/signup', {err_data: data});
+        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/signup.html'), { err_data: data });
     }
 
     request.body.password = await generatePassword(request.body.password);
@@ -43,12 +50,17 @@ const signupPharmacy = async (request, response) => {
         const result = await Pharmacy.enterPharmacy(request.body);
     }
     catch (error) {
+        var err_msg = "Internal server error " + error.message;
         console.log(error);
-        return response.status(500).send("Internal server error" + error.message);
+        return response.status(500).send(err_msg);
+
+        var data = { error_msg: err_msg, post_body: request.body };
+        // return response.render('/pharmacy/signup', {err_data: data});
+        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/signup.ejs'), { err_data: data });
     }
 
     return response.status(200).send("OK");
 
 }
 
-exports.signupPharmacy= signupPharmacy;
+exports.signupPharmacy = signupPharmacy;

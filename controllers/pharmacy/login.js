@@ -3,8 +3,10 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const Pharmacy = require('../../models/Pharmacy');
+const path = require('path');
 
-function validatePharmacyLoginInfo(pharmacy){
+
+function validatePharmacyLoginInfo(pharmacy) {
     const schema = Joi.object().keys({
         "email": Joi.string().email().required(),
         "password": Joi.string().required()
@@ -18,27 +20,43 @@ const loginPharmacy = async (request, response) => {
     const { error } = validatePharmacyLoginInfo(_.pick(request.body,
         [
             "email",
-            "password"        
+            "password"
         ]
     ));
 
 
     if (error) {
-        console.log("Pharmacy Login error validation " + error.message);
+        var err_msg = "Pharmacy Login error validation " + error.message;
+        console.log(err_msg);
         return response.status(400).send(error.message);
+
+        // return response.render('/pharmacy/login_error', { err_data: err_msg });
+        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
     }
 
     try {
         const result = await Pharmacy.getPharmacyInfoByEmail(request.body.email);
 
         if (!result[0]) {
-            return response.status(401).send("Email is not registered");
+            var err_msg = "Email is not registered";
+            console.log(err_msg);
+
+            return response.status(401).send(err_msg);
+
+            // return response.render('/pharmacy/login_error', { err_data: err_msg });
+            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
         }
 
         const hashedPassword = result[0].password;
         const passwordCorrect = await bcrypt.compare(request.body.password, hashedPassword);
         if (!passwordCorrect) {
-            return response.status(401).send("Invalid email or password");
+            var err_msg = "Invalid email or password";
+            console.log(err_msg);
+
+            return response.status(401).send(err_msg);
+
+            // return response.render('/pharmacy/login_error', { err_data: err_msg });
+            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
         }
 
         request.session.user = {};
@@ -49,8 +67,13 @@ const loginPharmacy = async (request, response) => {
 
     }
     catch (error) {
+        var err_msg = "Internal server error" + error.message;
         console.log(error);
-        return response.status(500).send("Internal server error" + error.message);
+
+        return response.status(500).send(err_msg);
+
+        // return response.render('/pharmacy/login_error', { err_data: err_msg });
+        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
     }
 
     // res.redirect('/');
@@ -58,4 +81,4 @@ const loginPharmacy = async (request, response) => {
 
 }
 
-exports.loginPharmacy= loginPharmacy;
+exports.loginPharmacy = loginPharmacy;

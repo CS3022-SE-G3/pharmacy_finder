@@ -3,6 +3,7 @@ const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
 const Lookup = require('../../models/lookup.js');
+const path = require('path');
 
 const lookup = async (email) => {
     const user = await Lookup.lookupEmail(email);
@@ -48,8 +49,14 @@ const signupCustomer = async (request, response) => {
     ));}
 
     catch (error) {
-        console.log("Customer error validation" + error.message);
+        var err_msg = "Customer error validation " + error.message;
+        console.log(err_msg);
         return response.status(400).send(error.message);
+
+        var data = {error_msg: err_msg, post_body: request.body};
+        // return response.render('customer/signup', {err_data: data});
+        // return response.sendFile(path.join(__dirname, '../../views/customer/signup.html'), {err_data: data});
+
     }
 
     request.body.password = await generatePassword(request.body.password);
@@ -58,8 +65,14 @@ const signupCustomer = async (request, response) => {
         const result = await Customer.enterCustomer(request.body);
     }
     catch (error) {
+        var err_msg = "Internal server error " + error.message;
         console.log(error);
-        return response.status(500).send("Internal server error" + error.message);
+        return response.status(500).send(err_msg);
+
+        var data = {error_msg: err_msg, post_body: request.body};
+        // return response.render('/customer/signup', {err_data: data});
+        // return response.sendFile(path.join(__dirname, '../../views/customer/signup.ejs'), {err_data: data});
+
     }
 
     return response.status(200).send("OK");
