@@ -23,7 +23,7 @@ function validatePharmacyName(pharmacyName){
 }
 
 
-const viewPharmacyInformation = (req, res) => {
+const viewPharmacyInformation = async(req, res) => {
 
     // get pharmacyID from URL
     const pharmacyName = req.params.name; 
@@ -46,27 +46,29 @@ const viewPharmacyInformation = (req, res) => {
     }
 
     // get the information of the pharmacy as requested
-    const result = pharmacy.getPharmacyInformation(pharmacyName);
-
-    result.then((data) => {
-
-        if(data.length === 0){
-            return res.status(400).send("Pharmacy not registered");
+    const pharmacyInformation = await pharmacy.getPharmacyInformation(pharmacyName);
+    console.log(pharmacyInformation);
+    try{
+        if(pharmacyInformation.length === 0){
+            return res.status(404).render('404');
             
         }
         
         // send data to front end
         
-        res.status(200).json(data[0])
-        res.end()
-    })
-    .catch(error => {
-        console.log(error)
+        return res.status(200).render('customer/view_pharmacy',{
+            pharmacyInformation: pharmacyInformation[0],
+            pageTitle: 'Pharmacy Information'
+        });
+    }catch(error){
+        console.log(error.message)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
-    })
+        return res.status(500).render('500');
+    }
+        
+
 
 }
 
-module.exports.viewPharmacyInformation = viewPharmacyInformation;
+exports.viewPharmacyInformation = viewPharmacyInformation;
