@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= pageTitle %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<main>
+    <table>
+        <% for(var i=0; i < requests.length; i++) { %>
+           
+             <h2>Request ID: <%= requests[i].request_id %></h2>
+             <p>Drug Type Name: <%= requests[i].drug_type_name %></p>
+             <p>Brand Name: <%= requests[i].brand_name %></p>
+             <p>Manufacturer: <%= requests[i].manufacturer %></p>
+             <br><br>
+           
+        <% } %>
+    </table>
+
+</main>
+</body>
+</html>

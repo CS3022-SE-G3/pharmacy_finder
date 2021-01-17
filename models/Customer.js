@@ -29,7 +29,7 @@ class Customer{
     static getBroadcastedRequests(customerId){
         try{
             return new Promise((resolve,reject)=>{
-                const result = pool.query('SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM drug_type NATURAL JOIN (SELECT * FROM branded_drug NATURAL JOIN (SELECT * FROM requests_and_associated_pharmacies NATURAL JOIN (SELECT * FROM requests NATURAL JOIN requests_and_associated_branded_drugs) AS T) AS T) AS T) AS T WHERE customer_id= ?',
+                const result = pool.query('SELECT customer_id,request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM (SELECT * FROM requests NATURAL JOIN requests_and_associated_branded_drugs)AS A NATURAL JOIN branded_drug) AS B JOIN drug_type WHERE B.drug_type_id=drug_type.drug_type_id AND customer_id=?',
                 [customerId],
                 function (error, results) {
                     if (error) {

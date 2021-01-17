@@ -95,7 +95,7 @@ function validateCustomerId(customerId){
 }
 
 
-const viewBroadcastedRequests = (req, res) => {
+const viewBroadcastedRequests = async(req, res) => {
 
     // get customerId from URL
     const customerId = req.params.id; 
@@ -118,26 +118,23 @@ const viewBroadcastedRequests = (req, res) => {
     }
 
     // get the information of the broadcasted requests as requested
-    const result = Customer.getBroadcastedRequests(customerId);
-
-    result.then((data) => {
-
-        if(data.length === 0){
-            return res.status(400).send(" customerID not found");
+    const result = await Customer.getBroadcastedRequests(customerId);
+    
+    try{
+        if(result.length === 0){
+            return res.status(404).render('404');
             
         }
-        
-        // send data to front end
-        
-        res.status(200).json(data)
-        res.end()
-    })
-    .catch(error => {
-        console.log(error)
-
-        // send 'internal server error'
-        res.status(500).send("Internal Server Error")
-    })
+        return res.status(200).render('customer/view_requests',{
+            requests: result,
+            pageTitle: 'Requests'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+   
 
 }
 
