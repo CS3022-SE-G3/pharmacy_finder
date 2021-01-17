@@ -1,3 +1,4 @@
+
 const { pool } = require('../database/connection');
 const Lookup = require('./Lookup');
 class Customer{
@@ -33,7 +34,7 @@ class Customer{
                 [customerId],
                 function (error, results) {
                     if (error) {
-                        reject (new Error(error.message));
+                        reject (error);
                     }
                     console.log(results);
                     resolve(results);
@@ -45,6 +46,31 @@ class Customer{
         }
                 
             
+    }
+    static getRespondedPharmacies(requestId) {
+        console.log("Getting responded pharmacies");
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
+                    [
+                        "Approved",
+                        requestId
+                    ],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            }
+            )
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     static enterRequest(customerID) {
@@ -102,12 +128,13 @@ class Customer{
                         resolve(results);
                     }
                 )
+                
             })
-        } catch {
+        } catch (error) {
             console.log(error)
         }
-
     }
+                
     //branded drugs
     static enterBrandedDrugs(brandedDrugs) {
         try {
@@ -137,20 +164,6 @@ class Customer{
          */
 
         return customerLocation;
-    }
-
-    static getCustomerInfoByEmail(email){
-        return new Promise((resolve,reject)=>{
-            const result = pool.query('SELECT * FROM customer WHERE email = ?',
-            [email],
-            function (error, results) {
-                if (error) {
-                    reject (new Error(error.message));
-                }
-                resolve(results);
-            }
-        )
-        })
     }
 }
 

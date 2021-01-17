@@ -34,6 +34,7 @@ dotenv.config({
 
 // set up template engine
 app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 // static files
 app.use(express.static('./public'));
