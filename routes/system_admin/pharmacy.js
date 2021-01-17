@@ -6,7 +6,20 @@ const router = express.Router();
 
 const {viewPharmacyInfo,viewPendingPharmacies,approvePharmacy,getSearchPharmacy,postSearchPharmacy} = require('../../controllers/system_admin/pharmacy');
 
+/**
+ * @description get the page for searching a pharmacy by Pharmacy ID
+ * @URL http://localhost:3000/system_admin/pharmacy/search
+ * @method GET
+ * @todo not final
+ */
 router.get('/search',getSearchPharmacy);
+
+/**
+ * @description search the Pharmacy ID and get the results on same page
+ * @URL http://localhost:3000/system_admin/pharmacy/search
+ * @method POST
+ * @todo not final
+ */
 router.post('/search',postSearchPharmacy);
 
 /**
