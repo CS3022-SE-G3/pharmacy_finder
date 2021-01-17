@@ -48,7 +48,6 @@ class Customer{
     }
     static getRespondedPharmacies(requestId) {
         console.log("Getting responded pharmacies");
-        try {
             return new Promise((resolve, reject) => {
                 const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
                     [
@@ -65,12 +64,9 @@ class Customer{
                     }
                 )
             }
-            )
+            );
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
+    
 
     static enterRequest(customerID) {
         try {

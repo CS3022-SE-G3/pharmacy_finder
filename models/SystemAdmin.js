@@ -1,7 +1,7 @@
 const { pool } = require('../database/connection');
 
 
-class SystemAdmin{
+class SystemAdmin {
 
     /**
      * @description Add a branded drug to the database
@@ -50,7 +50,7 @@ class SystemAdmin{
     /**
      * @description Get all branded drugs from the database
      */
-    static getAllDrugs() { 
+    static getAllDrugs() {
         return new Promise((resolve, reject) => {
             const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ?",
                 [false],
@@ -185,29 +185,29 @@ class SystemAdmin{
  *  @param {number} accountId - customerId
  *  @param {number} pharamacyId - pharamacy Id
  */
-    static async deleteRecord(pharamacyId,accountId){
+    static async deleteRecord(pharamacyId, accountId) {
 
-    try {
-        const response = await new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "DELETE FROM reported_pharmacies WHERE pharmacy_id=? AND customer_id=?"; // query
-            pool.query(qry,[pharamacyId,accountId], (err, res) =>{
-                if (err){
-                    reject (new Error(err.message));
-                } 
-                // else
-                console.log(res)
-                resolve(res);
-            })
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "DELETE FROM reported_pharmacies WHERE pharmacy_id=? AND customer_id=?"; // query
+                pool.query(qry, [pharamacyId, accountId], (err, res) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    }
+                    // else
+                    console.log(res)
+                    resolve(res);
+                })
+            }
+            )
+
+            return response;
+
+        } catch (error) {
+            console.log(error)
         }
-        )
-
-        return response;
-
-    } catch (error) {
-        console.log(error)
-    }
     }
 
 
@@ -216,49 +216,49 @@ class SystemAdmin{
  *  @description - getting customer infromation from database from accountID
  *  @param {number} accountId - customerId
  */
-    static async getCustomerAccountInformation(accountId){
+    static async getCustomerAccountInformation(accountId) {
 
-    try {
-        const response = await new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
-            pool.query(qry,[accountId], (err, res) =>{
-                if (err){
-                    reject (new Error(err.message));
-                } 
-                // else
-                console.log(res)
-                resolve(res);
-            })
+        try {
+            const response = await new Promise((resolve, reject) => {
+                // if query succces we gonna resolve the result
+                // else we gonna reject it
+                const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
+                pool.query(qry, [accountId], (err, res) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    }
+                    // else
+                    console.log(res)
+                    resolve(res);
+                })
+            }
+            )
+
+            return response;
+
+        } catch (error) {
+            console.log(error)
         }
-        )
-
-        return response;
-
-    } catch (error) {
-        console.log(error)
-    }
     }
 
- /**
- *  
- *  @description - getting customer infromation from database from accountID
- *  
- */
-    static async getReportedPharmaciesInformation(){
+    /**
+    *  
+    *  @description - getting customer infromation from database from accountID
+    *  
+    */
+    static async getReportedPharmaciesInformation() {
 
         try {
             const response = await new Promise((resolve, reject) => {
                 // if query succces we gonna resolve the result
                 // else we gonna reject it
                 const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
-                pool.query(qry, (err, res) =>{
-                    if (err){
+                pool.query(qry, (err, res) => {
+                    if (err) {
                         // testing - pass
                         console.log(err)
-                        reject (new Error(err.message));
-                    } 
+                        reject(new Error(err.message));
+                    }
                     // else
                     // testing -pass
                     console.log(res)
@@ -270,34 +270,32 @@ class SystemAdmin{
             // testing - pass
             return response;
 
-            } catch (error) {
-                return (error)
-            }
+        } catch (error) {
+            return (error)
         }
+    }
 
 
-        /**
- *  
- *  @description - getting pharmacy is in the reported pharmacy list
- *  @param {number} accountId - customerId
- *  @param {number} pharamacyId - pharmacy Id
- *  
- */
-    static async getReportedPharmacyInformation(pharamacyId,accountId){
+    /**
+*  
+*  @description - getting pharmacy is in the reported pharmacy list
+*  @param {number} accountId - customerId
+*  @param {number} pharamacyId - pharmacy Id
+*  
+*/
+    static async getReportedPharmacyInformation(pharmacyID, customerID) {
 
-        try {
-            const response = await new Promise((resolve, reject) => {
-                // if query succces we gonna resolve the result
-                // else we gonna reject it
-                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons` FROM `reported_pharmacies` WHERE pharmacy_id=? AND customer_id=?"; // query
-                pool.query(qry,[pharamacyId,accountId], (err, res) =>{
-                    if (err){
-                        // testing - pass
+        return new Promise((resolve, reject) => {
+                
+            const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons` FROM `reported_pharmacies` WHERE pharmacy_id=? AND customer_id=?"; // query
+            
+                const result = pool.query(qry, [pharmacyID, customerID], (err, res) => {
+                    if (err) {
+                        console.log(result.sql);
                         console.log(err)
-                        reject (new Error(err.message));
-                    } 
-                    // else
-                    // testing -pass
+                        reject(new Error(err.message));
+                    }
+                    
                     resolve(res.length > 0);
                 })
             }
@@ -306,48 +304,38 @@ class SystemAdmin{
             // testing - pass
             return response;
 
-            } catch (error) {
-                return (error)
-            }
-        }
+        } 
         
 
-        /**
- *  
- *  @description - deleting pharmacy account
- *  @param {number} pharamacyId - pharmacy Id
- *  
- */
-    static async deleteAccount(pharamacyId){
+    /**
+*  
+*  @description - deleting pharmacy account
+*  @param {number} pharamacyId - pharmacy Id
+*  
+*/
+    static async deleteAccount(pharamacyId) {
 
-        try {
-            const response = await new Promise((resolve, reject) => {
-                // if query succces we gonna resolve the result
-                // else we gonna reject it
-                const qry = "DELETE FROM `pharmacy` WHERE pharmacy_id=?"; // query
-                pool.query(qry,[pharamacyId], (err, res) =>{
-                    if (err){
-                        // testing - pass
-                        console.log(err)
-                        reject (new Error(err.message));
-                    } 
-                    // else
-                    // testing -pass
-                    resolve(res);
-                })
+        return new Promise((resolve, reject) => {
+            // if query succces we gonna resolve the result
+            // else we gonna reject it
+            const qry = "DELETE FROM `pharmacy` WHERE pharmacy_id=?"; // query
+            pool.query(qry, [pharamacyId], (err, res) => {
+                if (err) {
+                    // testing - pass
+                    console.log("error in deleting pharmacy from database when deleting a reported pharmacy");
+                    console.log(err)
+                    reject(false); //returns false if error
+                }
+                // else
+                // testing -pass
+                console.log
+                resolve(true);
             }
             )
+        })
+            
 
-            // testing - pass
-            return response;
-
-            } catch (error) {
-                console.log(error)
-                return (error)
-            }
-        }
-        
-
+    }
 }
 
 module.exports = SystemAdmin;
