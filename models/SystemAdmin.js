@@ -223,7 +223,6 @@ class SystemAdmin{
             // if query succces we gonna resolve the result
             // else we gonna reject it
             const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
-            
             pool.query(qry,[accountId], (err, res) =>{
                 if (err){
                     reject (new Error(err.message));
