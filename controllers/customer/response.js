@@ -17,14 +17,14 @@ function validateRequestId(requestId){
     });
 
     // return valid or not
-    return schema.validate(requestId)
+    return schema.validate(requestId);
 }
 
 
-const viewRespondedPharmacies = (req, res) => {
+const viewRespondedPharmacies = async (req, res) => {
 
     // get requestId from URL
-    const requestId = req.params.Id; 
+    const requestId = req.params.id; 
 
     // validating
     const {error} = validateRequestId({requestId:requestId});
@@ -40,30 +40,29 @@ const viewRespondedPharmacies = (req, res) => {
         res.end()
 
         // stop execution
-        return
+        return;
     }
 
     // get the information of the responded pharmacies as requested
-    const result = Customer.getRespondedPharmacies(requestId);
-
-    result.then((data) => {
-
-        if(data.length === 0){
+    try
+    {
+        const result = await Customer.getRespondedPharmacies(requestId);
+        if (result.length === 0) {
             return res.status(400).send(" Responded pharmacies not found");
-            
         }
-        
+        return res.status(200).json(result);
+
         // send data to front end
-    
-        res.status(200).json(data)
-        res.end()
-    })
-    .catch(error => {
+
+        return res.status(200).json(data);
+    }
+    catch (error) {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
-    })
+        return res.status(500).send("Internal Server Error")
+        
+    }
 
 }
 

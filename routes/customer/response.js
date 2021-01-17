@@ -8,6 +8,6 @@ const { viewRespondedPharmacies }=require('../../controllers/customer/response')
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/view/:Id',viewRespondedPharmacies);
+router.get('/view/:id',viewRespondedPharmacies);
 
 module.exports = router;
