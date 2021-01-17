@@ -8,16 +8,22 @@ const {viewAllReportedPharmacies,deleteRecordOfReportedPharmacy,deletePharmacy} 
  * @method GET
  */
 router.get('/view/reportedPharmacies', viewAllReportedPharmacies);
+
+
 /**
  * @URL - http://localhost:3000/system_admin/report/pharmacy/delete
  * @description Delete record reported pharmacy
- * @method DELETE
+ * @method POST
  */
-router.delete('/pharmacy/delete', deletePharmacy);
+router.post('/pharmacy/delete', deletePharmacy);
+
+
 /**
  * @URL - http://localhost:3000/system_admin/report/delete
  * @description Delete record reported pharmacy
  * @method DELETE
  */
 router.delete('/delete', deleteRecordOfReportedPharmacy);
+
+
 module.exports = router;

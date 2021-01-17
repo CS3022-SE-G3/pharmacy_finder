@@ -1,25 +1,25 @@
 const express = require('express');
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
-const systemAdmin = require('../../models/SystemAdmin');
+const SystemAdmin = require('../../models/SystemAdmin');
 
 /**
  * @description - validating account id and pharmacy id that sent from request
  * @param {number} accountId - customerId
  * @param {number} pharmacyId - pharmacy Id
  */
-function validateIds(pharmacyId,accountId){
+function validateIds(pharmacyID, customerID) {
 
     // schema to validate
     const schema = Joi.object({
         
-        "accountId"    : Joi.number().integer().min(10001).required(),
-        "pharmacyId"    : Joi.number().integer().min(30001).required(),
+        "customerID": Joi.number().integer().min(10001).required(),
+        "pharmacyID": Joi.number().integer().min(30001).required(),
         
     });
 
     // return valid or not
-    return schema.validate({pharmacyId,accountId})
+    return schema.validate({customerID,pharmacyID})
 }
 
 /**
@@ -53,7 +53,7 @@ const deleteRecordOfReportedPharmacy = (req, res) => {
     }
 
     // get the reported pharamacy information of the pharamacy as requested
-    const result = systemAdmin.deleteRecord(pharmacyId,accountId);
+    const result = SystemAdmin.deleteRecord(pharmacyId,accountId);
 
     result.then((data) => {
 
@@ -85,7 +85,7 @@ const deleteRecordOfReportedPharmacy = (req, res) => {
 const viewAllReportedPharmacies = (req, res) => {
 
     // get the reported pharamacy information of the pharamacy as requested
-    const result = systemAdmin.getReportedPharmaciesInformation();
+    const result = SystemAdmin.getReportedPharmaciesInformation();
 
     result.then((data) => {
 
@@ -114,42 +114,38 @@ const viewAllReportedPharmacies = (req, res) => {
  */
 const deletePharmacy = (req, res) => {
 
-    const pharmacy_id = req.body.pharmacy_id;
-    const customer_id = req.body.customer_id;
+    const pharmacyID = req.body.pharmacyID;
+    const customerID = req.body.customerID;
 
-    const { e } = validateIds(pharmacy_id,customer_id)
+    const { error } = validateIds(pharmacyID,customerID)
 
-    if(e){
+    if (error) {
         // log the error
         console.error('ValidationError:system_admin-customer_account_id: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Account ID and Pharmacy ID provided");
+        return res.status(400).send(error.details[0].message);
 
-        res.end()
-
-        // stop execution
-        return
     }
 
     // get the reported pharamacy is in reported pharamacy list
-    const response = systemAdmin.getReportedPharmacyInformation(pharmacy_id,customer_id); 
+    const response = SystemAdmin.getReportedPharmacyInformation(pharmacyID, customerID);
     response.then(isDelOk => {
         console.log(isDelOk)
 
         if (isDelOk) {
         // if that pharamacy in reported list then delete its account
-        const delres = systemAdmin.deleteAccount(pharmacy_id);
+        const delres = SystemAdmin.deleteAccount(pharmacyID);
 
         // delete record of the report
         delres.then(data => {
-            systemAdmin.deleteRecord(pharmacy_id,customer_id).then(data => {
-                return res.status(200).send('successfully account deleted');
+            SystemAdmin.deleteRecord(pharmacyID, customerID).then(data => {
+                return res.status(200).send('Successfully deleted account');
             })
         })
     } else {
         // else send that pharmacy not reported and unable to delete
-        return res.status(400).send("This is not a reported pharamacy.So unable to delete account");
+        return res.status(400).send("This pharmacy has not been reported and so cannot be deleted");
     }
     }).catch(error => {
         // send 'internal server error'
