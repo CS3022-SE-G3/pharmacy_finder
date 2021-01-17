@@ -7,7 +7,12 @@ const { viewBroadcastedRequests } = require('../../controllers/customer/request'
 const { getBroadcastForm } = require('../../controllers/customer/request');
 const { createBroadcastRequest } = require('../../controllers/customer/request');
 
-//URL:localhost:3000/customer/request/view/:id --method GET
+/**
+ * @description Load and view all requests of a customer
+ * @URL localhost:3000/customer/request/view/:id 
+ * @method GET
+ * @todo return results in response body along with the html file
+ */
 router.get('/view/:id', viewBroadcastedRequests);
 
 

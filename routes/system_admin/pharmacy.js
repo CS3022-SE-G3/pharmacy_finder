@@ -24,9 +24,9 @@ router.get('/view/:pharmacyid', viewPharmacyInfo);
 
 /**
  * @description Approve a pharmacy that is not already approved and notify approval
- * @URL http://localhost:3000/system_admin/pharmacy/approve/{pharmacyid}
- * @method PUT
+ * @URL http://localhost:3000/system_admin/pharmacy/approve
+ * @method POST
  */
-router.put('/approve/:pharmacyid',approvePharmacy);
+router.post('/approve',approvePharmacy);
 
 module.exports = router;
