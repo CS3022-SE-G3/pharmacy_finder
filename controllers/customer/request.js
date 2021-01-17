@@ -82,7 +82,7 @@ function validateBroadcast(broadcaset) {
  * @param {number} customerId
  */
 function validateCustomerId(customerId){
-
+    
     // schema to validate
     const schema = Joi.object({
         
