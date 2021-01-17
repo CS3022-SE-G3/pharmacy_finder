@@ -39,14 +39,14 @@
       - delete record of an reported pharmacy
       - localhost:3000/system_admin/report/delete
       - request body -json
-            ```javascript
+        ```javascript
             {
                 "pharmacy_id":30090,
                 "customer_id":100099
             }
         ```    
       - response
-            ```javascript
+        ```javascript
             {
                 "fieldCount": 0,
                 "affectedRows": 0,
@@ -63,7 +63,7 @@
       - delete account of pharmacy
       - http://localhost:3000/system_admin/report/pharmacy/delete
       - request body -json
-            ```javascript
+        ```javascript
             {
                 "pharmacy_id":30090,
                 
@@ -89,3 +89,10 @@
             "successfully account deleted"
         - if invalid pharmacy_id and customer_id
             "Invalid Account ID and Pharmacy ID provided"
+
+### views
+  1. view all  reported pharmcies
+    - http://localhost:3000/system_admin/report/view/reportedPharmacies
+
+  2. view information of a customer by ID
+    - http://localhost:3000/system_admin/customer/view

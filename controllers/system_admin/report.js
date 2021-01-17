@@ -74,7 +74,6 @@ const deleteRecordOfReportedPharmacy = (req, res) => {
     })
 
 }
-
 /**
  * @description - handling system admin's request to view customer information.handles response and return customer infromation
  * @param {request} req - request to API
@@ -96,7 +95,7 @@ const viewAllReportedPharmacies = (req, res) => {
         }
         
         // send data to front end
-        return res.status(200).send(data);
+        return res.render('system_admin/viewpharmaciesreprted',{title: 'welcome',data: data});
     })
     .catch(error => {
         console.log(error)
