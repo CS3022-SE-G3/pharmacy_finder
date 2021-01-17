@@ -44,6 +44,8 @@ const loginSysAdmin = async (request, response) => {
         request.session.user = {};
         request.session.user.username = result[0].username;
         request.session.user.id = result[0].sys_admin_id;
+        request.session.user.class = 0;
+
 
     }
     catch (error) {

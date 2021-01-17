@@ -44,6 +44,8 @@ const loginPharmacy = async (request, response) => {
         request.session.user = {};
         request.session.user.email = result[0].email;
         request.session.user.id = result[0].pharmacy_id;
+        request.session.user.class = 1;
+
 
     }
     catch (error) {

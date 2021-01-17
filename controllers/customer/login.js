@@ -44,6 +44,7 @@ const loginCustomer = async (request, response) => {
         request.session.user = {};
         request.session.user.email = result[0].email;
         request.session.user.id = result[0].customer_id;
+        request.session.user.class = 2;
 
     }
     catch (error) {
