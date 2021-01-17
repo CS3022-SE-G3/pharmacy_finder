@@ -22,12 +22,14 @@
             </div>
         </form>
     </div>
-    <div>
+
         <%if (pharmacyInfo.length===1){ %>
+    <div>
             <p><%=pharmacyInfo[0].pharmacy_id%></p>
             <a href="http://localhost:3000/system_admin/pharmacy/view/<%=pharmacyInfo[0].pharmacy_id%>">View</a>
-        <%}%>
     </div>
+        <%}%>
+
 </main>
 </body>
 </html>
