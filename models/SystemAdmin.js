@@ -197,6 +197,7 @@ class SystemAdmin{
                     reject (new Error(err.message));
                 } 
                 // else
+                console.log(res)
                 resolve(res);
             })
         }
@@ -227,6 +228,7 @@ class SystemAdmin{
                     reject (new Error(err.message));
                 } 
                 // else
+                console.log(res)
                 resolve(res);
             })
         }
@@ -239,8 +241,10 @@ class SystemAdmin{
     }
     }
 
-/**
+ /**
+ *  
  *  @description - getting customer infromation from database from accountID
+ *  
  */
     static async getReportedPharmaciesInformation(){
 
@@ -248,18 +252,22 @@ class SystemAdmin{
             const response = await new Promise((resolve, reject) => {
                 // if query succces we gonna resolve the result
                 // else we gonna reject it
-                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
+                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`name` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
                 pool.query(qry, (err, res) =>{
                     if (err){
+                        // testing - pass
+                        console.log(err)
                         reject (new Error(err.message));
                     } 
                     // else
+                    // testing -pass
                     console.log(res)
                     resolve(res);
                 })
             }
             )
 
+            // testing - pass
             return response;
 
             } catch (error) {
