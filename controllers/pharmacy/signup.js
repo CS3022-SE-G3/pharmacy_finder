@@ -44,6 +44,16 @@ const signupPharmacy = async (request, response) => {
         // return response.sendFile(path.join(__dirname, '../../views/pharmacy/signup.html'), { err_data: data });
     }
 
+    if (await Pharmacy.isEmailRegistered(request.body.email)){
+        var err_msg = "Email is already registered";
+        console.log(err_msg);
+        return response.status(400).send(err_msg);
+
+        var data = {error_msg: err_msg, post_body: request.body};
+        // return response.render('pharmacy/signup', {err_data: data});
+        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/signup.html'), {err_data: data});
+    }
+
     request.body.password = await generatePassword(request.body.password);
 
     try {
