@@ -13,7 +13,7 @@ const Lookup = require('../../models/Lookup');
  * @todo get all drugs and drug types? from system admin
  */
 const getBroadcastForm = (request, response) => {
-    return response.send(200).send("Broadcast Form placeholder");
+    return response.status(200).send("Broadcast Form placeholder");
 }
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
