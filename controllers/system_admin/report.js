@@ -10,6 +10,7 @@ const SystemAdmin = require('../../models/SystemAdmin');
  */
 function validateIds(pharmacyID, customerID) {
 
+    
     // schema to validate
     const schema = Joi.object({
         
@@ -107,6 +108,7 @@ const deletePharmacy = async (req, res) => {
 
     const { error } = validateIds(pharmacyID,customerID)
 
+
     if (error) {
         // log the error
         console.error(error.details[0].message);
@@ -116,7 +118,7 @@ const deletePharmacy = async (req, res) => {
 
     }
 
-    // get the reported pharamacy is in reported pharamacy list
+    // conforim if the reported pharamacy is in reported pharamacy list
     try{
         const doesReportedAccountExist = await SystemAdmin.getReportedPharmacyInformation(pharmacyID, customerID);
         console.log(doesReportedAccountExist)
