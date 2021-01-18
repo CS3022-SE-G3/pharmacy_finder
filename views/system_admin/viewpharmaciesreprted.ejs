@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!-- http://localhost:3000/system_admin/report/view/reportedPharmacies -->
+
+<body>
+
+    <%if(data.length>0) {%>
+        <%data.forEach(element=> {%>
+            <div id=<%=element.pharmacy_id.toString()+element.customer_id.toString() %> >
+
+
+                <h3>
+                    <%= element.name%>
+                </h3>
+
+
+
+                <div class="customer_id">
+                    Reported By-<%= element.customer_id%>
+                </div>
+
+
+
+                <div class="reasons">
+                    reason - <%= element.reasons%>
+                </div>
+
+
+
+                <div class="address">
+                    Address - <%= element.address%>
+                </div>
+
+
+
+                <div class="longitude">
+                    Longitude - <%= element.longitude%>
+                </div>
+
+
+
+                <div class="latitude">
+                    latitude - <%= element.latitude%>
+                </div>
+
+
+
+                <div class="email">
+                    email - <%= element.email%>
+                </div>
+
+
+
+                <div class="contact_no">
+                    contact - <%= element.contact_no%>
+                </div>
+
+
+
+                <div class="pharmacy_id">
+                    pharmacy id -<%= element.pharmacy_id%>
+                </div>
+
+                <div>
+                    <button class="delete_record" data-pharmacy_id="<%= element.pharmacy_id%>"
+                        data-customer_id="<%= element.customer_id%>" onclick="deleteRecord(this)">delete this
+                        report</button>
+                    <button class="disable_pharmacy" data-pharmacy_id="<%= element.pharmacy_id%>"
+                        data-customer_id="<%= element.customer_id%>" onclick="deletePharmacyAccount(this)">disable this
+                        pharmacy</button>
+                </div>
+            </div>
+
+            <%})};%>
+
+</body>
+
+
+
+<script>
+
+    async function deletePharmacyAccount(e) {
+        console.log(e.dataset.pharmacy_id)
+        const pharmacy_id = e.dataset.pharmacy_id
+        const customer_id = e.dataset.customer_id
+        if (window.confirm("Are you sure?")) {
+            console.log("ok")
+            try {
+                const res = await fetch("http://localhost:3000/system_admin/report/pharmacy/delete", {
+                    method: "DELETE",
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        pharmacy_id: pharmacy_id,
+                        customer_id: customer_id
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+
+                })
+
+                console.log(res)
+                if (res.status == 200) {
+                    alert('success');
+                    document.getElementById(`${pharmacy_id + customer_id}`).remove()
+                }
+            } catch (error) {
+                alert(error)
+            }
+        }
+
+
+    }
+
+    async function deleteRecord(e) {
+        console.log(e.dataset.pharmacy_id)
+        const pharmacy_id = e.dataset.pharmacy_id
+        const customer_id = e.dataset.customer_id
+        if (window.confirm("Are you sure?")) {
+            console.log("ok")
+            try {
+                const res = await fetch("http://localhost:3000/system_admin/report/delete", {
+                    method: "DELETE",
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        pharmacy_id: pharmacy_id,
+                        customer_id: customer_id
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+
+                })
+
+                console.log(res)
+                if (res.status == 200) {
+                    alert('success');
+                    document.getElementById(`${pharmacy_id + customer_id}`).remove()
+                }
+            } catch (error) {
+                alert(error)
+            }
+        }
+
+
+    }
+
+
+</script>
+
+</html>
