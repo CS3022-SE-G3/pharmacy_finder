@@ -46,7 +46,10 @@ const viewAllDrugs = async (request, response) => {
     try {
         const result = await SystemAdmin.getAllDrugs();
         console.log(result);
-        return response.status(200).send(result);
+        return res.status(200).render('system_admin/drugs',{
+            drugs: result,
+            pageTitle: 'Drugs'
+        });
     }
     catch (error) {
         return response.status(500).send("internal server error");

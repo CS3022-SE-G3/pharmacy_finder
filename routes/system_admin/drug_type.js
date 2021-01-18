@@ -17,6 +17,14 @@ const {
  * @method GET
  * @todo return results in response body along with the html file
  */
+router.get('/view/:drug_type_id', viewDrugType);
+
+/**
+ * @description Load and view all drug types
+ * @URL localhost:3000/system_admin/drug_type
+ * @method GET
+ * @todo return results in response body along with the html file
+ */
 router.get('/', viewAllDrugTypes);
 
 /**

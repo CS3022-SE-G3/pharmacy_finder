@@ -41,7 +41,7 @@ router.post('/add', addNewDrug);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/update', viewUpdateDrugForm);
+router.get('/update/:branded_drug_id,:brand_name,:manufacturer,:drug_type_id', viewUpdateDrugForm);
 
 /**
  * @description Update existing branded drug's details
@@ -56,7 +56,7 @@ router.put('/update', updateDrugDetails);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/delete', viewDeleteDrugPrompt);
+router.get('/delete/:branded_drug_id', viewDeleteDrugPrompt);
 
 /**
  * @description Delete specicfied branded drug
