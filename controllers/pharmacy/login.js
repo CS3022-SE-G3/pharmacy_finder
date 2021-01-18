@@ -47,6 +47,16 @@ const loginPharmacy = async (request, response) => {
             // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
         }
 
+        if (result[0].approved_state == "Not Approved"){
+            var err_msg = "Your pharmacy have not been approved";
+            console.log(err_msg);
+
+            return response.status(401).send(err_msg);
+
+            // return response.render('/pharmacy/login_error', { err_data: err_msg });
+            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+        }
+
         const hashedPassword = result[0].password;
         const passwordCorrect = await bcrypt.compare(request.body.password, hashedPassword);
         if (!passwordCorrect) {
