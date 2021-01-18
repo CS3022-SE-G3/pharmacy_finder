@@ -1,6 +1,4 @@
-const express = require('express');
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
 const systemAdmin = require('../../models/SystemAdmin');
 
 /**
@@ -81,7 +79,7 @@ const renderForm = (req,res) => {
     try {
 
         // send view
-        res.render('system_admin/viewcus',{title: 'View | customer'});
+        res.render('system_admin/viewCustomer',{title: 'View | customer'});
         
     } catch (error) {
 
