@@ -1,6 +1,7 @@
 
 const Joi = require('joi');
 const Customer = require('../../models/Customer');
+const SystemAdmin = require('../../models/SystemAdmin');
 const Lookup = require('../../models/Lookup');
 
 // ======================================USE CASE: BROADCAST REQUESTS==================================================//
@@ -12,57 +13,97 @@ const Lookup = require('../../models/Lookup');
  * @todo return the broadcast form
  * @todo get all drugs and drug types? from system admin
  */
-const getBroadcastForm = (request, response) => {
-    return response.send(200).send("Broadcast Form placeholder");
+const getBroadcastForm = async (request, response) => {
+    const drug_types = await SystemAdmin.getAllDrugTypesandIDs();
+    const branded_drugs = await SystemAdmin.getAllDrugs();
+    console.log(drug_types);
+    console.log(branded_drugs);
+
+    return response.status(200).render('customer/broadcastForm', {
+        pageTitle: "Broadcast Form",
+        drug_types: drug_types,
+        branded_drugs: branded_drugs,
+        hasErrors: false
+    });
 }
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
 
 const createBroadcastRequest = async (request, response) => {
+
+    //@todo: get customer id either from session or from post request
     const customerID = request.body.id;
     const customerLocation = await Customer.getLocation(customerID);
-    const drugTypes = []
-    const brandedDrugs = []
 
-    const tempDrugTypes = request.body.drug_types;
-    const tempBrandedDrugs = request.body.branded_drugs;
+    let tempDrugTypes=[];
+    let tempBrandedDrugs=[];
 
-    const pharmacies = await Lookup.lookupPharmacies(customerLocation, tempBrandedDrugs, tempDrugTypes);
-    console.log(pharmacies);
+    //both are defined
+    if (request.body.drug_types) {
+        tempDrugTypes = request.body.drug_types;
+    }
+
+    if (request.body.branded_drugs) {
+        tempBrandedDrugs = request.body.branded_drugs;
+    }
+
+    
+    
+    /**
+     * @todo add validation? minimum one drug has to be selected
+     */
+    if (tempDrugTypes.length == 0 && tempBrandedDrugs.length == 0) {
+        return response.send("You have not selected any drugs")
+    }
+    
     console.log(tempDrugTypes);
     console.log(tempBrandedDrugs);
+
+    const tempPharmaciesToLookUp = await Lookup.lookupPharmaciesForDrugs(tempBrandedDrugs, tempDrugTypes);
+    let pharmaciesToLookUp = [];
+    tempPharmaciesToLookUp.forEach(value => {
+            pharmaciesToLookUp.push(value.pharmacy_id);
+    });
+
+    console.log(pharmaciesToLookUp);
+
+    const latitude = customerLocation.latitude;
+    const longitude = customerLocation.longitude;
+
+
     
-    try
-    {
-        const id = await Customer.enterRequest(customerID);
-        console.log(id);
+    // const pharmacies = await Lookup.lookupPharmacies(left, right, up, down);
+    // console.log(pharmacies);
+    // console.log(tempDrugTypes);
+    // console.log(tempBrandedDrugs);
+    
+    // try
+    // {
+    //     const id = await Customer.enterRequest(customerID);
+    //     console.log(id);
 
-        tempDrugTypes.forEach(function (drugType) {
-            drugTypes.push([id, drugType]);
-        });
+    //     tempDrugTypes.forEach(function (drugType) {
+    //         drugTypes.push([id, drugType]);
+    //     });
 
-        tempBrandedDrugs.forEach(function (brandedDrug) {
-            brandedDrugs.push([id, brandedDrug]);
-        });
+    //     tempBrandedDrugs.forEach(function (brandedDrug) {
+    //         brandedDrugs.push([id, brandedDrug]);
+    //     });
         
-        console.log(pharmacies);
-        console.log(drugTypes);
-        console.log(brandedDrugs);
+    //     console.log(pharmacies);
+    //     console.log(drugTypes);
+    //     console.log(brandedDrugs);
 
-        const id1 = await Customer.enterPharmacies(pharmacies);
-        const id2 = await Customer.enterDrugTypes(drugTypes);
-        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+    //     const id1 = await Customer.enterPharmacies(pharmacies);
+    //     const id2 = await Customer.enterDrugTypes(drugTypes);
+    //     const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
 
-        // const id1 = await Customer.enterPharmacies([[id, '30001'],[id,'30002']]);     //pharmacies
-        // const id2 = await Customer.enterDrugTypes([[id,'40001'], [id,'40002']]);      //drug types
-        // const id3 = await Customer.enterBrandedDrugs([[id,'50001'],[id, '50002']]);      //branded drugs
-
-        response.status(200).send("OK");
-    }
-    catch (error) {
-        response.status(500).send("Internal Server error");
-        console.log(error);
-    }
+    //     response.status(200).send("OK");
+    // }
+    // catch (error) {
+    //     response.status(500).send("Internal Server error");
+    //     console.log(error);
+    // }
     
 }
 
@@ -109,12 +150,7 @@ const viewBroadcastedRequests = (req, res) => {
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Customer");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Customer");
     }
 
     // get the information of the broadcasted requests as requested
@@ -129,14 +165,13 @@ const viewBroadcastedRequests = (req, res) => {
         
         // send data to front end
         
-        res.status(200).json(data)
-        res.end()
+        return res.status(200).json(data);
     })
     .catch(error => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
+        return res.status(500).send("Internal Server Error")
     })
 
 }

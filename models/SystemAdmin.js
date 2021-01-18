@@ -52,11 +52,33 @@ class SystemAdmin {
      */
     static getAllDrugs() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ?",
+            const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ? ORDER BY brand_name",
                 [false],
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
+                        reject(error);
+                        return;
+                    };
+                    console.log(results);
+                    resolve(results);
+                }
+            )
+        })
+    }
+
+    /**
+     * Used to get all drug type ids and names from the database
+     * Used for the boradcast request use case of customer
+     */
+
+    static getAllDrugTypesandIDs() {
+        return new Promise((resolve, reject) => {
+            const query = pool.query("SELECT drug_type_id,drug_type_name FROM drug_type ORDER BY drug_type_name",
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(query.sql);
+                        console.log(error);
                         reject(error);
                         return;
                     };
