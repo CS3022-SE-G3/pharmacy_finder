@@ -1,6 +1,4 @@
-const express = require('express');
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
 const systemAdmin = require('../../models/SystemAdmin');
 
 /**
@@ -72,4 +70,22 @@ const viewCustomerInformation = (req, res) => {
 
 }
 
-module.exports = viewCustomerInformation;
+/**
+ * @description - render form to get cutomer id from system admin to view customer detatils
+ * @param {request} req - request to API
+ * @param {response} res - reponse
+ */
+const renderForm = (req,res) => {
+    try {
+
+        // send view
+        res.render('system_admin/viewCustomer',{title: 'View | customer'});
+        
+    } catch (error) {
+
+        // send 'internal server error'
+        res.status(500).send("Internal Server Error")
+    }
+}
+module.exports.viewCustomerInformation = viewCustomerInformation;
+module.exports.renderForm = renderForm;
