@@ -7,5 +7,6 @@ module.exports.pool = mysql.createConnection({
     host: config.get("host"),
     password: config.get("password"),
     port: config.get("port"),
-    database: config.get("database")
+    database: config.get("database"),
+    multipleStatements:true
 });

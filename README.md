@@ -95,4 +95,4 @@
     - http://localhost:3000/system_admin/report/view/reportedPharmacies
 
   2. view information of a customer by ID
-    - http://localhost:3000/system_admin/customer/view
+    - http://localhost:3000/system_admin/customer/search
