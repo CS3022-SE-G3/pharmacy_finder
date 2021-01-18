@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Register Form</title>
+</head>
+
+<body>
+
+    <form method="PUT" action="/system_admin/drug/update">
+
+        Branded Drug ID: <input type="number" id="branded_drug_id" name="branded_drug_id"
+            value="<%=drug.branded_drug_id%>" required>
+        <br>
+
+        Brand Name: <input type="text" id="brand_name" name="brand_name" value="<%=drug.brand_name%>" required>
+        <br>
+
+        Manufacturer: <input type="text" id="manufacturer" name="manufacturer" value="<%=drug.manufacturer%>" required>
+        <br>
+
+        Drug Type: <input type="number" id="drug_type_id" name="drug_type_id" value="<%=drug.drug_type_id%>" required>
+        <!-- TODO: implement dropdown box for drug types -->
+        <br>
+
+        <button type="submit">Update</button>
+    </form>
+
+</body>
+
+</html>

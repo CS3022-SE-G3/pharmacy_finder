@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Register Form</title>
+</head>
+
+<body>
+
+    <form method="POST" action="/system_admin/drug/add">
+
+        Brand Name: <input type="text" id="brand_name" name="brand_name" required>
+        <br>
+
+        Manufacturer: <input type="text" id="manufacturer" name="manufacturer" required>
+        <br>
+
+        Drug Type: <input type="number" id="drug_type_id" name="drug_type_id" required>
+        <!-- TODO: implement dropdown box for drug types -->
+        <br>
+
+        <button type="submit">Add</button>
+    </form>
+
+</body>
+
+</html>
