@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
-const pharmacy = require('../../models/Pharmacy');
+const Customer = require('../../models/Customer');
 
 /**
  * 
@@ -46,7 +46,7 @@ const viewPharmacyInformation = async(req, res) => {
     }
 
     // get the information of the pharmacy as requested
-    const pharmacyInformation = await pharmacy.getPharmacyInformation(pharmacyName);
+    const pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
     console.log(pharmacyInformation);
     try{
         if(pharmacyInformation.length === 0){
@@ -66,9 +66,54 @@ const viewPharmacyInformation = async(req, res) => {
         // send 'internal server error'
         return res.status(500).render('500');
     }
+}
+const getCustomerSearchPharmacy = async (req,res)=>{
+
+    res.render('customer/search_pharmacy',{
+        pageTitle: "Search Pharmacy",
+        pharmacyInformation: [],
+        hasErrors: false
+    });
+}
+    
+const postCustomerSearchPharmacy = async(req,res)=>{
+    let pharmacyInformation;
+    const pharmacyName = req.body.pharmacyName;
+    const {error} = validatePharmacyName({pharmacyName:pharmacyName});
+    if (error){
+        console.log(error);
+        return res.status(400).render('customer/search_pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInformation: [],
+            hasErrors: true,
+            errors: error.details[0].message
+        });
+    }
+    try{
+        pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
+        if (pharmacyInformation.length===0){
+            return res.status(404).render('customer/search_pharmacy',{
+                pageTitle: "Search Pharmacy",
+                pharmacyInformation: [],
+                hasErrors: true,
+                errors: "Pharmacy not registered"
+            });
+        }
+        return res.status(200).render('customer/search_pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInformation: pharmacyInformation,
+            hasErrors: false
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
         
-
-
 }
 
+
+
 exports.viewPharmacyInformation = viewPharmacyInformation;
+exports.getCustomerSearchPharmacy = getCustomerSearchPharmacy;
+exports.postCustomerSearchPharmacy = postCustomerSearchPharmacy;

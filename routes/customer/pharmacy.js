@@ -3,15 +3,23 @@
 const express = require('express');
 const router = express.Router();
 const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy');
+const {getCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
+const {postCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
 
 /**
- * @description returns sign search bar for customer
- * @URL localhost:3000/customer/pharmacy/view
+ * @description get the page for searching a pharmacy by Pharmacy Name
+ * @URL http://localhost:3000/customer/pharmacy/search
  * @method GET
  */
-router.get('/', (request, response) => {
-    return response.sendFile(path.join(__dirname, '../../views/customer/search_pharmacy.ejs'));
-});
+router.get('/search',getCustomerSearchPharmacy);
+
+/**
+ * @description search the Pharmacy Name and get the results on same page
+ * @URL http://localhost:3000/customer/pharmacy/search
+ * @method POST
+ */
+router.post('/search',postCustomerSearchPharmacy);
+
 
 /**
  * @description Load and view requested pharmacy information
