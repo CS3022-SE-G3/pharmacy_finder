@@ -26,7 +26,7 @@ function sendEmail(emailTo){
 
 function validatePharmacyId(pharmacyId){
     const schema = Joi.object({
-        pharmacyId    : Joi.number().integer().min(10001).required(),
+        pharmacyId    : Joi.number().integer().min(10001).required().label("Pharmacy ID"),
     });
     return schema.validate(pharmacyId)
 }
@@ -106,6 +106,52 @@ const approvePharmacy = async (req,res)=>{
     }
 };
 
+const getSearchPharmacy = async (req,res)=>{
+
+    res.render('system_admin/search-pharmacy',{
+        pageTitle: "Search Pharmacy",
+        pharmacyInfo: [],
+        hasErrors: false
+    });
+};
+
+const postSearchPharmacy = async(req,res)=>{
+    let pharmacyInfo;
+    const pharmacyId = req.body.pharmacyId;
+    const {error} = validatePharmacyId({pharmacyId:pharmacyId});
+    if (error){
+        console.log(error);
+        return res.status(400).render('system_admin/search-pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInfo: [],
+            hasErrors: true,
+            errors: error.details[0].message
+        });
+    }
+    try{
+        pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
+        if (pharmacyInfo.length===0){
+            return res.status(404).render('system_admin/search-pharmacy',{
+                pageTitle: "Search Pharmacy",
+                pharmacyInfo: [],
+                hasErrors: true,
+                errors: "Pharmacy not registered"
+            });
+        }
+        return res.status(200).render('system_admin/search-pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInfo: pharmacyInfo,
+            hasErrors: false
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+};
+
 exports.viewPharmacyInfo = viewPharmacyInfo;
 exports.viewPendingPharmacies = viewPendingPharmacies;
 exports.approvePharmacy = approvePharmacy;
+exports.getSearchPharmacy = getSearchPharmacy;
+exports.postSearchPharmacy = postSearchPharmacy;
