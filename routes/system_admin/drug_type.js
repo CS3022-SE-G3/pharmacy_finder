@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
     addNewDrugType,
+    viewDrugType,
     viewAllDrugTypes,
     viewAddDrugTypeForm,
     viewUpdateDrugTypeForm,
@@ -12,8 +13,8 @@ const {
 } = require('../../controllers/system_admin/drug_type');
 
 /**
- * @description Load and view all drug types
- * @URL localhost:3000/system_admin/drug_type
+ * @description Load and view a drug type
+ * @URL localhost:3000/system_admin/drug_type/view
  * @method GET
  * @todo return results in response body along with the html file
  */

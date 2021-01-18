@@ -35,7 +35,7 @@ const addNewDrugType = async (request, response) => {
 }
 
 /** 
- * @description Load all drug types
+ * @description Load drug type
  * @todo return results in response body along with the html file
 */
 const viewAllDrugTypes = async (request, response) => {
@@ -43,6 +43,25 @@ const viewAllDrugTypes = async (request, response) => {
         const result = await SystemAdmin.getAllDrugTypes();
         console.log(result);
         return response.status(200).send(result);
+    }
+    catch (error) {
+        return response.status(500).send("internal server error");
+    }
+    //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
+}
+
+/** 
+ * @description Load all drug types
+ * @todo return results in response body along with the html file
+*/
+const viewDrugType = async (request, response) => {
+    try {
+        const result = await SystemAdmin.getDrugType(request.params.drug_type_id);
+        console.log(result);
+        return res.status(200).render('system_admin/drug_type', {
+            drug_type: result,
+            pageTitle: 'Drug Type'
+        });
     }
     catch (error) {
         return response.status(500).send("internal server error");
@@ -152,6 +171,7 @@ function validateUpdateDrugTypeDetails(drug) {
 
 exports.addNewDrugType = addNewDrugType;
 exports.viewAddDrugTypeForm = viewAddDrugTypeForm;
+exports.viewDrugType = viewDrugType;
 exports.viewAllDrugTypes = viewAllDrugTypes;
 exports.viewUpdateDrugTypeForm = viewUpdateDrugTypeForm;
 exports.updateDrugTypeDetails = updateDrugTypeDetails;

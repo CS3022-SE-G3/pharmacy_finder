@@ -80,8 +80,18 @@ const viewAddDrugForm = async (request, response) => {
 */
 const viewUpdateDrugForm = async (request, response) => {
     try {
+        const drug ={ //TODO: clarify
+            branded_drug_id:request.params.branded_drug_id,
+            brand_name:request.params.brand_name,
+            manufacturer:request.params.manufacturer,
+            drug_type_id:request.params.drug_type_id
+        };
         const results = await SystemAdmin.getAllDrugTypes();
-        return response.status(200).send(results);
+        return res.status(200).render('system_admin/update_drug_form',{
+            drug: drug,
+            drugTypes: result,
+            pageTitle: 'Update Branded Drug Info'
+        });
 
     }
     catch (error) {
@@ -131,7 +141,10 @@ const updateDrugDetails = async (request, response) => {
 */
 const viewDeleteDrugPrompt = async (request, response) => {
     //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
-    return response.status(200).send("Delete form placeholder");
+    return res.status(200).render('system_admin/delete_drug_prompt',{
+        branded_drug_id:request.params.branded_drug_id,
+        pageTitle: 'Delete Branded Drug'
+    });
 }
 
 /** 
