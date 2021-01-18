@@ -26,10 +26,30 @@ class Customer{
             )
         })
     }
-    static getBroadcastedRequests(customerId){
+    static getBroadcastedRequests(requestId){
         try{
             return new Promise((resolve,reject)=>{
-                const result = pool.query('SELECT customer_id,request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM (SELECT * FROM requests NATURAL JOIN requests_and_associated_branded_drugs)AS A NATURAL JOIN branded_drug) AS B JOIN drug_type WHERE B.drug_type_id=drug_type.drug_type_id AND customer_id=?',
+                const result = pool.query('SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs)AS A JOIN drug_type WHERE A.drug_type_id=drug_type.drug_type_id AND request_id=?',
+                [requestId],
+                function (error, results) {
+                    if (error) {
+                        reject (error);
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+                )
+            })
+        }catch{
+            console.log(error)
+        }
+                
+            
+    }
+    static getAllRequests(customerId){
+        try{
+            return new Promise((resolve,reject)=>{
+                const result = pool.query('SELECT * FROM requests WHERE customer_id=?',
                 [customerId],
                 function (error, results) {
                     if (error) {

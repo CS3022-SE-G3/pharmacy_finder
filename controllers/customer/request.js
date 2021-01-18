@@ -81,6 +81,69 @@ function validateBroadcast(broadcaset) {
  * 
  * @param {number} customerId
  */
+function validateRequestId(requestId){
+    
+    // schema to validate
+    const schema = Joi.object({
+        
+        "requestId"    : Joi.number().integer().min(60001).required(),
+        
+    });
+
+    // return valid or not
+    return schema.validate(requestId)
+}
+
+
+const viewBroadcastedRequests = async(req, res) => {
+
+    // get customerId from URL
+    const requestId = req.params.requestId; 
+
+    // validating
+    const {error} = validateRequestId({requestId:requestId});
+
+    if (error) {
+
+        // log the error
+        console.error('ValidationError:customer-requestId: '+error.details[0].message)
+
+        // send bad request
+        res.status(400).send("Invalid Request");
+
+        res.end()
+
+        // stop execution
+        return
+    }
+
+    // get the information of the broadcasted requests as requested
+    const result = await Customer.getBroadcastedRequests(requestId);
+    
+    try{
+        if(result.length === 0){
+            return res.status(404).render('404');
+            
+        }
+        return res.status(200).render('customer/view_requests',{
+            requests: result,
+            pageTitle: 'Request Details'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+   
+
+}
+
+// ====================================================END OF USE CASE======================================================//
+// ======================================USE CASE: VIEW ALL REQUESTS==================================================//
+/**
+ * 
+ * @param {number} customerId
+ */
 function validateCustomerId(customerId){
     
     // schema to validate
@@ -95,10 +158,10 @@ function validateCustomerId(customerId){
 }
 
 
-const viewBroadcastedRequests = async(req, res) => {
+const viewAllRequests = async(req, res) => {
 
     // get customerId from URL
-    const customerId = req.params.id; 
+    const customerId = req.params.customerId; 
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -118,15 +181,15 @@ const viewBroadcastedRequests = async(req, res) => {
     }
 
     // get the information of the broadcasted requests as requested
-    const result = await Customer.getBroadcastedRequests(customerId);
+    const result = await Customer.getAllRequests(customerId);
     
     try{
         if(result.length === 0){
             return res.status(404).render('404');
             
         }
-        return res.status(200).render('customer/view_requests',{
-            requests: result,
+        return res.status(200).render('customer/view_all_requests',{
+            all_requests: result,
             pageTitle: 'Requests'
         });
     }
@@ -143,3 +206,4 @@ const viewBroadcastedRequests = async(req, res) => {
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
 module.exports.getBroadcastForm = getBroadcastForm;
 module.exports.createBroadcastRequest = createBroadcastRequest;
+module.exports.viewAllRequests = viewAllRequests;
