@@ -11,15 +11,27 @@
 <body>
 <main>
     <table>
-        <% for(var i=0; i < requests.length; i++) { %>
-           
-             <h2>Request ID: <%= requests[i].request_id %></h2>
-             <p>Drug Type Name: <%= requests[i].drug_type_name %></p>
-             <p>Brand Name: <%= requests[i].brand_name %></p>
-             <p>Manufacturer: <%= requests[i].manufacturer %></p>
+        <h2>Requested Drugs:</h2>
+        <br>
+             Drug Types:
+             <% for(var i=0; i < drug_types.length; i++) { %>
+                <br>
+                <%= i+1%>.
+            Drug Type Name: <%= drug_types[i].drug_type_name %>
+             <%}%>
+             <br><br>
+
+             Branded Drugs:
+             <% for(var i=0; i < branded_drugs.length; i++) { %>
+                <br>
+                <%= i +1%>.
+
+             Brand Name: <%= branded_drugs[i].brand_name  %>    ,
+            
+             Drug Type Name: <%= branded_drugs[i].drug_type_name %>
+             <%}%>
              <br><br>
            
-        <% } %>
     </table>
 
 </main>

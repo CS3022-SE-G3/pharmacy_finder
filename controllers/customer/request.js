@@ -98,10 +98,10 @@ function validateRequestId(requestId){
 const viewBroadcastedRequests = async(req, res) => {
 
     // get customerId from URL
-    const requestId = req.params.requestId; 
+    const requestID = req.params.requestId; 
 
     // validating
-    const {error} = validateRequestId({requestId:requestId});
+    const {error} = validateRequestId({requestId:requestID});
 
     if (error) {
 
@@ -109,24 +109,25 @@ const viewBroadcastedRequests = async(req, res) => {
         console.error('ValidationError:customer-requestId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Request");
+        return res.status(400).send("Invalid Request");
 
-        res.end()
-
-        // stop execution
-        return
     }
 
     // get the information of the broadcasted requests as requested
-    const result = await Customer.getBroadcastedRequests(requestId);
+    // const result = await Customer.getBroadcastedRequests(requestId);
+    const drug_types = await Customer.getDrugTypesFromRequest(requestID);
+    const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
+    console.log(drug_types);
+    console.log(branded_drugs);
     
     try{
-        if(result.length === 0){
+        if(drug_types.length === 0 && branded_drugs.length===0){
             return res.status(404).render('404');
             
         }
         return res.status(200).render('customer/view_requests',{
-            requests: result,
+            drug_types: drug_types,
+            branded_drugs: branded_drugs,
             pageTitle: 'Request Details'
         });
     }
@@ -172,12 +173,7 @@ const viewAllRequests = async(req, res) => {
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Customer");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Customer");
     }
 
     // get the information of the broadcasted requests as requested
