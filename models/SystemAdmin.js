@@ -1,3 +1,4 @@
+
 const { pool } = require('../database/connection');
 
 
@@ -60,8 +61,29 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results);
                     resolve(results);
+                }
+            )
+        })
+    }
+
+    /**
+     * @description Get drug type from database
+     * @todo Add 'is_deleted' to drug_type table
+     */
+    static getDrugType(drug_type_id) {
+        return new Promise((resolve, reject) => {
+            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type where drug_type_id = ?",
+                [drug_type_id],
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(query.sql);
+                        console.log(error);
+                        reject(error);
+                        return;
+                    };
+                    console.log(results[0]);
+                    resolve(results[0]);
                 }
             )
         })
@@ -73,7 +95,7 @@ class SystemAdmin {
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_name FROM drug_type",
+            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE is_deleted = ?",[false],
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -81,7 +103,6 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results);
                     resolve(results);
                 }
             )
@@ -222,13 +243,11 @@ class SystemAdmin {
             const response = await new Promise((resolve, reject) => {
                 // if query succces we gonna resolve the result
                 // else we gonna reject it
-                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`name` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
-                pool.query(qry, (err, res) =>{
-                    if (err){
-                        // testing - pass
-                        console.log(err)
-                        reject (new Error(err.message));
-                    } 
+                const qry = "SELECT full_name,nic,email,address,gender,dob,contact_no FROM customer WHERE customer_id=?"; // query
+                pool.query(qry, [accountId], (err, res) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    }
                     // else
                     console.log(res)
                     resolve(res);
@@ -288,26 +307,26 @@ class SystemAdmin {
     static async getReportedPharmacyInformation(pharmacyID, customerID) {
 
         return new Promise((resolve, reject) => {
-                
+
             const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons` FROM `reported_pharmacies` WHERE pharmacy_id=? AND customer_id=?"; // query
-            
-                const result = pool.query(qry, [pharmacyID, customerID], (err, res) => {
-                    if (err) {
-                        console.log(result.sql);
-                        console.log(err)
-                        reject(new Error(err.message));
-                    }
-                    
-                    resolve(res.length > 0);
-                })
-            }
-            )
 
-            // testing - pass
-            return response;
+            const result = pool.query(qry, [pharmacyID, customerID], (err, res) => {
+                if (err) {
+                    console.log(result.sql);
+                    console.log(err)
+                    reject(new Error(err.message));
+                }
 
-        } 
-        
+                resolve(res.length > 0);
+            })
+        }
+        )
+
+        // testing - pass
+        return response;
+
+    }
+
 
     /**
 *  
@@ -335,9 +354,10 @@ class SystemAdmin {
             }
             )
         })
-            
+
 
     }
 }
 
 module.exports = SystemAdmin;
+
