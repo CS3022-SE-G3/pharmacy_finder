@@ -14,44 +14,35 @@
 
 <body>
     <h2>
-        Branded Drugs
+        Drug Types
     </h2>
     <main>
         <div>
             <table>
                 <thead>
-                    <th>Branded Drug ID</th>
-                    <th>Brand Name</th>
-                    <th>Manufacturer</th>
-                    <th>Drug Type</th>
+                    <th>Drug Type ID</th>
+                    <th>Drug Type Name</th>
                     <th>Update Info</th>
                     <th>Delete</th>
                 </thead>
                 <tbody>
-                    <% for (let drug of drugs) { %>
+                    <% for (let drugType of drugTypes) { %>
                         <tr>
                             <td>
-                                <%=drug.branded_drug_id%>
+                                <%=drugType.drug_type_id%>
                             </td>
                             <td>
-                                <%=drug.brand_name%>
-                            </td>
-                            <td>
-                                <%=drug.manufacturer%>
-                            </td>
-
-                            <td>
-                                <a href="/system_admin/drug_type/view/<%=drug.drug_type_id%>">View</a>
+                                <%=drugType.drug_type_name%>
                             </td>
                             <td>
                                 <form
-                                    action="/system_admin/drug/update/<%=drug.branded_drug_id%>/<%=drug.brand_name%>/<%=drug.manufacturer%>/<%=drug.drug_type_id%>"
+                                    action="/system_admin/drug_type/update/<%=drugType.drug_type_id%>/<%=drugType.drug_type_name%>"
                                     method="get">
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
                             <td>
-                                <form action="/system_admin/drug/delete/<%=drug.branded_drug_id%>" method="get">
+                                <form action="/system_admin/drug_type/delete/<%=drugType.drug_type_id%>" method="get">
                                     <button type="submit">Delete</button>
                                 </form>
                             </td>
@@ -61,8 +52,8 @@
             </table>
         </div>
         <div>
-            <form action="/system_admin/drug/add" method="get">
-                <button type="submit">Add New Branded Drug</button>
+            <form action="/system_admin/drug_type/add" method="get">
+                <button type="submit">Add New Drug Type</button>
             </form>
         </div>
     </main>

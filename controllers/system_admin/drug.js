@@ -6,6 +6,7 @@ const _ = require('lodash');
 
 /**
  * @description Validate and add new branded drug
+ * @todo prompt operation status (success/fail)
  */
 const addNewDrug = async (request, response) => {
 
@@ -29,7 +30,7 @@ const addNewDrug = async (request, response) => {
                 "drug_type_id"
             ]
         ));
-        return response.status(200).send(request.body);
+        return response.status(200).redirect('/system_admin/drug');
 
 
     } catch (error) {
@@ -40,13 +41,12 @@ const addNewDrug = async (request, response) => {
 
 /** 
  * @description Load all branded drugs
- * @todo return results in response body along with the html file
+ * 
 */
 const viewAllDrugs = async (request, response) => {
     try {
         const result = await SystemAdmin.getAllDrugs();
-        console.log(result);
-        return res.status(200).render('system_admin/drugs',{
+        return response.status(200).render('system_admin/drugs', {
             drugs: result,
             pageTitle: 'Drugs'
         });
@@ -54,57 +54,58 @@ const viewAllDrugs = async (request, response) => {
     catch (error) {
         return response.status(500).send("internal server error");
     }
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
 }
 
 /** 
  * @description Return drug types with add new branded drug form
- * @todo return results in response body along with the html file
+ *
 */
 const viewAddDrugForm = async (request, response) => {
     try {
         const result = await SystemAdmin.getAllDrugTypes();
-        console.log(result);
-        return response.status(200).send(result);
+        return response.status(200).render('system_admin/add_drug_form', {
+            drugTypes: result,
+            pageTitle: 'Add New Branded Drug'
+        });
     }
     catch (error) {
         console.log(error.message);
         return response.status(500).send("internal server error");
     }
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
 }
 
 /** 
  * @description Return drug types with add new branded drug form
- * @todo return results in response body along with the html file
+ * 
 */
 const viewUpdateDrugForm = async (request, response) => {
     try {
-        const drug ={ //TODO: clarify
-            branded_drug_id:request.params.branded_drug_id,
-            brand_name:request.params.brand_name,
-            manufacturer:request.params.manufacturer,
-            drug_type_id:request.params.drug_type_id
+        const drug = {
+            branded_drug_id: request.params.branded_drug_id,
+            brand_name: request.params.brand_name,
+            manufacturer: request.params.manufacturer,
+            drug_type_id: request.params.drug_type_id
         };
         const results = await SystemAdmin.getAllDrugTypes();
-        return res.status(200).render('system_admin/update_drug_form',{
+        return response.status(200).render('system_admin/update_drug_form', {
             drug: drug,
-            drugTypes: result,
+            drugTypes: results,
             pageTitle: 'Update Branded Drug Info'
         });
 
     }
     catch (error) {
+        console.log(error.message);
         return response.status(500).send("Internal Server Error");
     }
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
 }
 
 /**
  * @description Validate and update branded drug details
+ * @todo prompt operation status (success/fail)
  */
 const updateDrugDetails = async (request, response) => {
-
+    console.log("In drug controller");
     const { error } = validateUpdateDrugDetails(_.pick(request.body,
         [
             "branded_drug_id",
@@ -132,23 +133,23 @@ const updateDrugDetails = async (request, response) => {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");
     }
-    return response.status(200).send(request.body);
+    return response.status(200).redirect('/system_admin/drug');
 }
 
 /** 
  * @description return delete branded drug prompt
- * @todo return the html file
+ * 
 */
 const viewDeleteDrugPrompt = async (request, response) => {
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
-    return res.status(200).render('system_admin/delete_drug_prompt',{
-        branded_drug_id:request.params.branded_drug_id,
+    return response.status(200).render('system_admin/delete_drug_prompt', {
+        branded_drug_id: request.params.branded_drug_id,
         pageTitle: 'Delete Branded Drug'
     });
 }
 
 /** 
  * @description Delete branded drug
+ * @todo prompt operation status (success/fail)
 */
 const deleteDrug = async (request, response) => {
 
@@ -158,7 +159,7 @@ const deleteDrug = async (request, response) => {
                 "branded_drug_id"
             ]
         ));
-    return response.status(200).send(request.body);
+        return response.status(200).redirect('system_admin/drug');
     } catch (error) {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");

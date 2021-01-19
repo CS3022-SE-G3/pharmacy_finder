@@ -49,14 +49,14 @@ router.post('/add', addNewDrugType);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/update', viewUpdateDrugTypeForm);
+router.get('/update/:drug_type_id/:drug_type_name', viewUpdateDrugTypeForm);
 
 /**
  * @description Update existing drug type's details
  * @URL localhost:3000/system_admin/drug_type
- * @method PUT
+ * @method POST
  */
-router.put('/update', updateDrugTypeDetails);
+router.post('/update', updateDrugTypeDetails);
 
 /**
  * @description Prompt delete drug type option
@@ -64,14 +64,14 @@ router.put('/update', updateDrugTypeDetails);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/delete', viewDeleteDrugTypePrompt);
+router.get('/delete/:drug_type_id', viewDeleteDrugTypePrompt);
 
 /**
  * @description Delete specicfied drug type
  * @URL localhost:3000/system_admin/drug_type/delete
- * @method PUT
+ * @method POST
  * @todo return results in response body along with the html file
  */
-router.put('/delete', deleteDrugType);
+router.post('/delete', deleteDrugType);
 
 module.exports = router;

@@ -13,15 +13,15 @@
 </head>
 
 <body>
-    <h2>Delete Branded Drug?</h2>
+    <h2>Delete Drug Type?</h2>
     <main>
 
         <div>
-            <form action="/system_admin/drug/delete" method="POST">
-                <input type="hidden" name="branded_drug_id" value="<%=branded_drug_id%>">
+            <form action="/system_admin/drug_type/delete" method="POST">
+                <input type="hidden" name="drug_type_id" value="<%=drug_type_id%>">
                 <button type="submit">Delete</button>
             </form>
-            <form action="/system_admin/drug" method="get">
+            <form action="/system_admin/drug_type" method="get">
                 <button type="submit">Cancel</button>
             </form>
         </div>

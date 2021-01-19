@@ -60,7 +60,6 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results);
                     resolve(results);
                 }
             )
@@ -82,8 +81,8 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results);
-                    resolve(results);
+                    console.log(results[0]);
+                    resolve(results[0]);
                 }
             )
         })
@@ -95,7 +94,7 @@ class SystemAdmin {
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_name FROM drug_type",
+            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type",
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -103,7 +102,6 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results);
                     resolve(results);
                 }
             )
