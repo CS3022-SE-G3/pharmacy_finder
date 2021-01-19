@@ -5,7 +5,7 @@ class Pharmacy{
 
     static getAllRequests(pharmacyId) {
         return new Promise((resolve, reject) => {
-            const result = pool.query('SELECT request_id, customer_id, date_created FROM requests_and_associated_pharmacies NATURAL JOIN requests WHERE pharmacy_id = ?',
+            const result = pool.query('SELECT request_id, customer_id, date_created FROM requests_and_associated_pharmacies NATURAL JOIN requests WHERE pharmacy_id = ? ORDER BY date_created',
                 [pharmacyId],
                 function (error, results, fields) {
                     if (error) {
