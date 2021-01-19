@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= pageTitle %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<main>
+    
+        <% for(var i=0; i < all_requests.length; i++) { %>
+            <li><a href="/customer/request/view/req/<%= all_requests[i].request_id %> ">Request ID: <%= all_requests[i].request_id %> Date Sent: <%= all_requests[i].date_created %></a> </li>
+            
+             
+             <br><br>
+           
+        <% } %>
+    
+
+</main>
+</body>
+</html>
