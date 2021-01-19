@@ -95,7 +95,7 @@ class SystemAdmin {
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type",
+            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE is_deleted = ?",[false],
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -358,4 +358,6 @@ class SystemAdmin {
 
     }
 }
+
+module.exports = SystemAdmin;
 

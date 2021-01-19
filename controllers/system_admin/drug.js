@@ -1,7 +1,6 @@
 
 const Joi = require('joi');
 const SystemAdmin = require('../../models/SystemAdmin');
-const path = require('path');
 const _ = require('lodash');
 
 /**
@@ -52,6 +51,7 @@ const viewAllDrugs = async (request, response) => {
         });
     }
     catch (error) {
+        console.log(error);
         return response.status(500).send("internal server error");
     }
 }
