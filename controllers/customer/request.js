@@ -13,7 +13,7 @@ const Lookup = require('../../models/Lookup');
  * @todo get all drugs and drug types? from system admin
  */
 const getBroadcastForm = (request, response) => {
-    return response.send(200).send("Broadcast Form placeholder");
+    return response.status(200).send("Broadcast Form placeholder");
 }
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
@@ -81,6 +81,70 @@ function validateBroadcast(broadcaset) {
  * 
  * @param {number} customerId
  */
+function validateRequestId(requestId){
+    
+    // schema to validate
+    const schema = Joi.object({
+        
+        "requestId"    : Joi.number().integer().min(60001).required(),
+        
+    });
+
+    // return valid or not
+    return schema.validate(requestId)
+}
+
+
+const viewBroadcastedRequests = async(req, res) => {
+
+    // get customerId from URL
+    const requestID = req.params.requestId; 
+
+    // validating
+    const {error} = validateRequestId({requestId:requestID});
+
+    if (error) {
+
+        // log the error
+        console.error('ValidationError:customer-requestId: '+error.details[0].message)
+
+        // send bad request
+        return res.status(400).send("Invalid Request");
+
+    }
+
+    // get the information of the broadcasted requests as requested
+    // const result = await Customer.getBroadcastedRequests(requestId);
+    const drug_types = await Customer.getDrugTypesFromRequest(requestID);
+    const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
+    console.log(drug_types);
+    console.log(branded_drugs);
+    
+    try{
+        if(drug_types.length === 0 && branded_drugs.length===0){
+            return res.status(404).render('404');
+            
+        }
+        return res.status(200).render('customer/view_requests',{
+            drug_types: drug_types,
+            branded_drugs: branded_drugs,
+            pageTitle: 'Request Details'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+   
+
+}
+
+// ====================================================END OF USE CASE======================================================//
+// ======================================USE CASE: VIEW ALL REQUESTS==================================================//
+/**
+ * 
+ * @param {number} customerId
+ */
 function validateCustomerId(customerId){
     
     // schema to validate
@@ -95,10 +159,10 @@ function validateCustomerId(customerId){
 }
 
 
-const viewBroadcastedRequests = (req, res) => {
+const viewAllRequests = async(req, res) => {
 
     // get customerId from URL
-    const customerId = req.params.id; 
+    const customerId = req.params.customerId; 
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -109,35 +173,27 @@ const viewBroadcastedRequests = (req, res) => {
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Customer");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Customer");
     }
 
     // get the information of the broadcasted requests as requested
-    const result = Customer.getBroadcastedRequests(customerId);
-
-    result.then((data) => {
-
-        if(data.length === 0){
-            return res.status(400).send(" customerID not found");
+    const result = await Customer.getAllRequests(customerId);
+    
+    try{
+        if(result.length === 0){
+            return res.status(404).render('404');
             
         }
-        
-        // send data to front end
-        
-        res.status(200).json(data)
-        res.end()
-    })
-    .catch(error => {
-        console.log(error)
-
-        // send 'internal server error'
-        res.status(500).send("Internal Server Error")
-    })
+        return res.status(200).render('customer/view_all_requests',{
+            all_requests: result,
+            pageTitle: 'Requests'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+   
 
 }
 
@@ -146,3 +202,4 @@ const viewBroadcastedRequests = (req, res) => {
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
 module.exports.getBroadcastForm = getBroadcastForm;
 module.exports.createBroadcastRequest = createBroadcastRequest;
+module.exports.viewAllRequests = viewAllRequests;

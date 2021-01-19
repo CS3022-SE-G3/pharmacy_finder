@@ -26,10 +26,54 @@ class Customer{
             )
         })
     }
-    static getBroadcastedRequests(customerId){
+    static getDrugTypesFromRequest(requestID){
+        try{
+            return new Promise((resolve, reject) => {
+                const result = pool.query(`(SELECT drug_type_id, drug_type_name FROM requests_and_associated_drug_types NATURAL JOIN drug_type WHERE request_id = ${requestID} )`,
+                [],
+                function (error, results) {
+                    if (error) {
+                        console.log(result.sql)
+                        reject (error);
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+                )
+            })
+        }catch{
+            console.log(error)
+        }
+                
+            
+    }
+
+    static getBrandedDrugsFromRequest(requestID) {
+        try {
+            return new Promise((resolve, reject) => {
+                // 'SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs)AS A JOIN drug_type WHERE A.drug_type_id=drug_type.drug_type_id AND request_id=?'
+                const result = pool.query(`SELECT branded_drug_id, brand_name, drug_type_name FROM (requests_and_associated_branded_drugs NATURAL JOIN branded_drug) NATURAL JOIN drug_type WHERE request_id = ${requestID}`,
+                    [],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql)
+                            reject(error);
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+
+
+    }
+    static getAllRequests(customerId){
         try{
             return new Promise((resolve,reject)=>{
-                const result = pool.query('SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM drug_type NATURAL JOIN (SELECT * FROM branded_drug NATURAL JOIN (SELECT * FROM requests_and_associated_pharmacies NATURAL JOIN (SELECT * FROM requests NATURAL JOIN requests_and_associated_branded_drugs) AS T) AS T) AS T) AS T WHERE customer_id= ?',
+                const result = pool.query('SELECT * FROM requests WHERE customer_id=?',
                 [customerId],
                 function (error, results) {
                     if (error) {
