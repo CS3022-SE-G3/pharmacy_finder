@@ -25,9 +25,7 @@ const getBroadcastForm = async (request, response) => {
         branded_drugs: branded_drugs,
         hasErrors: false
     });
-const getBroadcastForm = (request, response) => {
-    return response.status(200).send("Broadcast Form placeholder");
-
+}
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
 
