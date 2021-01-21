@@ -201,10 +201,6 @@ function validateCustomerId(customerId){
 
 const viewAllRequests = async(req, res) => {
 
-    // get customerId from URL
-    // get customerId from login
-    // const customerId = req.customerId; 
-    // const customerId = "10001";
     const customerId = req.session.user.id;
 
     // validating
