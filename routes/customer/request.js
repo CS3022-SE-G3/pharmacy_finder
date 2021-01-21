@@ -1,10 +1,6 @@
-// broadcast request
-// cancel broadcast request
-// update broadcasted request
 const express = require('express');
 const router = express.Router();
-const { viewBroadcastedRequests,createBroadcastRequest,getBroadcastForm,viewAllRequests } = require('../../controllers/customer/request');
-
+const {viewBroadcastedRequests,createBroadcastRequest,getBroadcastForm,viewAllRequests} = require('../../controllers/customer/request');
 
 /**
  * @description Load and view all requests of a customer or request details 
@@ -12,7 +8,6 @@ const { viewBroadcastedRequests,createBroadcastRequest,getBroadcastForm,viewAllR
  * @method GET
  */
 router.get('/view', viewAllRequests);
-
 
 /**
  * @description Load and view a specific request's details of a customer

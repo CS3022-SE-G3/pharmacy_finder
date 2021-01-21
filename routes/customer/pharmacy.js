@@ -18,10 +18,11 @@ router.get('/search',getCustomerSearchPharmacy);
  * @URL http://localhost:3000/customer/pharmacy/search
  * @method POST
  */
-router.post('/search',postCustomerSearchPharmacy);
-router.get('/', (req, res) => {
-    return res.render('/customer/search_for_pharmacy');
-});
+router.post('/search', postCustomerSearchPharmacy);
+
+// router.get('/', (req, res) => {
+//     return res.render('/customer/search_for_pharmacy');
+// });
 
 /**
  * @description Load and view requested pharmacy information

@@ -9,9 +9,12 @@ routes.use('/response', require('./response'));
 routes.use('/signup', require('./signup'));
 routes.use('/login', require('./login'));
 routes.use('/entry', require('./entry'));
+const { viewAllRequests } = require('../../controllers/customer/request');
+
 
 routes.use('/', (req, res) => {
-    return res.render('/customer/home.html');
+    
+    return res.render('customer/home');
 });
 
 
