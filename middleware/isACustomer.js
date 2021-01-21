@@ -4,7 +4,11 @@ const isACustomer = (req, res, next) => {
             next();
         } else {
             console.log("Not a Customer");
-            res.redirect('/');
+            if (req.session.user.class == 0){
+                res.redirect('/system_admin/home');
+            }else{
+                res.redirect('/pharmacy/home');
+            }
         }
     }
     else {

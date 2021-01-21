@@ -3,7 +3,13 @@ const ifNotLoggedIn = (req, res, next) => {
         next();
     }else{
         console.log("Alredy logged in");
-        res.redirect("/");
+        if (req.session.user.class == 0){
+            res.redirect('/system_admin/home');
+        } else if (req.session.user.class == 1){
+            res.redirect('/pharmacy/home');
+        }else{
+            res.redirect('/customer/home');
+        }
     }
 };
 
