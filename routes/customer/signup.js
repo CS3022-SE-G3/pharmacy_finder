@@ -9,7 +9,7 @@ const { signupCustomer } = require('../../controllers/customer/signup');
  * @method GET
  */
 router.get('/', (request, response) => {
-    return response.render('/customer/signup');
+    return response.render('customer/signup');
 });
 
 /**
