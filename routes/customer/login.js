@@ -5,7 +5,7 @@ const path = require('path');
 const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
 const { loginCustomer } = require('../../controllers/customer/login');
 
-router.get('/', (req, res) => {
+router.get('/', ifNotLoggedIn, (req, res) => {
     return res.render('customer/login');
 });
 
