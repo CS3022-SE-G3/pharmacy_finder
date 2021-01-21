@@ -90,7 +90,7 @@ class Customer{
     static getAllRequests(customerId){
         try{
             return new Promise((resolve,reject)=>{
-                const result = pool.query('SELECT * FROM requests WHERE customer_id=?',
+                const result = pool.query('SELECT request_id,  date_created FROM requests WHERE customer_id=?',
                 [customerId],
                 function (error, results) {
                     if (error) {
@@ -101,11 +101,30 @@ class Customer{
                 }
                 )
             })
-        }catch{
+        }catch(error){
             console.log(error)
         }
-                
             
+    }
+
+    static deleteRequest(requestID) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('DELETE FROM requests WHERE request_id=?',
+                    [requestID],
+                    function (error, results) {
+                        if (error) {
+                            reject(error);
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch(error) {
+            console.log(error)
+        }
+        
     }
     static getRespondedPharmacies(requestId) {
         console.log("Getting responded pharmacies");

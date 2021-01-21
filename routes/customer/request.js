@@ -3,15 +3,18 @@
 // update broadcasted request
 const express = require('express');
 const router = express.Router();
-const { viewBroadcastedRequests } = require('../../controllers/customer/request');
-const { getBroadcastForm } = require('../../controllers/customer/request');
-const { createBroadcastRequest } = require('../../controllers/customer/request');
-const { viewAllRequests } = require('../../controllers/customer/request');
+const {
+    viewBroadcastedRequests,
+    getBroadcastForm,
+    viewAllRequests,
+    createBroadcastRequest,
+    deleteBroadcast
+} = require('../../controllers/customer/request');
 const isACustomer = require('../../middleware/isACustomer');
 
 /**
  * @description Load and view all requests of a customer or request details 
- * @URL localhost:3000/customer/request/view/:customerId 
+ * @URL localhost:3000/customer/request/view
  * @method GET
  */
 router.get('/view', isACustomer, viewAllRequests);
@@ -30,5 +33,8 @@ router.get('/broadcast', isACustomer, getBroadcastForm);
 
 //URL localhost:3000/customer/request/broadcast --method POST
 router.post('/broadcast', isACustomer, createBroadcastRequest);
+
+//URL localhost:3000/customer/request/delete
+router.post('/delete', isACustomer, deleteBroadcast);
 
 module.exports = router;
