@@ -5,18 +5,13 @@
 
 const express = require('express');
 const router = express.Router();
-const bodyParser=require('body-parser');
-const urlencodedParser= bodyParser.urlencoded({extended: true});
-
-router.use(express.json());
-router.use(bodyParser.json());
-
 const Pharmacy = require('../../models/Pharmacy');
 const { getDrugTypes, getBrandedDrugs, putPharmacyDrugTypes,putPharmacyBrandedDrugs,getPharmacyDrugTypes,getPharmacyBrandedDrugs} = require('../../models/Pharmacy');
- 
+const isAPharmacy = require('../../middleware/isAPharmacy');
 
 //Get drug_types and branded_drugs from the database
-router.get('/',function(request,response){
+// localhost:3000/pharmacy/addDrug
+router.get('/', isAPharmacy, function(request, response) {
 
     async function getData(){
         try{
@@ -35,7 +30,8 @@ router.get('/',function(request,response){
 
 
 //Insert submitted data into pharmacy_drug_types and pharmacy_branded_drugs tables
-router.post('/',urlencodedParser,function(request,response){
+router.post('/', isAPharmacy, function (request, response) {
+    const pharmacy_id = request.session.user.id;
     
     const result= Object.keys(request.body);
     const drug_type_data=[];
@@ -53,7 +49,7 @@ router.post('/',urlencodedParser,function(request,response){
     //Insert submitted data into pharmacy_drug_types table
     async function insertPharmacyDrugTypes(){
         try{
-            const drug= await putPharmacyDrugTypes(drug_type_data);
+            const drug= await putPharmacyDrugTypes(pharmacy_id, drug_type_data);
         }
         catch(err){
             console.log(err);
@@ -64,7 +60,7 @@ router.post('/',urlencodedParser,function(request,response){
     //Insert submitted data into pharmacy_drug_types and pharmacy_branded_drugs table
     async function insertPharmacyBrandedDrugs(){
         try{
-            const brand= await putPharmacyBrandedDrugs(branded_drug_data);
+            const brand = await putPharmacyBrandedDrugs(pharmacy_id, branded_drug_data);
         }
         catch(err){
             console.log(err);

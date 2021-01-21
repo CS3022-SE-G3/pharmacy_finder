@@ -47,13 +47,13 @@ class Pharmacy{
         } )
     }
 // **************** I used 30001 for pharmacy_id as a default value ****************
-    static putPharmacyDrugTypes(data) {
+    static putPharmacyDrugTypes(pharmacy_id, data) {
         return new Promise((resolve, reject) => {
             const drug_types = data;
             
             for (var i = 0; i < drug_types.length; i++) {
                 const drug_type_id = [parseInt(drug_types[i])];
-                const result = pool.query('INSERT INTO pharmacy_drug_types(pharmacy_id,drug_type_id) VALUES(30001,?)', drug_type_id,
+                const result = pool.query('INSERT INTO pharmacy_drug_types(pharmacy_id,drug_type_id) VALUES(?,?)', [pharmacy_id, drug_type_id],
                 
                     function (error, results, fields) {
                         if (error) {
@@ -83,14 +83,13 @@ class Pharmacy{
             
         }
     
-// **************** I used 30001 for pharmacy_id as a default value ****************
-    static putPharmacyBrandedDrugs(data) {
+    static putPharmacyBrandedDrugs(pharmacy_id,data) {
         return new Promise((resolve, reject) =>{
             const branded_drugs=data;
 
             for(var i=0; i<branded_drugs.length;i++){
                 const branded_drug_id=[parseInt(branded_drugs[i])];
-                const result = pool.query('INSERT INTO pharmacy_branded_drugs(pharmacy_id,branded_drug_id) VALUES(30001,?)',branded_drug_id,
+                const result = pool.query('INSERT INTO pharmacy_branded_drugs(pharmacy_id,branded_drug_id) VALUES(?,?)', [pharmacy_id, branded_drug_id],
                     
                     function (error, results, fields) {
                         if (error) {
@@ -132,9 +131,9 @@ class Pharmacy{
         } )
     }
       
-    static getPharmacyDrugTypes() {
+    static getPharmacyDrugTypes(pharmacy_id) {
         return new Promise((resolve, reject) =>{
-            const result = pool.query('SELECT drug_type.drug_type_id,drug_type_name FROM drug_type,pharmacy_drug_types WHERE drug_type.drug_type_id=pharmacy_drug_types.drug_type_id',
+            const result = pool.query('SELECT drug_type.drug_type_id,drug_type_name FROM drug_type,pharmacy_drug_types WHERE drug_type.drug_type_id=pharmacy_drug_types.drug_type_id AND pharmacy_id = ? ORDER BY drug_type_name',[pharmacy_id],
                 
                 function (error, results, fields) {
                     if (error) {
@@ -146,9 +145,9 @@ class Pharmacy{
         } )
     }
 
-    static getPharmacyBrandedDrugs() {
+    static getPharmacyBrandedDrugs(pharmacy_id) {
         return new Promise((resolve, reject) =>{
-            const result = pool.query('SELECT branded_drug.branded_drug_id,brand_name FROM branded_drug,pharmacy_branded_drugs WHERE branded_drug.branded_drug_id=pharmacy_branded_drugs.branded_drug_id',
+            const result = pool.query('SELECT branded_drug.branded_drug_id,brand_name FROM branded_drug,pharmacy_branded_drugs WHERE branded_drug.branded_drug_id=pharmacy_branded_drugs.branded_drug_id AND pharmacy_id=? ORDER BY brand_name', [pharmacy_id],
                 
                 function (error, results, fields) {
                     if (error) {
@@ -160,10 +159,10 @@ class Pharmacy{
         } )
     }
 
-    static deletePharmacyDrugTypes(id) {
+    static deletePharmacyDrugTypes(id,pharmacy_id) {
         return new Promise((resolve, reject) =>{
             const drug_type_id=[id];
-            const result = pool.query('DELETE FROM pharmacy_drug_types WHERE drug_type_id=?',drug_type_id,
+            const result = pool.query('DELETE FROM pharmacy_drug_types WHERE drug_type_id=? AND pharmacy_id = ?', [drug_type_id, pharmacy_id],
                 
                 function (error, results, fields) {
                     if (error) {
@@ -175,11 +174,10 @@ class Pharmacy{
         } )
     }
 
-    static deletePharmacyBrandedDrugs(id) {
+    static deletePharmacyBrandedDrugs(id, pharmacy_id) {
         return new Promise((resolve, reject) =>{
             const branded_drug_id=[id];
-            const result = pool.query('DELETE FROM pharmacy_branded_drugs WHERE branded_drug_id=?',branded_drug_id,
-                
+            const result = pool.query('DELETE FROM pharmacy_branded_drugs WHERE branded_drug_id=?', [branded_drug_id, pharmacy_id],
                 function (error, results, fields) {
                     if (error) {
                         reject (new Error(error.message));
