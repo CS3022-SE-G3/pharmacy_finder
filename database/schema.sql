@@ -138,18 +138,9 @@ CREATE TABLE reported_pharmacies (
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-----------------Session Table Schema------------------------------
-
-CREATE TABLE "session" (
-    "sid" varchar NOT NULL COLLATE "default",
-    "sess" json NOT NULL,
-    "expire" timestamp(6) NOT NULL
-)
-WITH (
-    OIDS = FALSE
+CREATE TABLE system_admin(
+    sys_admin_id int AUTO_INCREMENT,
+    username varchar(30),
+    password varchar(70),
+    PRIMARY KEY (sys_admin_id)
 );
-
-ALTER TABLE "session"
-    ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
-
-CREATE INDEX "IDX_session_expire" ON "session" ("expire");

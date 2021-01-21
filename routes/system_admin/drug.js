@@ -41,14 +41,14 @@ router.post('/add', addNewDrug);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/update', viewUpdateDrugForm);
+router.get('/update/:branded_drug_id/:brand_name/:manufacturer/:drug_type_id', viewUpdateDrugForm); //TODO: clarify
 
 /**
  * @description Update existing branded drug's details
  * @URL localhost:3000/system_admin/drug/update
- * @method PUT
+ * @method POST
  */
-router.put('/update', updateDrugDetails);
+router.post('/update', updateDrugDetails);
 
 /**
  * @description Prompt delete branded drug option
@@ -56,14 +56,14 @@ router.put('/update', updateDrugDetails);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/delete', viewDeleteDrugPrompt);
+router.get('/delete/:branded_drug_id', viewDeleteDrugPrompt); //TODO: clarify
 
 /**
  * @description Delete specicfied branded drug
  * @URL localhost:3000/system_admin/drug/delete
- * @method PUT
+ * @method POST
  * @todo return results in response body along with the html file
  */
-router.put('/delete', deleteDrug);
+router.post('/delete', deleteDrug);
 
 module.exports = router;
