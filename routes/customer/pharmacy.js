@@ -2,7 +2,13 @@
 // report pharmacy account
 const express = require('express');
 const router = express.Router();
-const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy');
+const { viewPharmacyInformation } = require('../../controllers/customer/pharmacy');
+const path = require('path');
+
+
+router.get('/', (req, res) => {
+    return res.render('/customer/search_for_pharmacy');
+});
 
 /**
  * @description Load and view requested pharmacy information
@@ -10,6 +16,6 @@ const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy')
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/view/:name', viewPharmacyInformation);
+router.get('/view/:pharmacy_name', viewPharmacyInformation);
 
 module.exports = router;

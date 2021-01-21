@@ -117,13 +117,14 @@ const viewBroadcastedRequests = async(req, res) => {
     // const result = await Customer.getBroadcastedRequests(requestId);
     const drug_types = await Customer.getDrugTypesFromRequest(requestID);
     const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
+    console.log("Drug types request:")
     console.log(drug_types);
+    console.log("Branded Drugs request:")
     console.log(branded_drugs);
     
     try{
         if(drug_types.length === 0 && branded_drugs.length===0){
             return res.status(404).render('404');
-            
         }
         return res.status(200).render('customer/view_requests',{
             drug_types: drug_types,
@@ -162,7 +163,9 @@ function validateCustomerId(customerId){
 const viewAllRequests = async(req, res) => {
 
     // get customerId from URL
-    const customerId = req.params.customerId; 
+    // get customerId from login
+    // const customerId = req.customerId; 
+    const customerId = "10001";
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -177,7 +180,7 @@ const viewAllRequests = async(req, res) => {
     }
 
     // get the information of the broadcasted requests as requested
-    const result = await Customer.getAllRequests(customerId);
+    let result = await Customer.getAllRequests(customerId);
     
     try{
         if(result.length === 0){
