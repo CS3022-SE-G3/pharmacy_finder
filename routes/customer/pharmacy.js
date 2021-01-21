@@ -24,6 +24,7 @@ router.get('/', isACustomer, (req, res) => {
     return res.render('/customer/search_for_pharmacy');
 });
 
+
 /**
  * @description Load and view requested pharmacy information
  * @URL localhost:3000/customer/pharmacy/view/:name

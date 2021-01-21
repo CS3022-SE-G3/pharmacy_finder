@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Add drugs</title>
+        
+        <link rel="stylesheet" href="/assets/bootstrap.min.css">
+        <script src="/assets/jquery.js" ></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+    </head>
+
+    <body>
+        <form method="post" >
+
+                    <div class="row">
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body--">
+                                    <div class="table-stats ov-h">
+                                        <table class="table table-dark table-hover">
+        
+                                            <thead >
+                                                <tr>
+                                                    <th width="90%"><h3>Drug Type</h3></th>
+                                                    <th width="10%"></th>
+                                                </tr>
+                                                
+                                            </thead>
+    
+                                                <% for(var i=0; i < drug_types.length; i++){ %>
+                                                    <tr>
+                                                        <td><%= drug_types[i].drug_type_name  %></td>
+                                                        <td><input type="radio" name="<%= drug_types[i].drug_type_id%>" value="<%= drug_types[i].drug_type_id %>"></td>
+                                                    </tr>  
+                                                <% } %>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body--">
+                                    <div class="table-stats ov-h">
+                                        <table class="table  table-dark table-hover">
+        
+                                            <thead>
+                                                <tr>
+                                                    <th width="90%" ><h3>Branded Drug</h3></th>
+                                                    <th width="10%"></th>
+                                                </tr>
+                                                </thead>
+    
+                                                <% for(var i=0; i < branded_drugs.length; i++){ %>
+                                                    <tr>
+                                                        <td><%= branded_drugs[i].brand_name  %></td>
+                                                        <td><input type="radio" name="<%= branded_drugs[i].branded_drug_id %>" value="<%= branded_drugs[i].branded_drug_id %>" ></td>
+                                                    </tr>
+                                                    
+                                                <% } %>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> 
+        </div>  
+        
+        <a href="/pharmacy/addDrug"><input class="btn btn-lg btn-success" type="submit"  value="Submit" ></a>
+            
+        </form>
+
+        <a href="/pharmacy/drug"><button class="btn btn-primary" >Back</button></a>
+               
+    </body>
+
+</html>
