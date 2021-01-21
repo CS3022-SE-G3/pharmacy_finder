@@ -1,4 +1,5 @@
 
+const { request } = require('express');
 const { pool } = require('../database/connection');
 
 class Pharmacy{
@@ -206,6 +207,54 @@ class Pharmacy{
 
         return result.length != 0;
     }
+
+    static async getRequests(pharmacy_id){
+        var responded_requests = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM response WHERE pharmacy_id = ?); ',
+            [pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        console.log(responded_requests)
+
+        var requests = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM requests_and_associated_pharmacies WHERE request_id NOT IN (SELECT request_id FROM response WHERE pharmacy_id = ?) AND pharmacy_id = ?); ',
+            [pharmacy_id, pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        console.log(requests)
+
+
+        return [responded_requests, requests];
+    }
+
+    static async getPharmacyInfoByID(pharmacy_id){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT pharmacy_id, name, address, longitude, latitude, email, contact_no FROM pharmacy WHERE pharmacy_id = ?',
+            [pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
+    
 
 }
 
