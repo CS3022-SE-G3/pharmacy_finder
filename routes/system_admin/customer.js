@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { viewCustomerInformation, renderForm } = require('../../controllers/system_admin/customer');
+const isSystemAdmin = require('../../middleware/isSystemAdmin');
 
 /**
  * 
@@ -10,7 +11,7 @@ const { viewCustomerInformation, renderForm } = require('../../controllers/syste
  * @method GET
  */
 
-router.get('/search', renderForm);
+router.get('/search', isSystemAdmin, renderForm);
 
 /**
  * 
@@ -19,7 +20,7 @@ router.get('/search', renderForm);
  * @method GET
  */
 
-router.get('/view/:accountId', viewCustomerInformation);
+router.get('/view/:accountId', isSystemAdmin, viewCustomerInformation);
 
 
 module.exports = router;

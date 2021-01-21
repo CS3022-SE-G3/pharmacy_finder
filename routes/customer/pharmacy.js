@@ -6,23 +6,24 @@ const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy')
 const {getCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
 const {postCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
 const path = require('path');
+const isACustomer = require('../../middleware/isACustomer');
 /**
  * @description get the page for searching a pharmacy by Pharmacy Name
  * @URL http://localhost:3000/customer/pharmacy/search
  * @method GET
  */
-router.get('/search',getCustomerSearchPharmacy);
+router.get('/search', isACustomer, getCustomerSearchPharmacy);
 
 /**
  * @description search the Pharmacy Name and get the results on same page
  * @URL http://localhost:3000/customer/pharmacy/search
  * @method POST
  */
-router.post('/search', postCustomerSearchPharmacy);
+router.post('/search', isACustomer, postCustomerSearchPharmacy);
+router.get('/', isACustomer, (req, res) => {
+    return res.render('/customer/search_for_pharmacy');
+});
 
-// router.get('/', (req, res) => {
-//     return res.render('/customer/search_for_pharmacy');
-// });
 
 /**
  * @description Load and view requested pharmacy information
@@ -30,6 +31,6 @@ router.post('/search', postCustomerSearchPharmacy);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/view/:pharmacy_name', viewPharmacyInformation);
+router.get('/view/:pharmacy_name', isACustomer, viewPharmacyInformation);
 
 module.exports = router;
