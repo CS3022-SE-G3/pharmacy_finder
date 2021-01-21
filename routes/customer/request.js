@@ -1,12 +1,6 @@
-// broadcast request
-// cancel broadcast request
-// update broadcasted request
 const express = require('express');
 const router = express.Router();
-const { viewBroadcastedRequests } = require('../../controllers/customer/request');
-const { getBroadcastForm } = require('../../controllers/customer/request');
-const { createBroadcastRequest } = require('../../controllers/customer/request');
-const { viewAllRequests } = require('../../controllers/customer/request');
+const {viewBroadcastedRequests,createBroadcastRequest,getBroadcastForm,viewAllRequests} = require('../../controllers/customer/request');
 
 /**
  * @description Load and view all requests of a customer or request details 
@@ -15,19 +9,19 @@ const { viewAllRequests } = require('../../controllers/customer/request');
  */
 router.get('/view', viewAllRequests);
 
-
 /**
- * @description Load and view a specific request details of a customer
+ * @description Load and view a specific request's details of a customer
  * @URL localhost:3000/customer/request/view/:requestId 
  * @method GET
  * @todo return results in response body along with the html file
  */
 router.get('/view/req/:requestId', viewBroadcastedRequests);
 
-
-
-
-//URL localhost:3000/customer/request/broadcast --method GET
+/**
+ * URL localhost:3000/customer/request/broadcast 
+ * @method GET
+ * 
+ * */
 router.get('/broadcast', getBroadcastForm);
 
 //URL localhost:3000/customer/request/broadcast --method POST

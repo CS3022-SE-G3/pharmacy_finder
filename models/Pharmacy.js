@@ -3,6 +3,20 @@ const { pool } = require('../database/connection');
 
 class Pharmacy{
 
+    static getAllRequests(pharmacyId) {
+        return new Promise((resolve, reject) => {
+            const result = pool.query('SELECT request_id, customer_id, date_created FROM requests_and_associated_pharmacies NATURAL JOIN requests WHERE pharmacy_id = ? ORDER BY date_created',
+                [pharmacyId],
+                function (error, results, fields) {
+                    if (error) {
+                        reject(new Error(error.message));
+                    }
+                    resolve(results);
+                }
+            )
+        })
+    }
+
     static getPharmacyInfo(pharmacyId) {
         return new Promise((resolve, reject) =>{
             const result = pool.query('SELECT pharmacy_id,name,address,longitude,latitude,email,contact_no,approved_state FROM pharmacy WHERE pharmacy_id = ?',
