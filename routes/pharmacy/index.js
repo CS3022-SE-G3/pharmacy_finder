@@ -8,6 +8,7 @@ routes.use('/response', require('./response'));
 routes.use('/signup', require('./signup'));
 routes.use('/login', require('./login'));
 routes.use('/entry', require('./entry'));
+routes.use('/home', require('./home'));
 
 
 module.exports = routes;
