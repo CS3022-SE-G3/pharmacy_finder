@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
@@ -28,10 +30,9 @@ const loginPharmacy = async (request, response) => {
     if (error) {
         var err_msg = "Pharmacy Login error validation " + error.message;
         console.log(err_msg);
-        return response.status(400).send(error.message);
+        // return response.status(400).send(error.message);
 
-        // return response.render('/pharmacy/login_error', { err_data: err_msg });
-        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+        return response.render('pharmacy/login_error', { err_data: err_msg });
     }
 
     try {
@@ -41,20 +42,18 @@ const loginPharmacy = async (request, response) => {
             var err_msg = "Email is not registered";
             console.log(err_msg);
 
-            return response.status(401).send(err_msg);
+            // return response.status(401).send(err_msg);
 
-            // return response.render('/pharmacy/login_error', { err_data: err_msg });
-            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+            return response.render('pharmacy/login_error', { err_data: err_msg });
         }
 
         if (result[0].approved_state == "Not Approved"){
             var err_msg = "Your pharmacy have not been approved";
             console.log(err_msg);
 
-            return response.status(401).send(err_msg);
+            // return response.status(401).send(err_msg);
 
-            // return response.render('/pharmacy/login_error', { err_data: err_msg });
-            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+            return response.render('pharmacy/login_error', { err_data: err_msg });
         }
 
         const hashedPassword = result[0].password;
@@ -63,10 +62,9 @@ const loginPharmacy = async (request, response) => {
             var err_msg = "Invalid email or password";
             console.log(err_msg);
 
-            return response.status(401).send(err_msg);
+            // return response.status(401).send(err_msg);
 
-            // return response.render('/pharmacy/login_error', { err_data: err_msg });
-            // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+            return response.render('pharmacy/login_error', { err_data: err_msg });
         }
 
         request.session.user = {};
@@ -80,10 +78,9 @@ const loginPharmacy = async (request, response) => {
         var err_msg = "Internal server error" + error.message;
         console.log(error);
 
-        return response.status(500).send(err_msg);
+        // return response.status(500).send(err_msg);
 
-        // return response.render('/pharmacy/login_error', { err_data: err_msg });
-        // return response.sendFile(path.join(__dirname, '../../views/pharmacy/login_error.ejs'), { err_data: err_msg });
+        return response.render('pharmacy/login_error', { err_data: err_msg });
     }
 
     // res.redirect('/');

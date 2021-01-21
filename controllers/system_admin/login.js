@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
@@ -28,10 +30,9 @@ const loginSysAdmin = async (request, response) => {
     if (error) {
         var err_msg = "System Admin Login error validation " + error.message;
         console.log(err_msg);
-        return response.status(400).send(error.message);
+        // return response.status(400).send(error.message);
 
-        // return response.render('/system_admin/login_error', { err_data: err_msg });
-        // return response.sendFile(path.join(__dirname, '../../views/system_admin/login_error.ejs'), { err_data: err_msg });
+        return response.render('system_admin/login_error', { err_data: err_msg });
     }
 
     try {
@@ -40,10 +41,9 @@ const loginSysAdmin = async (request, response) => {
         if (!result[0]) {
             var err_msg = "Username is not valid";
             console.log(err_msg);
-            return response.status(401).send(err_msg);
+            // return response.status(401).send(err_msg);
 
-            // return response.render('/system_admin/login_error', { err_data: err_msg });
-            // return response.sendFile(path.join(__dirname, '../../views/system_admin/login_error.ejs'), { err_data: err_msg });
+            return response.render('system_admin/login_error', { err_data: err_msg });
         }
 
         const hashedPassword = result[0].password;
@@ -51,10 +51,9 @@ const loginSysAdmin = async (request, response) => {
         if (!passwordCorrect) {
             var err_msg = "Invalid username or password";
             console.log(err_msg);
-            return response.status(401).send(err_msg);
+            // return response.status(401).send(err_msg);
 
-            // return response.render('/system_admin/login_error', { err_data: err_msg });
-            // return response.sendFile(path.join(__dirname, '../../views/system_admin/login_error.ejs'), { err_data: err_msg });
+            return response.render('system_admin/login_error', { err_data: err_msg });
         }
 
         request.session.user = {};
@@ -67,10 +66,9 @@ const loginSysAdmin = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error" + error.message;
         console.log(error);
-        return response.status(500).send(err_msg);
+        // return response.status(500).send(err_msg);
 
-        // return response.render('/system_admin/login_error', { err_data: err_msg });
-        // return response.sendFile(path.join(__dirname, '../../views/system_admin/login_error.ejs'), { err_data: err_msg });
+        return response.render('system_admin/login_error', { err_data: err_msg });
     }
 
     // res.redirect('/');
