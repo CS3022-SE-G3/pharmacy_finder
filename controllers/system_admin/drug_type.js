@@ -6,6 +6,7 @@ const _ = require('lodash');
 
 /**
  * @description Validate and add new drug type
+ * @todo prompt operation status (success/fail)
  */
 const addNewDrugType = async (request, response) => {
 
@@ -25,7 +26,7 @@ const addNewDrugType = async (request, response) => {
                 "drug_type_name"
             ]
         ));
-        return response.status(200).send(request.body);
+        return response.status(200).redirect('/system_admin/drug_type');
 
 
     } catch (error) {
@@ -35,14 +36,33 @@ const addNewDrugType = async (request, response) => {
 }
 
 /** 
- * @description Load all drug types
- * @todo return results in response body along with the html file
+ * @description Load drug type
+ * 
 */
 const viewAllDrugTypes = async (request, response) => {
     try {
         const result = await SystemAdmin.getAllDrugTypes();
-        console.log(result);
-        return response.status(200).send(result);
+        return response.status(200).render('system_admin/drug_types', {
+            drugTypes: result,
+            pageTitle: 'Drug Types'
+        });
+    }
+    catch (error) {
+        return response.status(500).send("internal server error");
+    }
+}
+
+/** 
+ * @description Load all drug types
+ * 
+*/
+const viewDrugType = async (request, response) => {
+    try {
+        const result = await SystemAdmin.getDrugType(request.params.drug_type_id);
+        return response.status(200).render('system_admin/drug_type', {
+            drug_type: result,
+            pageTitle: 'Drug Type'
+        });
     }
     catch (error) {
         return response.status(500).send("internal server error");
@@ -52,25 +72,33 @@ const viewAllDrugTypes = async (request, response) => {
 
 /** 
  * @description Return add new drug type form
- * @todo return the html file
+ * 
 */
 const viewAddDrugTypeForm = async (request, response) => {
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
-    return response.status(200).send("Drug type add placeholder");
+    return response.status(200).render('system_admin/add_drug_type_form', {
+        pageTitle: 'Add New Drug Type'
+    });
 }
 
 /** 
  * @description Return add new drug type form
- * @todo return the html file
+ * 
 */
 const viewUpdateDrugTypeForm = async (request, response) => {
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
-    return response.status(200).send("Update form placeholder")
+    const drugType = {
+        drug_type_id: request.params.drug_type_id,
+        drug_type_name: request.params.drug_type_name
+    };
+
+    return response.status(200).render('system_admin/update_drug_type_form', {
+        drugType: drugType,
+        pageTitle: 'Update Drug Type Info'
+    });
 }
 
 /**
  * @description Validate and update drug type details
- * @todo check if the id actually exists in the table first? the put won't work if the id doesnt exist but maybe its better for UX
+ * @todo prompt operation status (success/fail)
  */
 const updateDrugTypeDetails = async (request, response) => {
 
@@ -97,20 +125,23 @@ const updateDrugTypeDetails = async (request, response) => {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");
     }
-    return response.status(200).send(request.body);
+    return response.status(200).redirect('/system_admin/drug_type');
 }
 
 /** 
  * @description return delete drug type prompt
- * @todo return the html file
+ * 
 */
 const viewDeleteDrugTypePrompt = async (request, response) => {
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/add_new_drug_form.html')); 
-    return response.status(200).send("delete form placeholder");
+    return response.status(200).render('system_admin/delete_drug_type_prompt', {
+        drug_type_id: request.params.drug_type_id,
+        pageTitle: 'Delete Drug Type'
+    });
 }
 
 /** 
  * @description Delete drug type
+ * @todo prompt operation status (success/fail)
 */
 const deleteDrugType = async (request, response) => {
 
@@ -120,7 +151,7 @@ const deleteDrugType = async (request, response) => {
                 "drug_type_id"
             ]
         ));
-        return response.status(200).send(request.body);
+        return response.status(200).redirect('/system_admin/drug_type');
     } catch (error) {
         console.log(error.message);
         return response.status(500).send("Internal Server Error");
@@ -152,6 +183,7 @@ function validateUpdateDrugTypeDetails(drug) {
 
 exports.addNewDrugType = addNewDrugType;
 exports.viewAddDrugTypeForm = viewAddDrugTypeForm;
+exports.viewDrugType = viewDrugType;
 exports.viewAllDrugTypes = viewAllDrugTypes;
 exports.viewUpdateDrugTypeForm = viewUpdateDrugTypeForm;
 exports.updateDrugTypeDetails = updateDrugTypeDetails;

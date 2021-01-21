@@ -1,8 +1,5 @@
 
-const express = require('express');
-const router = express.Router();
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
 const pharmacy = require('../../models/Pharmacy');
 
 /**
@@ -26,7 +23,8 @@ function validatePharmacyName(pharmacyName){
 const viewPharmacyInformation = (req, res) => {
 
     // get pharmacyID from URL
-    const pharmacyName = req.params.name; 
+    const pharmacyName = req.params.pharmacy_name; 
+    console.log(pharmacyName);
 
     // validating
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
@@ -37,12 +35,7 @@ const viewPharmacyInformation = (req, res) => {
         console.error('ValidationError:customer-pharmacy_name: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Pharmacy Name provided");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Pharmacy Name provided");
     }
 
     // get the information of the pharmacy as requested
@@ -55,16 +48,15 @@ const viewPharmacyInformation = (req, res) => {
             
         }
         
-        // send data to front end
-        
-        res.status(200).json(data[0])
-        res.end()
+        return res.status(200).render('/customer/pharmacy_information', {
+            data: data[0]
+        });
     })
     .catch(error => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
+        return res.status(500).render('500');
     })
 
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h2>
+        Drug Types
+    </h2>
+    <main>
+        <div>
+            <table>
+                <thead>
+                    <th>Drug Type ID</th>
+                    <th>Drug Type Name</th>
+                    <th>Update Info</th>
+                    <th>Delete</th>
+                </thead>
+                <tbody>
+                    <% for (let drugType of drugTypes) { %>
+                        <tr>
+                            <td>
+                                <%=drugType.drug_type_id%>
+                            </td>
+                            <td>
+                                <%=drugType.drug_type_name%>
+                            </td>
+                            <td>
+                                <form
+                                    action="/system_admin/drug_type/update/<%=drugType.drug_type_id%>/<%=drugType.drug_type_name%>"
+                                    method="get">
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/system_admin/drug_type/delete/<%=drugType.drug_type_id%>" method="get">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <form action="/system_admin/drug_type/add" method="get">
+                <button type="submit">Add New Drug Type</button>
+            </form>
+        </div>
+    </main>
+    </main>
+</body>
+
+</html>
+<script src="/js/admin.js"></script>

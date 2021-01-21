@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h2>Delete Drug Type?</h2>
+    <main>
+
+        <div>
+            <form action="/system_admin/drug_type/delete" method="POST">
+                <input type="hidden" name="drug_type_id" value="<%=drug_type_id%>">
+                <button type="submit">Delete</button>
+            </form>
+            <form action="/system_admin/drug_type" method="get">
+                <button type="submit">Cancel</button>
+            </form>
+        </div>
+
+
+    </main>
+</body>
+
+</html>
+<script src="/js/admin.js"></script>

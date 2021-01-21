@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Customer Details</title>
+</head>
+
+<body>
+
+    <h3>View Customer Details</h3>
+
+
+    <form>
+        <!-- input customer_id -->
+        <label for="customer_id">Enter customer ID</label>
+        <input type="text" name="customer_id" id="customer_id" required>
+
+        <!-- submit button -->
+        <button type="submit">view details</button>
+
+    </form>
+
+    <div id="details">
+
+
+        <div class="name"></div>
+
+        <div class="address"></div>
+
+        <div class="contact_no"></div>
+
+        <div class="email"></div>
+
+        <div class="dob"></div>
+
+        <div class="gender"></div>
+
+        <div class="NIC"></div>
+    </div>
+
+    <script>
+
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (e) => {
+
+            const customer_id = form.customer_id.value;
+
+            e.preventDefault();
+
+            fetch(`http://localhost:3000/system_admin/customer/view/${customer_id}`)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    let details = document.getElementById("details")
+
+                    details.querySelector('.name').innerHTML = data.full_name;
+
+                    details.querySelector('.address').innerHTML = data.address;
+
+                    details.querySelector('.contact_no').innerHTML = data.contact_no;
+
+                    details.querySelector('.email').innerHTML = data.email;
+
+                    details.querySelector('.dob').innerHTML = data.dob;
+
+                    details.querySelector('.gender').innerHTML = data.gender;
+
+                    details.querySelector('.NIC').innerHTML = data.NIC;
+
+                })
+        })
+    </script>
+
+</body>
+
+</html>
