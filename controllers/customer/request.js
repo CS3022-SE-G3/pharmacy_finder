@@ -177,8 +177,6 @@ const viewBroadcastedRequests = async(req, res) => {
         console.log(error.message);
         return res.status(500).render('500');
     }
-   
-
 }
 
 // ====================================================END OF USE CASE======================================================//
@@ -206,7 +204,9 @@ const viewAllRequests = async(req, res) => {
     // get customerId from URL
     // get customerId from login
     // const customerId = req.customerId; 
-    const customerId = "10001";
+    // const customerId = "10001";
+    const customerId = req.session.user.id;
+    const customerEmail = req.session.user.email;
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});

@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
+    <h1>Customer Start Page</h1>
 </head>
 <body>
 <main>
@@ -17,7 +18,21 @@
              <br><br>
            
         <% } %>
-    
+    <form action="/customer/pharmacy/search" method="get">
+        <input type="submit" value="Search for pharmacy">
+    </form>
+    <br>
+    <form action="/customer/request/broadcast" method="get">
+        <input type="submit" value="Create new request">
+    </form>
+    <br>
+
+    <form action="/logout" method="get">
+        <input type="submit" value="Log out">
+    </form>
+
+    <br>
+
 
 </main>
 </body>
