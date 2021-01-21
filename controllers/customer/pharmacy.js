@@ -1,5 +1,7 @@
 
 const Joi = require('joi');
+const { pool } = require('../../database/connection');
+const Customer = require('../../models/Customer');
 const pharmacy = require('../../models/Pharmacy');
 
 /**
@@ -20,7 +22,7 @@ function validatePharmacyName(pharmacyName){
 }
 
 
-const viewPharmacyInformation = (req, res) => {
+const viewPharmacyInformation = async(req, res) => {
 
     // get pharmacyID from URL
     const pharmacyName = req.params.pharmacy_name; 
@@ -39,26 +41,74 @@ const viewPharmacyInformation = (req, res) => {
     }
 
     // get the information of the pharmacy as requested
-    const result = pharmacy.getPharmacyInformation(pharmacyName);
-
-    result.then((data) => {
-
-        if(data.length === 0){
-            return res.status(400).send("Pharmacy not registered");
+    const pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
+    console.log(pharmacyInformation);
+    try{
+        if(pharmacyInformation.length === 0){
+            return res.status(404).render('404');
             
         }
         
-        return res.status(200).render('/customer/pharmacy_information', {
-            data: data[0]
+        // send data to front end
+        
+        return res.status(200).render('customer/view_pharmacy',{
+            pharmacyInformation: pharmacyInformation[0],
+            pageTitle: 'Pharmacy Information'
         });
-    })
-    .catch(error => {
-        console.log(error)
+    }catch(error){
+        console.log(error.message)
 
         // send 'internal server error'
         return res.status(500).render('500');
-    })
+    }
+}
+const getCustomerSearchPharmacy = async (req,res)=>{
 
+    res.render('customer/search_pharmacy',{
+        pageTitle: "Search Pharmacy",
+        pharmacyInformation: [],
+        hasErrors: false
+    });
+}
+    
+const postCustomerSearchPharmacy = async(req,res)=>{
+    let pharmacyInformation;
+    const pharmacyName = req.body.pharmacyName;
+    const {error} = validatePharmacyName({pharmacyName:pharmacyName});
+    if (error){
+        console.log(error);
+        return res.status(400).render('customer/search_pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInformation: [],
+            hasErrors: true,
+            errors: error.details[0].message
+        });
+    }
+    try{
+        pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
+        if (pharmacyInformation.length===0){
+            return res.status(404).render('customer/search_pharmacy',{
+                pageTitle: "Search Pharmacy",
+                pharmacyInformation: [],
+                hasErrors: true,
+                errors: "Pharmacy not registered"
+            });
+        }
+        return res.status(200).render('customer/search_pharmacy',{
+            pageTitle: "Search Pharmacy",
+            pharmacyInformation: pharmacyInformation,
+            hasErrors: false
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+        
 }
 
-module.exports.viewPharmacyInformation = viewPharmacyInformation;
+
+
+exports.viewPharmacyInformation = viewPharmacyInformation;
+exports.getCustomerSearchPharmacy = getCustomerSearchPharmacy;
+exports.postCustomerSearchPharmacy = postCustomerSearchPharmacy;

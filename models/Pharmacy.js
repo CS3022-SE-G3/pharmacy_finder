@@ -17,6 +17,7 @@ class Pharmacy{
         } )
     }
 
+
     //send pharmacy information for the customers
     static getPharmacyInformation(pharmacyName){
         return new Promise((resolve,reject)=>{
@@ -27,6 +28,20 @@ class Pharmacy{
                     reject (new Error(error.message));
                 }
                 console.log(results);
+                resolve(results);
+            }
+        )
+        })
+    }
+
+    static getPharmacyInfoByEmail(email){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT * FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
                 resolve(results);
             }
         )
@@ -82,6 +97,22 @@ class Pharmacy{
                 }
             )
         } )
+    }
+
+    static async isEmailRegistered(email){
+        var result = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT pharmacy_id FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        return result.length != 0;
     }
 
 }
