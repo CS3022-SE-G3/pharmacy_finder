@@ -24,9 +24,6 @@ router.get('/view', viewAllRequests);
  */
 router.get('/view/req/:requestId', viewBroadcastedRequests);
 
-
-
-
 //URL localhost:3000/customer/request/broadcast --method GET
 router.get('/broadcast', getBroadcastForm);
 

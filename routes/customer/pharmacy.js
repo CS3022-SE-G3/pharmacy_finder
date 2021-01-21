@@ -7,7 +7,7 @@ const path = require('path');
 
 
 router.get('/', (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../views/customer/search_for_pharmacy.html'));
+    return res.render('/customer/search_for_pharmacy');
 });
 
 /**

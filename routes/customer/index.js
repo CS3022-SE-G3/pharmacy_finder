@@ -11,7 +11,7 @@ routes.use('/login', require('./login'));
 routes.use('/entry', require('./entry'));
 
 routes.use('/', (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../views/customer/home.html'));
+    return res.render('/customer/home.html');
 });
 
 
