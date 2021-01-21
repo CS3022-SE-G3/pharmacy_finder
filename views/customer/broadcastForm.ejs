@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title><%= pageTitle %></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+
+    <p>Please select the drugs you would like to request.</p>
+    <body>
+        <form action = "/customer/request/broadcast" method="POST">
+            Drugs Available (Any brand):
+            <% for(var i=0; i<drug_types.length; i++) {%>
+            <tr>
+                    <div class="checkbox">
+                        <label><input name="drug_types" id="drug_types"  type="checkbox"
+                                value=<%= drug_types[i].drug_type_id %>><%=drug_types[i].drug_type_name %></label>
+                    </div>
+            </tr>
+            <% } %>
+            <br>
+            <br>
+
+            Drugs of specific brands:
+            <% for(var i=0; i<branded_drugs.length; i++) {%>
+            <tr>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="branded_drugs" id="branded_drugs"
+                            value=<%= branded_drugs[i].branded_drug_id %>><%=branded_drugs[i].brand_name %></label>
+                </div>
+            </tr>
+            <% } %>
+
+        <input type="submit">
+        </form>
+
+        </script>
+    </body>
+
+</html>

@@ -53,7 +53,7 @@ class SystemAdmin {
      */
     static getAllDrugs() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ?",
+            const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ? ORDER BY brand_name",
                 [false],
                 function (error, results, fields) {
                     if (error) {
@@ -61,6 +61,7 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
+                    console.log(results);
                     resolve(results);
                 }
             )
@@ -68,13 +69,13 @@ class SystemAdmin {
     }
 
     /**
-     * @description Get drug type from database
-     * @todo Add 'is_deleted' to drug_type table
+     * Used to get all drug type ids and names from the database
+     * Used for the boradcast request use case of customer
      */
-    static getDrugType(drug_type_id) {
+
+    static getAllDrugTypesandIDs() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type where drug_type_id = ?",
-                [drug_type_id],
+            const query = pool.query("SELECT drug_type_id,drug_type_name FROM drug_type ORDER BY drug_type_name",
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -82,8 +83,8 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    console.log(results[0]);
-                    resolve(results[0]);
+                    console.log(results);
+                    resolve(results);
                 }
             )
         })
@@ -95,7 +96,7 @@ class SystemAdmin {
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE is_deleted = ?",[false],
+            const query = pool.query("SELECT drug_type_name FROM drug_type",
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -103,6 +104,7 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
+                    console.log(results);
                     resolve(results);
                 }
             )
@@ -202,38 +204,6 @@ class SystemAdmin {
 
     /**
  *  
- *  @description - delete record of reported paharamcy
- *  @param {number} accountId - customerId
- *  @param {number} pharamacyId - pharamacy Id
- */
-    static async deleteRecord(pharamacyId, accountId) {
-
-        try {
-            const response = await new Promise((resolve, reject) => {
-                // if query succces we gonna resolve the result
-                // else we gonna reject it
-                const qry = "DELETE FROM reported_pharmacies WHERE pharmacy_id=? AND customer_id=?"; // query
-                pool.query(qry, [pharamacyId, accountId], (err, res) => {
-                    if (err) {
-                        reject(new Error(err.message));
-                    }
-                    // else
-                    console.log(res)
-                    resolve(res);
-                })
-            }
-            )
-
-            return response;
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
-    /**
- *  
  *  @description - getting customer infromation from database from accountID
  *  @param {number} accountId - customerId
  */
@@ -265,7 +235,7 @@ class SystemAdmin {
     /**
     *  
     *  @description - getting customer infromation from database from accountID
-    *  
+    *  @todo delete report
     */
     static async getReportedPharmaciesInformation() {
 
@@ -282,6 +252,7 @@ class SystemAdmin {
                     }
                     // else
                     // testing -pass
+                    console.log('qry reault')
                     console.log(res)
                     resolve(res);
                 })
@@ -289,75 +260,30 @@ class SystemAdmin {
             )
 
             // testing - pass
+            console.log(`response to view reported pharamcy qry `)
+            console.log(response)
             return response;
 
         } catch (error) {
+            console.log(error)
             return (error)
         }
     }
 
-
-    /**
-*  
-*  @description - getting pharmacy is in the reported pharmacy list
-*  @param {number} accountId - customerId
-*  @param {number} pharamacyId - pharmacy Id
-*  
-*/
-    static async getReportedPharmacyInformation(pharmacyID, customerID) {
-
+    static getSysAdminInfo(username) {
         return new Promise((resolve, reject) => {
-
-            const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons` FROM `reported_pharmacies` WHERE pharmacy_id=? AND customer_id=?"; // query
-
-            const result = pool.query(qry, [pharmacyID, customerID], (err, res) => {
-                if (err) {
-                    console.log(result.sql);
-                    console.log(err)
-                    reject(new Error(err.message));
+            const result = pool.query('SELECT * FROM system_admin WHERE username = ?',
+                [username],
+                function (error, results) {
+                    if (error) {
+                        reject(new Error(error.message));
+                    }
+                    resolve(results);
                 }
-
-                resolve(res.length > 0);
-            })
-        }
-        )
-
-        // testing - pass
-        return response;
-
-    }
-
-
-    /**
-*  
-*  @description - deleting pharmacy account
-*  @param {number} pharamacyId - pharmacy Id
-*  
-*/
-    static async deleteAccount(pharamacyId) {
-
-        return new Promise((resolve, reject) => {
-            // if query succces we gonna resolve the result
-            // else we gonna reject it
-            const qry = "DELETE FROM `pharmacy` WHERE pharmacy_id=?"; // query
-            pool.query(qry, [pharamacyId], (err, res) => {
-                if (err) {
-                    // testing - pass
-                    console.log("error in deleting pharmacy from database when deleting a reported pharmacy");
-                    console.log(err)
-                    reject(false); //returns false if error
-                }
-                // else
-                // testing -pass
-                console.log
-                resolve(true);
-            }
             )
         })
-
-
     }
+
 }
 
 module.exports = SystemAdmin;
-

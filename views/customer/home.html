@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,24 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
-
     <body>
-
-        <h1> Pharmacy Login Page</h1>
+        <form action="/customer/pharmacy" method ="get">
+            <input type="submit" value="Search for pharmacy">
+        </form>
         <br>
         <br>
-        <br>
-        <br>
-
-        <form action="/pharmacy/login" method="POST">
-            E-Mail: <input type="email" id="email" name="email" required>
-            <br>
-
-            Password: <input type="password" id="password" name="password" required>
-            <br>
-
-            <button type="submit">Login</button>
+        <form action="/customer/request/view" method="get">
+            <input type="submit" value="View sent requests">
         </form>
     </body>
-
 </html>

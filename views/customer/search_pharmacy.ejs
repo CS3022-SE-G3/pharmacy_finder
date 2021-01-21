@@ -15,18 +15,18 @@
     <%}%>
     <div>
         <form action="" method="post">
-            <label for="pharmacyId">Pharmacy ID</label>
-            <input type="text" name="pharmacyId" id="pharmacyId">
+            <label for="pharmacyName">Pharmacy Name</label>
+            <input type="text" name="pharmacyName" id="pharmacyName">
             <div>
                 <button type="submit">Search</button>
             </div>
         </form>
     </div>
 
-        <%if (pharmacyInfo.length===1){ %>
+        <%if (pharmacyInformation.length===1){ %>
     <div>
-            <p><%=pharmacyInfo[0].pharmacy_id%></p>
-            <a href="/system_admin/pharmacy/view/<%=pharmacyInfo[0].pharmacy_id%>">View</a>
+            <p><%=pharmacyInformation[0].name%></p>
+            <a href="/customer/pharmacy/view/<%=pharmacyInformation[0].name%>">View</a>
     </div>
         <%}%>
 

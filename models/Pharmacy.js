@@ -60,12 +60,24 @@ class Pharmacy{
                         reject (new Error(error.message));
                     }
                     resolve(results);
+                })
+ }})}
+                                   
+
+    //send pharmacy information for the customers
+    static getPharmacyInformation(pharmacyName){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT name,address,email,contact_no FROM pharmacy WHERE name = ?',
+            [pharmacyName],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
                 }
                 )
             }
             
         } )
-    }
+    })}
 // **************** I used 30001 for pharmacy_id as a default value ****************
     static putPharmacyBrandedDrugs(data) {
         return new Promise((resolve, reject) =>{
@@ -86,6 +98,35 @@ class Pharmacy{
         } )
     }
 
+
+    static getPharmacyInfoByEmail(email){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT * FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
+
+    static getPendingPharmacies(){
+        return new Promise((resolve, reject) =>{
+            const result = pool.query('SELECT pharmacy_id,name,address,longitude,latitude,email,contact_no,approved_state FROM pharmacy WHERE approved_state = ?',
+                ['Not Approved'],
+                function (error, results, fields) {
+                    if (error) {
+                        reject (new Error(error.message));
+                    }
+                    resolve(results);
+                }
+            )
+        } )
+    }
+      
     static getPharmacyDrugTypes() {
         return new Promise((resolve, reject) =>{
             const result = pool.query('SELECT drug_type.drug_type_id,drug_type_name FROM drug_type,pharmacy_drug_types WHERE drug_type.drug_type_id=pharmacy_drug_types.drug_type_id',
@@ -146,6 +187,22 @@ class Pharmacy{
 
 
 
+
+    static async isEmailRegistered(email){
+        var result = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT pharmacy_id FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        return result.length != 0;
+    }
 
 }
 

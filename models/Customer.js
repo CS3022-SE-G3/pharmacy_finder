@@ -1,3 +1,4 @@
+
 const { pool } = require('../database/connection');
 const Lookup = require('./Lookup');
 class Customer{
@@ -26,6 +27,22 @@ class Customer{
             )
         })
     }
+    static getPharmacyInformation(pharmacyName){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT name,address,email,contact_no FROM pharmacy WHERE name = ?',
+            [pharmacyName],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                console.log(results);
+                resolve(results);
+            }
+        )
+        })
+    }
+    
+    static getBroadcastedRequests(customerId){
     static getDrugTypesFromRequest(requestID){
         try{
             return new Promise((resolve, reject) => {
@@ -51,14 +68,15 @@ class Customer{
     static getBrandedDrugsFromRequest(requestID) {
         try {
             return new Promise((resolve, reject) => {
-                // 'SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs)AS A JOIN drug_type WHERE A.drug_type_id=drug_type.drug_type_id AND request_id=?'
-                const result = pool.query(`SELECT branded_drug_id, brand_name, drug_type_name FROM (requests_and_associated_branded_drugs NATURAL JOIN branded_drug) NATURAL JOIN drug_type WHERE request_id = ${requestID}`,
-                    [],
+                // 'SELECT request_id, drug_type_name, brand_name, manufacturer,drug_type_name FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs) NATURAL JOIN drug_type AS A WHERE request_id=?'
+                const result = pool.query(`SELECT branded_drug_id, brand_name,manufacturer, drug_type_name FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs) AS A JOIN drug_type ON A.drug_type_id = drug_type.drug_type_id WHERE request_id=?`,
+                    [requestID],
                     function (error, results) {
                         if (error) {
                             console.log(result.sql)
                             reject(error);
                         }
+                        console.log(result.sql);
                         console.log(results);
                         resolve(results);
                     }
@@ -203,6 +221,36 @@ class Customer{
          */
 
         return customerLocation;
+    }
+
+    static getCustomerInfoByEmail(email){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT * FROM customer WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
+
+    static async isEmailRegistered(email){
+        var result = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT customer_id FROM customer WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        return result.length != 0;
     }
 }
 
