@@ -33,6 +33,20 @@ class Pharmacy{
         })
     }
 
+    static getPharmacyInfoByEmail(email){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT * FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
+
     static getPendingPharmacies(){
         return new Promise((resolve, reject) =>{
             const result = pool.query('SELECT pharmacy_id,name,address,longitude,latitude,email,contact_no,approved_state FROM pharmacy WHERE approved_state = ?',
@@ -82,6 +96,22 @@ class Pharmacy{
                 }
             )
         } )
+    }
+
+    static async isEmailRegistered(email){
+        var result = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT pharmacy_id FROM pharmacy WHERE email = ?',
+            [email],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        return result.length != 0;
     }
 
 }
