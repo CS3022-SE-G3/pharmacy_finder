@@ -48,20 +48,23 @@ class Pharmacy{
     }
 // **************** I used 30001 for pharmacy_id as a default value ****************
     static putPharmacyDrugTypes(data) {
-        return new Promise((resolve, reject) =>{
-            const drug_types=data;
+        return new Promise((resolve, reject) => {
+            const drug_types = data;
             
-            for(var i=0; i<drug_types.length;i++){
-                const drug_type_id=[parseInt(drug_types[i])];
-                const result = pool.query('INSERT INTO pharmacy_drug_types(pharmacy_id,drug_type_id) VALUES(30001,?)',drug_type_id,
+            for (var i = 0; i < drug_types.length; i++) {
+                const drug_type_id = [parseInt(drug_types[i])];
+                const result = pool.query('INSERT INTO pharmacy_drug_types(pharmacy_id,drug_type_id) VALUES(30001,?)', drug_type_id,
                 
-                function (error, results, fields) {
-                    if (error) {
-                        reject (new Error(error.message));
-                    }
-                    resolve(results);
-                })
- }})}
+                    function (error, results, fields) {
+                        if (error) {
+                            reject(new Error(error.message));
+                        }
+                        resolve(results);
+                    })
+            }
+        }
+        )
+    }
                                    
 
     //send pharmacy information for the customers
@@ -69,15 +72,17 @@ class Pharmacy{
         return new Promise((resolve,reject)=>{
             const result = pool.query('SELECT name,address,email,contact_no FROM pharmacy WHERE name = ?',
             [pharmacyName],
-            function (error, results) {
-                if (error) {
-                    reject (new Error(error.message));
+                function (error, results) {
+                    if (error) {
+                        reject(new Error(error.message));
+                    }
                 }
                 )
-            }
+        }
+        )
             
-        } )
-    })}
+        }
+    
 // **************** I used 30001 for pharmacy_id as a default value ****************
     static putPharmacyBrandedDrugs(data) {
         return new Promise((resolve, reject) =>{
