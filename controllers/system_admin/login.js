@@ -72,7 +72,6 @@ const loginSysAdmin = async (request, response) => {
     }
 
     // res.redirect('/');
-    console.log('/system_admin/home');
     return response.status(200).redirect('/system_admin/home');
 
 }

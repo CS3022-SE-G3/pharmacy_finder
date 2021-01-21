@@ -8,7 +8,6 @@ const _ = require('lodash');
  *
 */
 const viewHomePage = async (request, response) => {
-    console.log("in route");
     try {
         return response.status(200).render('system_admin/home', {
             pageTitle: 'Home'
