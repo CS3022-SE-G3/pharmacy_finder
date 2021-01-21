@@ -35,12 +35,7 @@ const viewRespondedPharmacies = async (req, res) => {
         console.error('ValidationError:customer-requestId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Request ID");
-
-        res.end()
-
-        // stop execution
-        return;
+        return res.status(400).send("Invalid Request ID");
     }
 
     // get the information of the responded pharmacies as requested
