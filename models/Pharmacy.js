@@ -17,6 +17,7 @@ class Pharmacy{
         } )
     }
 
+
     //send pharmacy information for the customers
     static getPharmacyInformation(pharmacyName){
         return new Promise((resolve,reject)=>{
