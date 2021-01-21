@@ -1,109 +1,204 @@
 
-const { pool } = require('../../database/connection');
 const Joi = require('joi');
+const SystemAdmin = require('../../models/SystemAdmin');
+const _ = require('lodash');
 
-function validateAddDrugDetails(drug) {
+/**
+ * @description Validate and add new branded drug
+ * @todo prompt operation status (success/fail)
+ */
+const addNewDrug = async (request, response) => {
+
+    const { error } = validateAddNewDrugDetails(_.pick(request.body,
+        [
+            "brand_name",
+            "manufacturer",
+            "drug_type_id"
+        ]
+    ));
+
+    if (error) {
+        return response.status(400).send(error.message);
+    }
+
+    try {
+        const result = await SystemAdmin.enterDrug(_.pick(request.body,
+            [
+                "brand_name",
+                "manufacturer",
+                "drug_type_id"
+            ]
+        ));
+        return response.status(200).redirect('/system_admin/drug');
+
+
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send("Internal Server Error");
+    }
+}
+
+/** 
+ * @description Load all branded drugs
+ * 
+*/
+const viewAllDrugs = async (request, response) => {
+    try {
+        const result = await SystemAdmin.getAllDrugs();
+        return response.status(200).render('system_admin/drugs', {
+            drugs: result,
+            pageTitle: 'Drugs'
+        });
+    }
+    catch (error) {
+        console.log(error);
+        return response.status(500).send("internal server error");
+    }
+}
+
+/** 
+ * @description Return drug types with add new branded drug form
+ *
+*/
+const viewAddDrugForm = async (request, response) => {
+    try {
+        const result = await SystemAdmin.getAllDrugTypes();
+        return response.status(200).render('system_admin/add_drug_form', {
+            drugTypes: result,
+            pageTitle: 'Add New Branded Drug'
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+        return response.status(500).send("internal server error");
+    }
+}
+
+/** 
+ * @description Return drug types with add new branded drug form
+ * 
+*/
+const viewUpdateDrugForm = async (request, response) => {
+    try {
+        const drug = {
+            branded_drug_id: request.params.branded_drug_id,
+            brand_name: request.params.brand_name,
+            manufacturer: request.params.manufacturer,
+            drug_type_id: request.params.drug_type_id
+        };
+        const results = await SystemAdmin.getAllDrugTypes();
+        return response.status(200).render('system_admin/update_drug_form', {
+            drug: drug,
+            drugTypes: results,
+            pageTitle: 'Update Branded Drug Info'
+        });
+
+    }
+    catch (error) {
+        console.log(error.message);
+        return response.status(500).send("Internal Server Error");
+    }
+}
+
+/**
+ * @description Validate and update branded drug details
+ * @todo prompt operation status (success/fail)
+ */
+const updateDrugDetails = async (request, response) => {
+    console.log("In drug controller");
+    const { error } = validateUpdateDrugDetails(_.pick(request.body,
+        [
+            "branded_drug_id",
+            "brand_name",
+            "manufacturer",
+            "drug_type_id"
+        ]
+    ));
+
+    if (error) {
+        return response.status(400).send(error.message);
+    }
+
+    try {
+        const result = await SystemAdmin.updateDrug(_.pick(request.body,
+            [
+                "branded_drug_id",
+                "brand_name",
+                "manufacturer",
+                "drug_type_id"
+            ]
+        ));
+
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send("Internal Server Error");
+    }
+    return response.status(200).redirect('/system_admin/drug');
+}
+
+/** 
+ * @description return delete branded drug prompt
+ * 
+*/
+const viewDeleteDrugPrompt = async (request, response) => {
+    return response.status(200).render('system_admin/delete_drug_prompt', {
+        branded_drug_id: request.params.branded_drug_id,
+        pageTitle: 'Delete Branded Drug'
+    });
+}
+
+/** 
+ * @description Delete branded drug
+ * @todo prompt operation status (success/fail)
+*/
+const deleteDrug = async (request, response) => {
+
+    try {
+        const result = await SystemAdmin.deleteDrug(_.pick(request.body,
+            [
+                "branded_drug_id"
+            ]
+        ));
+        return response.status(200).redirect('system_admin/drug');
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send("Internal Server Error");
+    }
+}
+
+/**
+ * @description Valitdate branded drug details
+ */
+function validateAddNewDrugDetails(drug) {
     const schema = Joi.object({
-        "brand_name"  : Joi.string().required(),
+        "brand_name": Joi.string().required(),
         "manufacturer": Joi.string().required(),
         "drug_type_id": Joi.number().integer().required()
     });
-    
+
     return schema.validate(drug);
 }
 
+/**
+ * @description Valitdate branded drug details
+ */
 function validateUpdateDrugDetails(drug) {
     const schema = Joi.object({
-        "branded_drug_id"   : Joi.number().integer().required(),
-        "brand_name"        : Joi.string().required(),
-        "manufacturer"      : Joi.string().required(),
-        "drug_type_id"      : Joi.number().integer().required()
+        "branded_drug_id": Joi.number().integer().required(),
+        "brand_name": Joi.string().required(),
+        "manufacturer": Joi.string().required(),
+        "drug_type_id": Joi.number().integer().required()
     });
-    
+
     return schema.validate(drug);
 }
 
-function getAllDrugs() { //TODO: fix
-    return new Promise((resolve, reject) => {
-        const query = pool.query("SELECT branded_drug_id,brand_name,manufacturer,drug_type_id FROM branded_drug WHERE is_deleted = ?",
-            [false],
-            function (error, results, fields) {
-                if (error) {
-                    console.log(query.sql);
-                    reject(error);
-                    return;
-                };
-                console.log(results);
-                resolve(results[0]);
-            }
-        )
-    })
-}
-
-function enterDrug(drug) {
-    return new Promise((resolve, reject) => {
-        const query = pool.query("INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES (?,?,?)",
-            [
-                drug.brand_name,
-                drug.manufacturer,
-                drug.drug_type_id
-            ],
-            function (error, results, fields) {
-                if (error) {
-                    console.log(query.sql);
-                    reject(error);
-                    return;
-                };
-                resolve(console.log("Done"));
-            }
-        )
-    })
-}
-
-function updateDrug(drug) {
-    return new Promise((resolve, reject) => {
-        const query = pool.query("UPDATE branded_drug SET brand_name = ?, manufacturer = ?, drug_type_id = ? WHERE branded_drug_id = ?",
-            [
-                drug.brand_name,
-                drug.manufacturer,
-                drug.drug_type_id,
-                drug.branded_drug_id
-            ],
-            function (error, results, fields) {
-                if (error) {
-                    console.log(query.sql);
-                    reject(error);
-                    return;
-                };
-                resolve(console.log("Done"));
-            }
-        )
-    })
-}
-
-function deleteDrug(drug) {
-    return new Promise((resolve, reject) => {
-        const query = pool.query("UPDATE branded_drug SET is_deleted = ? WHERE branded_drug_id = ?",
-            [
-                true,
-                drug.drug_type_id
-            ],
-            function (error, results, fields) {
-                if (error) {
-                    console.log(query.sql);
-                    reject(error);
-                    return;
-                };
-                resolve(console.log("Done"));
-            }
-        )
-    })
-}
-
-exports.getAllDrugs = getAllDrugs;
-exports.validateAddDrugDetails = validateAddDrugDetails;
-exports.validateUpdateDrugDetails = validateUpdateDrugDetails;
-exports.enterDrug = enterDrug;
-exports.updateDrug = updateDrug;
+exports.addNewDrug = addNewDrug;
+exports.viewAddDrugForm = viewAddDrugForm;
+exports.viewAllDrugs = viewAllDrugs;
+exports.viewUpdateDrugForm = viewUpdateDrugForm;
+exports.updateDrugDetails = updateDrugDetails;
+exports.viewDeleteDrugPrompt = viewDeleteDrugPrompt;
 exports.deleteDrug = deleteDrug;
+
 

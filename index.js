@@ -2,9 +2,14 @@
 const express = require('express');
 const app = express();
 // const config = require('config');
+const dotenv = require('dotenv');
+dotenv.config({
+    path: './config/config.env'
+});
 
 // set up template engine
 app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 // static files
 app.use(express.static('./public'));

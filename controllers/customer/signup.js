@@ -1,26 +1,39 @@
-
 const Joi = require('joi');
 const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
+const Lookup = require('../../models/lookup.js');
 
+const lookup = async (email) => {
+    const user = await Lookup.lookupEmail(email);
+    if (user) {
+        throw new Joi.ValidationError('Email already registered');
+    }
+};
+/**
+ * 
+ * @todo add regex for NIC 
+ */
 function validateCustomerAccount(customer) {
     const schema = Joi.object({
-        "full_name"     : Joi.string().required(),
-        "nic"           : Joi.string().required(),
-        "email"         : Joi.string().email().required(),           
-        "address"       : Joi.string().required(),
-        "gender"        : Joi.string().required(),
-        "dob"           : Joi.date().required(),
-        "contact_no"    : Joi.number().integer().required(),
-        "password"      : Joi.string().required()
+        "full_name"             : Joi.string().required(),
+        "nic"                   : Joi.string().required(),
+        "email"                 : Joi.string().email().required().external(lookup),           
+        "address"               : Joi.string().required(),
+        "gender"                : Joi.string().required(),
+        "dob"                   : Joi.date().required(),
+        "contact_no"            : Joi.number().integer().required(),
+        "password"              : Joi.string().required(),
+        "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
     });
-    return schema.validate(customer);
+    return schema.validateAsync(customer);
 
 }
 
 const signupCustomer = async (request, response) => {
-    const {error} = validateCustomerAccount(_.pick(request.body,
+    try
+    {
+        await validateCustomerAccount(_.pick(request.body,
         [
             "full_name",
             "nic",
@@ -29,13 +42,14 @@ const signupCustomer = async (request, response) => {
             "gender",
             "dob",
             "contact_no",
-            "password"
+            "password",
+            "password_confirmation"
         ]
-    ));
+    ));}
 
-    if (error) {
-        console.log("Customer error validation" + error.message[0]);
-        return response.status(400).send("Incorrect information entered");
+    catch (error) {
+        console.log("Customer error validation" + error.message);
+        return response.status(400).send(error.message);
     }
 
     request.body.password = await generatePassword(request.body.password);

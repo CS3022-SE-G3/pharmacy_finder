@@ -3,12 +3,20 @@ const router = express.Router();
 const path = require('path');
 const { signupCustomer } = require('../../controllers/customer/signup');
 
-// URL: localhost3000/customer/signup, method is GET
+/**
+ * @description returns sign up form for customer
+ * @URL localhost:3000/customer/signup
+ * @method GET
+ */
 router.get('/', (request, response) => {
     return response.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
 });
 
-// URL: localhost3000/customer/signup, method is POST
+/**
+ * @description information entered in sign up form is obtained from customer
+ * @URL localhost:3000 / customer / signup
+ * @method POST
+ */
 router.post('/', signupCustomer);
 
 

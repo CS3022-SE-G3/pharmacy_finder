@@ -1,5 +1,5 @@
 const { pool } = require('../database/connection');
-
+const Lookup = require('./Lookup');
 class Customer{
 
     static enterCustomer(customer) {
@@ -25,7 +25,185 @@ class Customer{
                 }
             )
         })
+    }
+    static getDrugTypesFromRequest(requestID){
+        try{
+            return new Promise((resolve, reject) => {
+                const result = pool.query(`(SELECT drug_type_id, drug_type_name FROM requests_and_associated_drug_types NATURAL JOIN drug_type WHERE request_id = ${requestID} )`,
+                [],
+                function (error, results) {
+                    if (error) {
+                        console.log(result.sql)
+                        reject (error);
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+                )
+            })
+        }catch{
+            console.log(error)
         }
+                
+            
+    }
+
+    static getBrandedDrugsFromRequest(requestID) {
+        try {
+            return new Promise((resolve, reject) => {
+                // 'SELECT request_id, drug_type_name, brand_name, manufacturer FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs)AS A JOIN drug_type WHERE A.drug_type_id=drug_type.drug_type_id AND request_id=?'
+                const result = pool.query(`SELECT branded_drug_id, brand_name, drug_type_name FROM (requests_and_associated_branded_drugs NATURAL JOIN branded_drug) NATURAL JOIN drug_type WHERE request_id = ${requestID}`,
+                    [],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql)
+                            reject(error);
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+
+
+    }
+    static getAllRequests(customerId){
+        try{
+            return new Promise((resolve,reject)=>{
+                const result = pool.query('SELECT * FROM requests WHERE customer_id=?',
+                [customerId],
+                function (error, results) {
+                    if (error) {
+                        reject (error);
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+                )
+            })
+        }catch{
+            console.log(error)
+        }
+                
+            
+    }
+    static getRespondedPharmacies(requestId) {
+        console.log("Getting responded pharmacies");
+            return new Promise((resolve, reject) => {
+                const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
+                    [
+                        "Approved",
+                        requestId
+                    ],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            }
+            );
+        }
+    
+
+    static enterRequest(customerID) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('SELECT insert_request (?,?) AS id',
+                    [customerID, Lookup.getDate()],
+                    function (error, results) {
+                        if (error) {
+                            reject(new Error(error.message));
+                        }
+                        console.log(results[0].id);
+                        resolve(results[0].id);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+        
+    }
+    //pharmacies
+    static enterPharmacies(pharmacies) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_pharmacies (request_id,pharmacy_id) VALUES ?',
+                    [pharmacies],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+                            reject(new Error(error.message));
+                        }
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+
+    }
+    //drug types
+    static enterDrugTypes(drugTypes) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_drug_types  (request_id,drug_type_id) VALUES ?',
+                    [drugTypes],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+                
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+                
+    //branded drugs
+    static enterBrandedDrugs(brandedDrugs) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('INSERT INTO requests_and_associated_branded_drugs  (request_id,branded_drug_id) VALUES ?',
+                    [brandedDrugs],
+                    function (error, results) {
+                        if (error) {
+                            console.log(result.sql);
+
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch {
+            console.log(error)
+        }
+    }
+
+    static getLocation(customerID) {
+        const customerLocation = [];
+        /**
+         * @todo Get live location or look up the address in the table and convert it to latitude and longitude
+         */
+
+        return customerLocation;
+    }
 }
 
 module.exports = Customer;
