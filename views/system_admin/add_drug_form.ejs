@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Branded Drug Form</title>
+</head>
+
+<body>
+
+    <form method="POST" action="/system_admin/drug/add">
+
+        Brand Name: <input type="text" id="brand_name" name="brand_name" required>
+        <br>
+
+        Manufacturer: <input type="text" id="manufacturer" name="manufacturer" required>
+        <br>
+
+        <!-- TODO: implement a database search to select drug type -->
+        Drug Type: <select type="text" id="drug_type_id" name="drug_type_id" required>
+            <% for (let drugType of drugTypes) { %>
+                <option value="<%=drugType.drug_type_id%>">
+                    <%=drugType.drug_type_name%>
+                </option>
+                <%}%>
+        </select>
+        <br>
+
+        <button type="submit">Add</button>
+    </form>
+    <form action="/system_admin/drug_type/add" method="get">
+        <button type="submit">Add New Drug Type</button>
+    </form>
+
+</body>
+
+</html>

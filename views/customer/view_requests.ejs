@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= pageTitle %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<main>
+    <table>
+        <h2>Requested Drugs:</h2>
+        <br>
+             Drug Types:
+             <% for(var i=0; i < drug_types.length; i++) { %>
+                <br>
+                <%= i+1%>.
+            Drug Type Name: <%= drug_types[i].drug_type_name %>
+             <%}%>
+             <br><br>
+
+             Branded Drugs:
+             <% for(var i=0; i < branded_drugs.length; i++) { %>
+                <br>
+                <%= i +1%>.
+
+             Brand Name: <%= branded_drugs[i].brand_name  %>    ,
+            
+             Drug Type Name: <%= branded_drugs[i].drug_type_name %>
+             <%}%>
+             <br><br>
+           
+    </table>
+
+</main>
+</body>
+</html>

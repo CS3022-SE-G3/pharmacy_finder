@@ -5,7 +5,7 @@ const router = express.Router();
 const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy');
 const {getCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
 const {postCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
-
+const path = require('path');
 /**
  * @description get the page for searching a pharmacy by Pharmacy Name
  * @URL http://localhost:3000/customer/pharmacy/search
@@ -19,7 +19,9 @@ router.get('/search',getCustomerSearchPharmacy);
  * @method POST
  */
 router.post('/search',postCustomerSearchPharmacy);
-
+router.get('/', (req, res) => {
+    return res.render('/customer/search_for_pharmacy');
+});
 
 /**
  * @description Load and view requested pharmacy information
@@ -27,6 +29,6 @@ router.post('/search',postCustomerSearchPharmacy);
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/view/:name', viewPharmacyInformation);
+router.get('/view/:pharmacy_name', viewPharmacyInformation);
 
 module.exports = router;

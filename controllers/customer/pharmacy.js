@@ -1,9 +1,8 @@
 
-const express = require('express');
-const router = express.Router();
 const Joi = require('joi');
 const { pool } = require('../../database/connection');
 const Customer = require('../../models/Customer');
+const pharmacy = require('../../models/Pharmacy');
 
 /**
  * 
@@ -26,7 +25,8 @@ function validatePharmacyName(pharmacyName){
 const viewPharmacyInformation = async(req, res) => {
 
     // get pharmacyID from URL
-    const pharmacyName = req.params.name; 
+    const pharmacyName = req.params.pharmacy_name; 
+    console.log(pharmacyName);
 
     // validating
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
@@ -37,12 +37,7 @@ const viewPharmacyInformation = async(req, res) => {
         console.error('ValidationError:customer-pharmacy_name: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Pharmacy Name provided");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Pharmacy Name provided");
     }
 
     // get the information of the pharmacy as requested
