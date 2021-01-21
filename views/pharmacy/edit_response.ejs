@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Response</title>
+</head>
+<body>
+    <ul>
+        <li><%= info[0][0].full_name %></li>
+        <li><%= info[0][0].email %></li>
+        <li><%= info[0][0].address %></li>
+        <li><%= info[0][0].gender %></li>
+        <li><%= info[0][0].contact_no %></li>
+    </ul>
+    <div>
+        <form action="/pharmacy/edit_response" method="post">
+            <div>
+                <% let j = 0; %>
+                <% for(let i=0; i < info[1].length; i++){ %>
+                    <% if ((j < info[3].length) && (info[1][i].drug_type_id === info[3][j].drug_type_id)){ %>
+                        <label for="<%= info[1][i].drug_type_name %>"><%= info[1][i].drug_type_name %></label>
+                        <input type="checkbox" id="drug_type" name="drug_type_ids" value="<%= info[1][i].drug_type_id %>" checked>
+                        <br>
+                        <% j++; %>
+                    <% } else { %>
+                        <label for="<%= info[1][i].drug_type_name %>"><%= info[1][i].drug_type_name %></label>
+                        <input type="checkbox" id="drug_type" name="drug_type_ids" value="<%= info[1][i].drug_type_id %>">
+                        <br>
+                    <% } %>
+                <% } %>
+            </div>
+            <div>
+                <% let k = 0; %>
+                <% for(let i=0; i < info[2].length; i++){ %>
+                    <% if ((k < info[4].length) && (info[2][i].branded_drug_id === info[4][k].branded_drug_id)){ %>
+                        <label for="<%= info[2][i].brand_name %>"><%= info[2][i].brand_name %></label>
+                        <input type="checkbox" id="branded_drug" name="branded_drug_ids" value="<%= info[2][i].branded_drug_id %>" checked>
+                        <br>
+                        <% k++; %>
+                    <% } else { %>
+                        <label for="<%= info[2][i].brand_name %>"><%= info[2][i].brand_name %></label>
+                        <input type="checkbox" id="branded_drug" name="branded_drug_ids" value="<%= info[2][i].branded_drug_id %>">
+                        <br>
+                    <% } %>
+                <% } %>
+            </div>
+            <button type="submit">Respond</button>
+        </form>
+    </div>
+</body>
+</html>
