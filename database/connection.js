@@ -9,3 +9,4 @@ module.exports.pool = mysql.createConnection({
     port: config.get("port"),
     database: config.get("database")
 });
+

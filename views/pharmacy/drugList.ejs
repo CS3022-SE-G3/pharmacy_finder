@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>Drug Details</title>
+        
+        <link rel="stylesheet" href="/assets/bootstrap.min.css">
+        <script src="/assets/jquery.js" ></script>
+        <script src="/assets/drugJS.js" ></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+
+        
+<form method="post">
+        <div class="content-table">
+            <div class="content pb-0">
+                <div class="orders">
+                    <div class="row">
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body--">
+                                    <div class="table-stats ov-h">
+                                        <table class="table  table-dark table-hover">
+        
+                                            <thead>
+                                                <tr>
+                                                    <th width="70%" ><h3>Drug Type</h3></th>
+                                                    <th width="30%"></th>
+                                                </tr>
+                                            </thead>
+
+                                            <% for(var i=0; i < drug_types.length; i++){ %>
+                                                <tr>
+                                                    <td><%= drug_types[i].drug_type_name  %></td>
+                                                    <td><button class="btn btn-danger" name="delete_drug_type" value="<%= drug_types[i].drug_type_id%>">Delete</button></td>
+                                                </tr>
+                                                
+                                            <% } %>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body--">
+                                    <div class="table-stats ov-h">
+                                        <table class="table  table-dark table-hover">
+        
+                                            <thead>
+                                                <tr>
+                                                    <th width="70%" ><h3>Branded Drug</h3></th>
+                                                    <th width="30%"></th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <% for(var i=0; i < branded_drugs.length; i++){ %>
+                                                <tr>
+                                                    <td><%= branded_drugs[i].brand_name  %></td>
+                                                    <td><button class="btn btn-danger" name="delete_branded_drug" value="<%= branded_drugs[i].branded_drug_id%>">Delete</button></td>
+                                                </tr>
+                                                
+                                            <% } %>
+                                            
+                                            
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> 
+        </div>  
+        
+</form>
+
+        <a href="/pharmacy/addDrug"><button class="btn btn-lg btn-info">ADD DRUG</button></a>
+  
+    </body>
+
+        
+</html>
