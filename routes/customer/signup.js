@@ -10,8 +10,8 @@ const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
  * @URL localhost:3000/customer/signup
  * @method GET
  */
-router.get('/', ifNotLoggedIn, (request, response) => {
-    return response.render('/customer/signup');
+router.get('/', (request, response) => {
+    return response.render('customer/signup');
 });
 
 /**
