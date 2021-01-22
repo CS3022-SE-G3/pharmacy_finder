@@ -72,7 +72,7 @@ const loginSysAdmin = async (request, response) => {
     }
 
     // res.redirect('/');
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/system_admin/home');
 
 }
 
