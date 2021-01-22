@@ -9,13 +9,24 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <form action="/customer/pharmacy/search" method ="get">
-            <input type="submit" value="Search for pharmacy">
-        </form>
+        <div>
+            <form action="/customer/pharmacy/search" method ="get">
+                <input type="submit" value="Search for pharmacy">
+            </form>
+        </div>
         <br>
         <br>
-        <form action="/customer/request/view" method="get">
-            <input type="submit" value="View sent requests">
-        </form>
+        <div>
+            <form action="/customer/request/view" method="get">
+                <input type="submit" value="View sent requests">
+            </form>
+        </div>
+
+        <div>
+            <form action="/logout" method="POST">
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+
     </body>
 </html>
