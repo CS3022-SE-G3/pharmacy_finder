@@ -5,10 +5,10 @@ const isACustomer = require('../../middleware/isACustomer');
 
 /**
  * @description Load and view all responses of pharmacies for a request
- * @URL localhost:3000/customer/response/view/:Id 
+ * @URL localhost:3000/customer/response/view/:requestId 
  * @method GET
  * @todo return results in response body along with the html file
  */
-router.get('/view/:id', isACustomer, viewRespondedPharmacies);
+router.get('/view/:id',isACustomer,viewRespondedPharmacies);
 
 module.exports = router;
