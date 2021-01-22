@@ -17,9 +17,9 @@ class Pharmacy{
         } )
     }
 
-    static getDrugTypes() {
+    static getDrugTypes(pharmacy_id) {
         return new Promise((resolve, reject) =>{
-            const result = pool.query('SELECT drug_type_id,drug_type_name FROM drug_type WHERE drug_type_id NOT IN (SELECT drug_type_id FROM pharmacy_drug_types) ',
+            const result = pool.query('SELECT drug_type_id,drug_type_name FROM drug_type WHERE drug_type_id NOT IN (SELECT drug_type_id FROM pharmacy_drug_types WHERE pharmacy_id = ?) ', [pharmacy_id],
                 
                 function (error, results, fields) {
                     if (error) {
@@ -33,9 +33,9 @@ class Pharmacy{
         } )
     }
 
-    static getBrandedDrugs() {
+    static getBrandedDrugs(pharmacy_id) {
         return new Promise((resolve, reject) =>{
-            const result = pool.query('SELECT branded_drug_id,brand_name FROM branded_drug WHERE branded_drug_id NOT IN (SELECT branded_drug_id FROM pharmacy_branded_drugs)',
+            const result = pool.query('SELECT branded_drug_id,brand_name FROM branded_drug WHERE branded_drug_id NOT IN (SELECT branded_drug_id FROM pharmacy_branded_drugs WHERE pharmacy_id = ?)', [pharmacy_id],
                 
                 function (error, results, fields) {
                     if (error) {

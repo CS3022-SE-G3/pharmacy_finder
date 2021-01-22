@@ -15,8 +15,9 @@ router.get('/', isAPharmacy, function(request, response) {
 
     async function getData(){
         try{
-            const drug= await getDrugTypes();
-            const brand = await getBrandedDrugs();
+            const pharmacy_id = request.session.user.id;
+            const drug= await getDrugTypes(pharmacy_id);
+            const brand = await getBrandedDrugs(pharmacy_id);
             
             response.render('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
         }
