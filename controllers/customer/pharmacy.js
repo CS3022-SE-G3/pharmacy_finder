@@ -75,12 +75,7 @@ const postCustomerSearchPharmacy = async(req,res)=>{
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
     if (error){
         console.log(error);
-        return res.status(400).render('customer/search_pharmacy',{
-            pageTitle: "Search Pharmacy",
-            pharmacyInformation: [],
-            hasErrors: true,
-            errors: error.details[0].message
-        });
+        return res.status(500).render('500');
     }
     try{
         pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
@@ -92,9 +87,10 @@ const postCustomerSearchPharmacy = async(req,res)=>{
                 errors: "Pharmacy not registered"
             });
         }
-        return res.status(200).render('customer/search_pharmacy',{
+        console.log(pharmacyInformation);
+        return res.status(200).render('customer/view_pharmacy',{
             pageTitle: "Search Pharmacy",
-            pharmacyInformation: pharmacyInformation,
+            pharmacyInformation: pharmacyInformation[0],
             hasErrors: false
         });
     }
