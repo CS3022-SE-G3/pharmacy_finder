@@ -4,7 +4,11 @@ const isSystemAdmin = (req, res, next) => {
             next();
         } else {
             console.log("Not System Admin");
-            res.redirect('/');
+            if (req.session.user.class == 1){
+                res.redirect('/pharmacy/home');
+            }else{
+                res.redirect('/customer/home');
+            }
         }
     }
     else {

@@ -177,8 +177,6 @@ const viewBroadcastedRequests = async(req, res) => {
         console.log(error.message);
         return res.status(500).render('500');
     }
-   
-
 }
 
 // ====================================================END OF USE CASE======================================================//
@@ -203,10 +201,7 @@ function validateCustomerId(customerId){
 
 const viewAllRequests = async(req, res) => {
 
-    // get customerId from URL
-    // get customerId from login
-    // const customerId = req.customerId; 
-    const customerId = "10001";
+    const customerId = req.session.user.id;
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -229,7 +224,7 @@ const viewAllRequests = async(req, res) => {
             
         }
 
-        return res.status(200).render('customer/view_all_requests',{
+        return res.status(200).render('customer/home',{
             all_requests: result,
             pageTitle: 'Requests'
         });
@@ -244,7 +239,14 @@ const viewAllRequests = async(req, res) => {
 
 // ====================================================END OF USE CASE======================================================//
 
+const deleteBroadcast = async (req, res) => {
+    const requestID = req.body.requestID;
+    result = await Customer.deleteRequest(requestID);
+    res.status(200).redirect('/customer');
+}
+
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
 module.exports.getBroadcastForm = getBroadcastForm;
 module.exports.createBroadcastRequest = createBroadcastRequest;
 module.exports.viewAllRequests = viewAllRequests;
+module.exports.deleteBroadcast = deleteBroadcast;

@@ -80,11 +80,10 @@ const loginPharmacy = async (request, response) => {
 
         // return response.status(500).send(err_msg);
 
-        return response.render('pharmacy/login_error', { err_data: err_msg });
+        return response.render('500');
     }
 
-    // res.redirect('/');
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/pharmacy/home');
 
 }
 

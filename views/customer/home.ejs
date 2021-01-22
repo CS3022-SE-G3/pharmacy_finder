@@ -1,32 +1,67 @@
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <div>
-            <form action="/customer/pharmacy/search" method ="get">
-                <input type="submit" value="Search for pharmacy">
-            </form>
-        </div>
-        <br>
-        <br>
-        <div>
-            <form action="/customer/request/view" method="get">
-                <input type="submit" value="View sent requests">
-            </form>
-        </div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= pageTitle %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <h1>Customer Start Page</h1>
+    <table>
+        <thead>
+            <th>Request</th>
+            <th>Date Created</th>
+            <th>View</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+        <% for(var i=0; i < all_requests.length; i++) { %>
+            <tr>
+                <td>
+                <%= all_requests[i].request_id %>
+                </td>
+                <td>
+                    <%= (all_requests[i].date_created).slice(0,11)%>
+                </td>
+                <td>
+                    <form action='/customer/request/view/req/<%= all_requests[i].request_id %>' method="GET">
+                        <input type="submit" value="View">
+                    </form>
+                </td>
+                <td>
+                <form action='/customer/request/delete' method="POST">
+                    <input type="text" name="requestID" id="requestID" value=<%= all_requests[i].request_id %> hidden readonly>
+                    <input type="submit" value="Delete">
+                </form>
+                </td>
+             <br><br>
+           
+        <% } %>
+            </tbody>
+        </table>
+    <form action="/customer/pharmacy/search" method="get">
+        <input type="submit" value="Search for pharmacy">
+    </form>
+    <br>
+    <form action="/customer/profile" method="get">
+        <input type="submit" value="View profile">
+    </form>
+    <br>
+    <form action="/customer/request/broadcast" method="get">
+        <input type="submit" value="Create new request">
+    </form>
+    <br>
 
-        <div>
-            <form action="/logout" method="POST">
-                <button type="submit">Log Out</button>
-            </form>
-        </div>
+    <form action="/logout" method="POST">
+        <input type="submit" value="Log out">
+    </form>
 
-    </body>
+    <br>
+
+
+</body>
 </html>

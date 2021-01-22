@@ -6,7 +6,6 @@
     <title><%= pageTitle %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
 </head>
 <body>
 <main>
@@ -14,25 +13,55 @@
         <h2>Requested Drugs:</h2>
         <br>
              Drug Types:
-             <% for(var i=0; i < drug_types.length; i++) { %>
-                <br>
-                <%= i+1%>.
-            Drug Type Name: <%= drug_types[i].drug_type_name %>
+                <%if (drug_types.length==0){%>
+                    <br>
+                        No drug types were selected
+                    <%} else{%>
+                        <table>
+                            <thead>
+                                <th></th>
+                                <th>Drug Type</th>
+                            </thead>
+                            <tbody>
+                                    <% for(var i=0; i < drug_types.length; i++) { %>
+
+                                <tr>
+                                    <td> <%= i+1%></td>
+                                    <td> <%= drug_types[i].drug_type_name %></td>
+                                    <%}%>
+                                </tr>
+                            </tbody>
+                        </table>
              <%}%>
              <br><br>
 
              Branded Drugs:
-             <% for(var i=0; i < branded_drugs.length; i++) { %>
-                <br>
-                <%= i +1%>.
-
-             Brand Name: <%= branded_drugs[i].brand_name  %>    ,
-            
-             Drug Type Name: <%= branded_drugs[i].drug_type_name %>
+                <%if (branded_drugs.length==0){%>
+                    No branded drugs were selected
+                    <%} else{%>
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th>Brand Name</th>
+                            <th>Drug Type Name</th>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i < branded_drugs.length; i++) { %>
+                            <tr>
+                                <td> <%= i+1%></td>
+                                <td> <%= branded_drugs[i].brand_name  %></td>
+                                <td> <%= branded_drugs[i].drug_type_name %></td>
+                                <%}%>
+                                </tr>
+                            </tbody>
+                        </table>
              <%}%>
+             
              <br><br>
            
     </table>
+
+    
 
 </main>
 </body>
