@@ -33,89 +33,157 @@ const createBroadcastRequest = async (request, response) => {
 
     //@todo: get customer id either from session or from post request
     const customerID = request.session.user.id;
+    console.log("Customer ID");
+    console.log(customerID);
+    console.log("");
+
     const customerLocation = await Customer.getLocation(customerID);    //lat and longitude
-    let tempDrugTypes=[];
-    let tempBrandedDrugs=[];
+    console.log("Customer Location");
+    console.log(customerLocation);
+    console.log("");
+
+    let tempDrugTypes = [];
+    let tempBrandedDrugs = [];
+    let tempDrugTypesBeforeProcessing = [];
+    let tempBrandedDrugsBeforeProcessing = [];
 
     //both are defined
     if (request.body.drug_types) {
-        tempDrugTypes = request.body.drug_types;
+        tempDrugTypesBeforeProcessing = request.body.drug_types;
     }
 
     if (request.body.branded_drugs) {
-        tempBrandedDrugs = request.body.branded_drugs;
+        tempBrandedDrugsBeforeProcessing = request.body.branded_drugs;
     }
     
     /**
      * @todo add validation? minimum one drug has to be selected
      */
-    if (tempDrugTypes.length == 0 && tempBrandedDrugs.length == 0) {
+    if (tempDrugTypesBeforeProcessing.length == 0 && tempBrandedDrugsBeforeProcessing.length == 0) {
         return response.send("You have not selected any drugs")
     }
-    
-    console.log(tempDrugTypes);
-    console.log(tempBrandedDrugs);
+    console.log("Drug types entered by customer");
+    console.log(tempDrugTypesBeforeProcessing);
+    console.log("");
+
+    console.log("Branded drugs entered by customer");
+    console.log(tempBrandedDrugsBeforeProcessing);
+
+    if (typeof tempBrandedDrugsBeforeProcessing === 'string' || tempBrandedDrugsBeforeProcessing instanceof String) {
+        tempBrandedDrugs.push(tempBrandedDrugsBeforeProcessing);
+    }
+    else {
+        tempBrandedDrugs = tempBrandedDrugsBeforeProcessing;
+    }
+
+    if (typeof tempDrugTypesBeforeProcessing === 'string' || tempDrugTypesBeforeProcessing instanceof String) {
+        tempDrugTypes.push(tempDrugTypesBeforeProcessing);
+    } else {
+        tempDrugTypes = tempDrugTypesBeforeProcessing;
+    }
 
     const tempPharmaciesToLookUp = await Lookup.lookupPharmaciesForDrugs(tempBrandedDrugs, tempDrugTypes);
+
     let pharmaciesToLookUp = [];
     tempPharmaciesToLookUp.forEach(value => {
             pharmaciesToLookUp.push(value.pharmacy_id);
     });
 
+    console.log("Pharmacies that contain the drugs needed by the customer");
     console.log(pharmaciesToLookUp);
+    console.log("");
 
     const latitude = customerLocation.latitude;
     const longitude = customerLocation.longitude;
     const left = longitude - 0.27027;
     const right = longitude + 0.27027;
     const up = latitude + 0.27027;
-    const down = latitude + 0.27027;
+    const down = latitude - 0.27027;
+    console.log("Distance ranges");
+    console.log("left");
+    console.log(left);
+    console.log("");
+
+    console.log("right");
+    console.log(right);
+    console.log("");
+
+    console.log("up");
+    console.log(up);
+    console.log("");
+
+    console.log("down");
+    console.log(down);
+    console.log("");
 
     // latitude +- 0.27027
     // longitude +- 0.27027
     try
     {
         const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
+        if (!pharmacies || pharmacies.length==0) {
+            return response.send("There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results");
+        }
+        console.log("pharmacies in the distance range");
+        console.log(pharmacies);
+        console.log("");
+
+        const id = await Customer.enterRequestPart1();
+        const waiting = await Customer.enterRequestPart2(id, customerID);
+
+        console.log("request id to be entered");
+        console.log(id);
+        console.log("");
+
+        let drugTypes = [];
+        let brandedDrugs = [];
+        let requestablePharmacies = [];
+
+        tempDrugTypes.forEach(function (drugType) {
+            drugTypes.push([id, drugType]);
+        });
+
+        console.log("drug types to be entered");
+        console.log(drugTypes);
+        console.log("");
+
+        tempBrandedDrugs.forEach(function (brandedDrug) {
+            brandedDrugs.push([id, brandedDrug]);
+        });
+
+        console.log("branded drugs to be entered");
+        console.log(brandedDrugs);
+        console.log("");
+
+        pharmacies.forEach(function (pharmacy) {
+            requestablePharmacies.push([id, pharmacy.pharmacy_id]);
+        });
+
+        console.log("pharmacies to be entered");
+        console.log(requestablePharmacies);
+        console.log("");
+
+        const id1 = await Customer.enterPharmacies(requestablePharmacies);
+        console.log("Pharmacies entered status");
+        console.log(id1);
+        console.log("");
+
+        const id2 = await Customer.enterDrugTypes(drugTypes);
+        console.log("Drug types entered status");
+        console.log(id2);
+        console.log("");
+
+        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+        console.log("Branded drugs entered status");
+        console.log(id3);
+        console.log("");
+        return response.status(200).redirect('/customer/home');
+        
     }
     catch (error) {
         console.log(error);
-        return response.send(500).render('500');
-
+        return response.status(500).render('500');
     }
-
-
-    // console.log(pharmacies);
-    // console.log(tempDrugTypes);
-    // console.log(tempBrandedDrugs);
-    
-    // try
-    // {
-    //     const id = await Customer.enterRequest(customerID);
-    //     console.log(id);
-
-    //     tempDrugTypes.forEach(function (drugType) {
-    //         drugTypes.push([id, drugType]);
-    //     });
-
-    //     tempBrandedDrugs.forEach(function (brandedDrug) {
-    //         brandedDrugs.push([id, brandedDrug]);
-    //     });
-        
-    //     console.log(pharmacies);
-    //     console.log(drugTypes);
-    //     console.log(brandedDrugs);
-
-    //     const id1 = await Customer.enterPharmacies(pharmacies);
-    //     const id2 = await Customer.enterDrugTypes(drugTypes);
-    //     const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
-
-    //     response.status(200).send("OK");
-    // }
-    // catch (error) {
-    //     response.status(500).send("Internal Server error");
-    //     console.log(error);
-    // }
-    
 }
 
 function validateBroadcast(broadcaset) {

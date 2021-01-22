@@ -73,10 +73,8 @@ const signupCustomer = async (request, response) => {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
         return response.render('500');
-
     }
-
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/customer/home');
 }
 
 exports.signupCustomer = signupCustomer;
