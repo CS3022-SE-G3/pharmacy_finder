@@ -106,8 +106,24 @@ class Lookup{
         });
     }
 
-    static lookupPharmacies(latitude, longitude) {
-        
+    static lookupPharmacies(left, right, up, down,pharmacies) {
+
+        const query = `SELECT pharmacy_id FROM pharmacy WHERE latitude BETWEEN up AND down AND longitude BETWEEN left AND right AND pharmacy_id IN (` + pharmacies.join() + `)`;
+        return new Promise((resolve, reject) => {
+            const result = pool.query(query,
+                [],
+                function (error, results, fields) {
+                    if (error) {
+                        console.log(result.sql);
+                        reject(error);
+                        return;
+                    };
+                    console.log(results);
+                    console.log(result.sql);
+                    resolve(results);
+                }
+            )
+        });
     }
 
 

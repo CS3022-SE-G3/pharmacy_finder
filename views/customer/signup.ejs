@@ -8,7 +8,6 @@
     </head>
 
     <body>
-
         <form action="/customer/signup" method="POST">
 
             Full Name: <input type="text" id="full_name" name="full_name" required>
@@ -26,11 +25,19 @@
             <input type="radio" id="gender" name="gender" value="Female" required>
             <label for="Female"> Female</label><br>
             <br>
+
             Date of Birth: <input type="date" id="dob" name="dob" required>
             <br>
 
             Contact Number : <input type="text" id="contact_no" name="contact_no" required>
             <br>
+
+            Longitude: <input type="number" step="0.000001" id="longitude" name="longitude" min=79.683333 max = 81.883333 required>
+            <br>
+
+            Latitude: <input type="number" step="0.000001" id="latitude" name="latitude" min = 5.916667 max = 9.850000 required>
+            <br>
+
 
             Email Address: <input type="email" id="email" name="email" required>
             <br>

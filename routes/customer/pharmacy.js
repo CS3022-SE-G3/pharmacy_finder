@@ -2,10 +2,11 @@
 // report pharmacy account
 const express = require('express');
 const router = express.Router();
-const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy');
-const {getCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
-const {postCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
-const path = require('path');
+const {
+    viewPharmacyInformation,
+    postCustomerSearchPharmacy,
+    getCustomerSearchPharmacy
+} = require('../../controllers/customer/pharmacy');
 const isACustomer = require('../../middleware/isACustomer');
 /**
  * @description get the page for searching a pharmacy by Pharmacy Name
