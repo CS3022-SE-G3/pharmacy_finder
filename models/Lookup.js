@@ -108,10 +108,10 @@ class Lookup{
 
     static lookupPharmacies(left, right, up, down,pharmacies) {
 
-        const query = `SELECT pharmacy_id FROM pharmacy WHERE latitude BETWEEN up AND down AND longitude BETWEEN left AND right AND pharmacy_id IN (` + pharmacies.join() + `)`;
+        const query = `SELECT pharmacy_id FROM pharmacy WHERE (latitude <= ? AND latitude>= ?) AND (longitude >=  ? AND longitude <= ?) AND (approved_state ="Approved") AND (pharmacy_id IN (` + pharmacies.join() + `))`;
         return new Promise((resolve, reject) => {
             const result = pool.query(query,
-                [],
+                [up,down,left,right],
                 function (error, results, fields) {
                     if (error) {
                         console.log(result.sql);
