@@ -5,12 +5,14 @@ class Customer{
 
     static enterCustomer(customer) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
+            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
                 [
                     customer.full_name,
                     customer.nic,
                     customer.email,
                     customer.address,
+                    customer.latitude,
+                    customer.longitude,
                     customer.gender,
                     customer.dob,
                     customer.contact_no,
@@ -90,7 +92,7 @@ class Customer{
     static getAllRequests(customerId){
         try{
             return new Promise((resolve,reject)=>{
-                const result = pool.query('SELECT * FROM requests WHERE customer_id=?',
+                const result = pool.query('SELECT request_id,  date_created FROM requests WHERE customer_id=?',
                 [customerId],
                 function (error, results) {
                     if (error) {
@@ -101,11 +103,30 @@ class Customer{
                 }
                 )
             })
-        }catch{
+        }catch(error){
             console.log(error)
         }
-                
             
+    }
+
+    static deleteRequest(requestID) {
+        try {
+            return new Promise((resolve, reject) => {
+                const result = pool.query('DELETE FROM requests WHERE request_id=?',
+                    [requestID],
+                    function (error, results) {
+                        if (error) {
+                            reject(error);
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            })
+        } catch(error) {
+            console.log(error)
+        }
+        
     }
     static getRespondedPharmacies(requestId) {
         console.log("Getting responded pharmacies");
@@ -272,6 +293,54 @@ class Customer{
 
         return result.length != 0;
     }
+
+    //profile
+    static getProfileDetails(customerId) {
+        console.log("Getting profile details");
+            return new Promise((resolve, reject) => {
+                const result = pool.query('SELECT * FROM customer WHERE customer_id=?',
+                    [customerId],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                            reject(new Error(error.message));
+                        }
+                        console.log(results);
+                        resolve(results);
+                    }
+                )
+            }
+            );
+    }
+    static editProfileDetails(customers) {
+        console.log("Editing profile details");
+            return new Promise((resolve, reject) => {
+                const result = pool.query('UPDATE `customer` SET `full_name`=?,`nic`=?,`email`=?,`address`=?,`gender`=?,`dob`=?,`contact_no`=? WHERE customer_id=?;',
+                [
+                    customers.full_name,
+                    customers.nic,
+                    customers.email,
+                    customers.address,
+                    customers.gender,
+                    customers.dob,
+                    customers.contact_no,
+                    customers.customer_id
+                ],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                            reject(new Error(error.message));
+                        }
+                        console.log('OK');
+                        resolve(console.log("Done"));
+                    }
+                )
+            }
+            );
+    }
+    
+    
+
 }
 
 module.exports = Customer;

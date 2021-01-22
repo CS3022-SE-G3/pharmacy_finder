@@ -2,10 +2,11 @@
 // report pharmacy account
 const express = require('express');
 const router = express.Router();
-const {viewPharmacyInformation} = require('../../controllers/customer/pharmacy');
-const {getCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
-const {postCustomerSearchPharmacy} = require('../../controllers/customer/pharmacy');
-const path = require('path');
+const {
+    viewPharmacyInformation,
+    postCustomerSearchPharmacy,
+    getCustomerSearchPharmacy
+} = require('../../controllers/customer/pharmacy');
 const isACustomer = require('../../middleware/isACustomer');
 /**
  * @description get the page for searching a pharmacy by Pharmacy Name
@@ -20,10 +21,10 @@ router.get('/search', isACustomer, getCustomerSearchPharmacy);
  * @method POST
  */
 router.post('/search', isACustomer, postCustomerSearchPharmacy);
+
 router.get('/', isACustomer, (req, res) => {
     return res.render('/customer/search_for_pharmacy');
 });
-
 
 /**
  * @description Load and view requested pharmacy information

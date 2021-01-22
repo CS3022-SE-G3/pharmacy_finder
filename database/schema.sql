@@ -17,6 +17,7 @@ CREATE TABLE customer (
 );
 
 ALTER TABLE customer AUTO_INCREMENT = 10001;
+ALTER TABLE `customer` CHANGE `dob` `dob` TEXT NOT NULL;
 
 CREATE TABLE pharmacy (
     pharmacy_id int auto_increment,

@@ -64,8 +64,7 @@ const signupPharmacy = async (request, response) => {
         console.log(error);
         // return response.status(500).send(err_msg);
 
-        var data = { error_msg: err_msg, post_body: request.body };
-        return response.render('pharmacy/signup', {err_data: data});
+        return response.render('500');
     }
 
     return response.status(200).send("OK");

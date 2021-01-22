@@ -1,4 +1,5 @@
 
+const { request } = require('express');
 const { pool } = require('../database/connection');
 
 class Pharmacy{
@@ -206,6 +207,179 @@ class Pharmacy{
 
         return result.length != 0;
     }
+
+    static async getRequests(pharmacy_id){
+        var responded_requests = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM response WHERE pharmacy_id = ?); ',
+            [pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        console.log(responded_requests)
+
+        var requests = await new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM requests_and_associated_pharmacies WHERE request_id NOT IN (SELECT request_id FROM response WHERE pharmacy_id = ?) AND pharmacy_id = ?); ',
+            [pharmacy_id, pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+
+        console.log(requests)
+
+
+        return [responded_requests, requests];
+    }
+
+    static async getPharmacyInfoByID(pharmacy_id){
+        return new Promise((resolve,reject)=>{
+            const result = pool.query('SELECT pharmacy_id, name, address, longitude, latitude, email, contact_no FROM pharmacy WHERE pharmacy_id = ?',
+            [pharmacy_id],
+            function (error, results) {
+                if (error) {
+                    reject (new Error(error.message));
+                }
+                resolve(results);
+            }
+        )
+        })
+    }
+    
+
+    static getCustomerInfo(request_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("SELECT customer_id, full_name, email, address, gender, contact_no FROM customer WHERE customer_id = (SELECT customer_id FROM requests WHERE request_id = ?)", [request_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+    static deletePreviousRespone(response_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("DELETE FROM response WHERE response_id = ?", [response_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve("Deleted the previous response...");
+            });
+        });
+    }
+
+    static storeAcceptedBrandedDrugs(response_id, branded_drug_ids) {
+        return new Promise((resolve, reject) => {
+            if (typeof (branded_drug_ids) === "undefined") {
+                resolve("No branded drugs...")
+            } else if (typeof (branded_drug_ids) === "string") {
+                mysqlConnection.query("INSERT INTO responses_and_associated_branded_drugs VALUES (?, ?)", [response_id, parseInt(branded_drug_ids)], (err, results, fields) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve("One branded drug...");
+                });
+            } else {
+                branded_drug_ids.forEach(function (id) {
+                    mysqlConnection.query("INSERT INTO responses_and_associated_branded_drugs VALUES (?, ?)", [response_id, parseInt(id)], (err, results, fields) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve("Multiple branded drugs...");
+                    });
+                });
+            }
+        });
+    }
+
+    static storeAcceptedDrugTypes(response_id, drug_type_ids) {
+        return new Promise((resolve, reject) => {
+            if (typeof (drug_type_ids) === "undefined") {
+                resolve("No drug types...");
+            } else if (typeof (drug_type_ids) === "string") {
+                mysqlConnection.query("INSERT INTO responses_and_associated_drug_types VALUES (?, ?)", [response_id, parseInt(drug_type_ids)], (err, results, fields) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve("One drug type...");
+                });
+            } else {
+                drug_type_ids.forEach(function (id) {
+                    mysqlConnection.query("INSERT INTO responses_and_associated_drug_types VALUES (?, ?)", [response_id, parseInt(id)], (err, results, fields) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve("Multiple drug types...");
+                    });
+                });
+            }
+        });
+    }
+
+    static getRespondedDrugTypes(response_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("SELECT DISTINCT(drug_type_id) FROM response NATURAL JOIN responses_and_associated_drug_types WHERE response_id = ?", [response_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
+    static storeInResponse(response_id, request_id, pharmacy_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("INSERT INTO response VALUES (?, ?, ?)", [response_id, request_id, pharmacy_id], (err, results, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve("Response table updated...");
+            });
+        });
+    }
+
+    static getRespondedBrandedDrugs(response_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("SELECT DISTINCT(branded_drug_id) FROM response NATURAL JOIN responses_and_associated_branded_drugs WHERE response_id = ?", [response_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
+    static getRequestedDrugTypes(request_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE drug_type_id IN (SELECT drug_type_id FROM requests_and_associated_drug_types WHERE request_id = ?)", [request_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
+    static getRequestedBrandedDrugs(request_id) {
+        return new Promise((resolve, reject) => {
+            mysqlConnection.query("SELECT branded_drug_id, brand_name FROM branded_drug WHERE branded_drug_id IN (SELECT branded_drug_id FROM requests_and_associated_branded_drugs WHERE request_id = ?)", [request_id], (err, rows, fields) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
 
 }
 

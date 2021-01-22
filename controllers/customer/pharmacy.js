@@ -12,9 +12,7 @@ function validatePharmacyName(pharmacyName){
 
     // schema to validate
     const schema = Joi.object({
-        
         "pharmacyName"    : Joi.string().trim().min(3).required(),
-        
     });
 
     // return valid or not

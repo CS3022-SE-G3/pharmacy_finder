@@ -68,11 +68,11 @@ const loginSysAdmin = async (request, response) => {
         console.log(error);
         // return response.status(500).send(err_msg);
 
-        return response.render('system_admin/login_error', { err_data: err_msg });
+        return response.render('500');
     }
 
     // res.redirect('/');
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/system_admin/home');
 
 }
 
