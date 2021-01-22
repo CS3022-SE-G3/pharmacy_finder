@@ -1,4 +1,4 @@
-
+const winston = require('winston');
 const express = require('express');
 const app = express();
 const config = require('config');
@@ -9,6 +9,12 @@ const MySQLStore = require('express-mysql-session')(session);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+winston.add(new winston.transports.File({
+    filename: "logfile.log",
+    level: 'info',
+    handleExceptions: true
+}));
 
 const options = {
     host: config.get("host"),
