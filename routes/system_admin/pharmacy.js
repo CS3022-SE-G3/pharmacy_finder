@@ -6,7 +6,11 @@ const router = express.Router();
 const isSystemAdmin = require('../../middleware/isSystemAdmin');
 
 
-const {viewPharmacyInfo,viewPendingPharmacies,approvePharmacy,getSearchPharmacy,postSearchPharmacy} = require('../../controllers/system_admin/pharmacy');
+const {
+    viewPharmacyInfo,viewPendingPharmacies,approvePharmacy,getSearchPharmacy,postSearchPharmacy,
+    getQwe,getTheData
+} = require('../../controllers/system_admin/pharmacy');
+
 
 /**
  * @description get the page for searching a pharmacy by Pharmacy ID
@@ -46,5 +50,9 @@ router.get('/view/:pharmacyid', isSystemAdmin, viewPharmacyInfo);
  * @method POST
  */
 router.post('/approve', isSystemAdmin, approvePharmacy);
+
+router.get('/qwe',isSystemAdmin, getQwe);
+
+router.get('/getTheData/:pharmacyid',isSystemAdmin,getTheData);
 
 module.exports = router;

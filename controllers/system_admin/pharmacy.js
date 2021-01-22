@@ -150,8 +150,30 @@ const postSearchPharmacy = async(req,res)=>{
     }
 };
 
+const getQwe = async (req,res)=>{
+
+    res.render('system_admin/qwe');
+};
+
+const getTheData = async (req,res)=>{
+    const pharmacyId = req.params.pharmacyid;
+    const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
+    console.log(pharmacyInfo);
+    try{
+        return res.json({theData:pharmacyInfo[0]})
+    }
+    catch (error) {
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+
+};
+
+
 exports.viewPharmacyInfo = viewPharmacyInfo;
 exports.viewPendingPharmacies = viewPendingPharmacies;
 exports.approvePharmacy = approvePharmacy;
 exports.getSearchPharmacy = getSearchPharmacy;
 exports.postSearchPharmacy = postSearchPharmacy;
+exports.getQwe = getQwe;
+exports.getTheData = getTheData;
