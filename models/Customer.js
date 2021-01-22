@@ -5,12 +5,14 @@ class Customer{
 
     static enterCustomer(customer) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
+            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
                 [
                     customer.full_name,
                     customer.nic,
                     customer.email,
                     customer.address,
+                    customer.latitude,
+                    customer.longitude,
                     customer.gender,
                     customer.dob,
                     customer.contact_no,

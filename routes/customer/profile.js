@@ -3,9 +3,9 @@
 // view customer account
 const express = require('express');
 const router = express.Router();
-const { viewProfileInformation}=require('../../controllers/customer/profile');
-const { editProfileInformation}=require('../../controllers/customer/profile');
-const { loadEditProfile}=require('../../controllers/customer/profile');
+const { viewProfileInformation, editProfileInformation, loadEditProfile } = require('../../controllers/customer/profile');
+const isACustomer = require('../../middleware/isACustomer');
+
 
 // view profile information
 /**
@@ -13,7 +13,7 @@ const { loadEditProfile}=require('../../controllers/customer/profile');
  * @URL http://localhost:3000/customer/profile/view/:customerId
  * @method GET
  */
-router.get('/view/:customerId', viewProfileInformation);
+router.get('/view', isACustomer, viewProfileInformation);
 
 
 // edit profile information

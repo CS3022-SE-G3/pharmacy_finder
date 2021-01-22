@@ -22,7 +22,7 @@ function validateCustomerId(customerId){
 const viewProfileInformation = async (req, res) => {
 
     // get customerId from SESSION
-    const customerId = req.params.customerId; 
+    const customerId = req.session.user.id; 
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -95,11 +95,6 @@ const editProfileInformation = async (request, response) => {
         return response.status(400).send(error.message);
 
     }
-
-    
-
-   
-
     try {
         const result = await Customer.editProfileDetails(_.pick(request.body,
             [
@@ -125,9 +120,7 @@ const editProfileInformation = async (request, response) => {
         return response.render('500');
 
     }
-    
-
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/customer/profile/view');
 }
 
 const loadEditProfile = async (request, response) => {

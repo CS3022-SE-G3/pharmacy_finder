@@ -27,12 +27,22 @@
       <br>
 
       Gender:
-      <input type="radio" id="gender" name="gender" value="Male" required>
-      <label for="Male"> Male</label><br>
-      <input type="radio" id="gender" name="gender" value="Female" required>
-      <label for="Female"> Female</label><br>
-      <br>
-      Date of Birth: <input type="date" id="dob" name="dob" value=<%= profile[0].dob %> required>
+      <% if (profile[0].gender=="Female") {%>
+        <input type="radio" id="gender" name="gender" value="Male" disabled>
+        <label for="Male"> Male</label><br>
+        <input type="radio" id="gender" name="gender" value="Female" checked>
+        <label for="Female"> Female</label><br>
+        <br>
+      <%}%>
+      <% if (profile[0].gender=="Male") {%>
+        <input type="radio" id="gender" name="gender" value="Male" checked>
+        <label for="Male"> Male</label><br>
+        <input type="radio" id="gender" name="gender" value="Female" disabled>
+        <label for="Female"> Female</label><br>
+        <br>
+      <%}%>
+
+      Date of Birth: <input type="date" id="dob" name="dob" value=<%= profile[0].dob %> required readonly>
       <br>
 
       Contact Number : <input type="text" id="contact_no" name="contact_no" value=<%= profile[0].contact_no %> required>
