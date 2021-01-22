@@ -20,10 +20,10 @@ router.get('/search', isACustomer, getCustomerSearchPharmacy);
  * @method POST
  */
 router.post('/search', isACustomer, postCustomerSearchPharmacy);
+
 router.get('/', isACustomer, (req, res) => {
     return res.render('/customer/search_for_pharmacy');
 });
-
 
 /**
  * @description Load and view requested pharmacy information
