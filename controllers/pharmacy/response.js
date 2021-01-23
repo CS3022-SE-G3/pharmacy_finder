@@ -57,11 +57,12 @@ async function displayResponseInfo(info, res, pharmacy_id, request_id) {
 
 async function storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id) {
     try {
-        const response = await Pharmacy.getResponseID(pharmacy_id, request_id);
+        var response = await Pharmacy.getResponseID(pharmacy_id, request_id);
         const dPR = await Pharmacy.deletePreviousRespone(response[0].response_id);
         console.log(dPR);
-        const sIR = await Pharmacy.storeInResponse(response[0].response_id, request_id, pharmacy_id);
+        const sIR = await Pharmacy.storeInResponse(request_id, pharmacy_id);
         console.log(sIR);
+        response = await Pharmacy.getResponseID(pharmacy_id, request_id);
         const sADT = await Pharmacy.storeAcceptedDrugTypes(response[0].response_id, drug_type_ids);
         console.log(sADT);
         const sABD = await Pharmacy.storeAcceptedBrandedDrugs(response[0].response_id, branded_drug_ids);
