@@ -16,8 +16,8 @@ router.post("/edit_response", isAPharmacy, (req, res) => {
     let drug_type_ids = req.body.drug_type_ids;
     let branded_drug_ids = req.body.branded_drug_ids;
     var pharmacy_id = req.session.user.id;
-    let request_id = req.session.user.req_res_id
-    return storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id)
+    let request_id = req.session.user.req_res_id;
+    return storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
 });
 
 // localhost:3000/pharmacy/response/respond
@@ -25,6 +25,7 @@ router.get("/respond/:request_id", isAPharmacy, (req, res) => {
     let info = [];
     let request_id = req.params.request_id;
     req.session.user.req_id = request_id;
+    console.log(123456);
     return displayRequestInfo(info, res, request_id);
 });
 
