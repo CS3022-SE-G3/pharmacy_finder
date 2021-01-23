@@ -11,6 +11,6 @@ routes.use('/login', require('./login'));
 routes.use('/entry', require('./entry'));
 
 
-routes.use('/', isACustomer, viewAllRequests);
+routes.use('/home', isACustomer, viewAllRequests);
 
 module.exports = routes;
