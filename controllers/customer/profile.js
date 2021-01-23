@@ -48,34 +48,35 @@ const viewProfileInformation = async (req, res) => {
     }
 }
 
-function validateCustomer(customer) {
+function validateCustomerAccount(customer) {
     const schema = Joi.object({
-        "customer_id"            : Joi.number().min(10001).required(),
-        "full_name"             : Joi.string().required(),
-        "nic"                   : Joi.string().required(),
-        "email"                 : Joi.string().email().required(),           
-        "address"               : Joi.string().required(),
-        "gender"                : Joi.string().required(),
-        "dob"                   : Joi.date().required(),
-        "contact_no"            : Joi.number().integer().required(),
+        "full_name"                 : Joi.string().required(),
+        "nic"                       : Joi.string().required(),
+        "email"                     : Joi.string().email().required(),
+        "address"                   : Joi.string().required(),
+        "latitude"                  : Joi.number().min(5.916667).max(9.850000).required(),
+        "longitude"                 : Joi.number().min(79.683333).max(81.883333).required(),
+        "gender"                    : Joi.string().required(),
+        "dob"                       : Joi.date().required(),
+        "contact_no"                : Joi.number().integer().required()
     });
     return schema.validateAsync(customer);
-
 }
 
 const editProfileInformation = async (request, response) => {
-        const { error } = validateCustomer(_.pick(request.body,
+        const { error } = await validateCustomerAccount(_.pick(request.body,
         [
-            "customer_id",
             "full_name",
             "nic",
             "email",
             "address",
+            "latitude",
+            "longitude",
             "gender",
             "dob",
             "contact_no"
         ]
-    ));
+        ));
 
     if (error) {
         return response.status(400).send(error.message);
@@ -89,6 +90,8 @@ const editProfileInformation = async (request, response) => {
                 "nic",
                 "email",
                 "address",
+                "latitude",
+                "longitude",
                 "gender",
                 "dob",
                 "contact_no"

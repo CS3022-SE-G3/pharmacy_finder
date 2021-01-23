@@ -1,7 +1,7 @@
 {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
+    "host": "remotemysql.com",
+    "user": "Kkq09TT7JY",
+    "password": "UV24WrmAIM",
     "port": 3306,
-    "database": "pharmacy-finder"
+    "database": "Kkq09TT7JY"
 }
