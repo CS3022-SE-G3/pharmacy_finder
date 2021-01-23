@@ -55,7 +55,6 @@ const viewPharmacyInformation = async(req, res) => {
         });
     }catch(error){
         console.log(error.message)
-        winston.log('error', error.message);
 
         // send 'internal server error'
         return res.status(500).render('500');
@@ -96,7 +95,6 @@ const postCustomerSearchPharmacy = async(req,res)=>{
         });
     }
     catch (error) {
-        winston.log('error', error.message);
         console.log(error.message);
         return res.status(500).render('500');
     }

@@ -1,11 +1,8 @@
-const express = require('express');
-const router = express.Router();
+
 const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const crypto = require('crypto');
 const Customer = require('../../models/Customer');
-const path = require('path');
 
 function validateCustomerLoginInfo(customer) {
     const schema = Joi.object().keys({
@@ -67,7 +64,6 @@ const loginCustomer = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
-        winston.log('error', error.message);
 
         // return response.status(500).send("Internal server error " + error.message);
 

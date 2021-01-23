@@ -92,7 +92,6 @@ const editProfileInformation = async (request, response) => {
     ));
 
     if (error) {
-        winston.log('error', error.message);
         return response.status(400).send(error.message);
 
     }
@@ -116,7 +115,6 @@ const editProfileInformation = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
-        winston.log('error', error.message);
 
         // return response.status(500).send(err_msg);
 
@@ -134,7 +132,6 @@ const loadEditProfile = async (request, response) => {
     const {error} = validateCustomerId({customerId:customerId});
 
     if (error) {
-        winston.log('error', error.message);
 
         // log the error
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
@@ -161,7 +158,6 @@ const loadEditProfile = async (request, response) => {
     }
     catch (error) {
         console.log(error)
-        winston.log('error', error.message);
         // send 'internal server error'
         return response.status(500).render('500');
         
