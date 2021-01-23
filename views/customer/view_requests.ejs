@@ -58,6 +58,27 @@
              <%}%>
              
              <br><br>
+
+             
+                <%if (!hasPharmacies){%>
+                    No pharmacies have responded yet.
+                    <%} else{%>
+                        Responded Pharmacies:
+                    <table>
+                        <thead>
+                            <th>Pharmacy Name</th>
+                            <th>Address</th>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i < pharmacies.length; i++) { %>
+                            <tr>
+                                <td> <%= pharmacies[i].name  %></td>
+                                <td> <%= pharmacies[i].address %></td>
+                                <%}%>
+                                </tr>
+                            </tbody>
+                        </table>
+             <%}%>
            
     </table>
 

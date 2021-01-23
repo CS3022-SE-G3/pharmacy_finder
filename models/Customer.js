@@ -5,7 +5,7 @@ class Customer{
 
     static enterCustomer(customer) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?)",
+            const result = pool.query("INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES (?,?,?,?,?,?,?,?,?,?)",
                 [
                     customer.full_name,
                     customer.nic,
@@ -168,12 +168,13 @@ class Customer{
     static enterRequestPart1() {
         try {
             return new Promise((resolve, reject) => {
-                const result = pool.query('SELECT AUTO_INCREMENT+1 AS id FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?',
-                    [config.get("database"), "requests"],
+                const result = pool.query('SELECT request_id+1 AS id FROM requests ORDER BY request_id desc LIMIT 1',
+                    [],
                     function (error, results) {
                         if (error) {
                             reject(new Error(error.message));
                         }
+                        console.log(result.sql);
                         console.log(results[0].id);
                         resolve(results[0].id);
                     }

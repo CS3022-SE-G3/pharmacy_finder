@@ -167,16 +167,21 @@ const createBroadcastRequest = async (request, response) => {
         console.log("Pharmacies entered status");
         console.log(id1);
         console.log("");
-
-        const id2 = await Customer.enterDrugTypes(drugTypes);
-        console.log("Drug types entered status");
-        console.log(id2);
-        console.log("");
-
-        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
-        console.log("Branded drugs entered status");
-        console.log(id3);
-        console.log("");
+        if (drugTypes.length>0)
+        {
+            const id2 = await Customer.enterDrugTypes(drugTypes);
+            console.log("Drug types entered status");
+            console.log(id2);
+            console.log("");
+        }
+        if (brandedDrugs.length > 0)
+        {
+            const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+            console.log("Branded drugs entered status");
+            console.log(id3);
+            console.log("");
+        }
+        
         return response.status(200).redirect('/customer/home');
         
     }
@@ -224,19 +229,14 @@ const viewBroadcastedRequests = async(req, res) => {
     const {error} = validateRequestId({requestId:requestID});
 
     if (error) {
-
-        // log the error
         console.error('ValidationError:customer-requestId: '+error.details[0].message)
-
-        // send bad request
         return res.status(400).send("Invalid Request");
 
     }
-
-    // get the information of the broadcasted requests as requested
-    // const result = await Customer.getBroadcastedRequests(requestId);
     const drug_types = await Customer.getDrugTypesFromRequest(requestID);
     const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
+    const responded_pharmacies = await Customer.getRespondedPharmacies(requestID);
+
     console.log("Drug types request:")
     console.log(drug_types);
     console.log("Branded Drugs request:")
@@ -246,11 +246,27 @@ const viewBroadcastedRequests = async(req, res) => {
         if(drug_types.length === 0 && branded_drugs.length===0){
             return res.status(404).render('404');
         }
-        return res.status(200).render('customer/view_requests',{
-            drug_types: drug_types,
-            branded_drugs: branded_drugs,
-            pageTitle: 'Request Details'
-        });
+
+        if (responded_pharmacies.length === 0) {
+            return res.status(200).render('customer/view_requests', {
+                drug_types: drug_types,
+                branded_drugs: branded_drugs,
+                hasPharmacies:false,
+                pageTitle: 'Request Details'
+            });
+        }
+        else {
+            return res.status(200).render('customer/view_requests', {
+                drug_types: drug_types,
+                branded_drugs: branded_drugs,
+                hasPharmacies: true,
+                pharmacies:responded_pharmacies,
+                pageTitle: 'Request Details'
+            });
+            
+        }
+
+        
     }
     catch(error){
         console.log(error.message);
@@ -321,7 +337,7 @@ const viewAllRequests = async(req, res) => {
 const deleteBroadcast = async (req, res) => {
     const requestID = req.body.requestID;
     result = await Customer.deleteRequest(requestID);
-    res.status(200).redirect('/customer');
+    res.status(200).redirect('/customer/home');
 }
 
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;

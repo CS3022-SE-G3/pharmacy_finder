@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="png" href="/assets/images/head_logo.png">
     <title>Pharmacy | Sign In</title>
-    <link rel="stylesheet" href="assets/css/sign_in.css">
+    <link rel="stylesheet" href="/assets/css/sign_in.css">
 </head>
 <body>
     <div class="container">
         <div class="forms-container">
             <div class="signin">
-                <form action="/pharmacy/login" class="sign-in-form">
-                    <h2 class="sign-in-title">Sign In</h2>
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email" id="email" name="email" required/>
-                    </div>
+                <form action="/pharmacy/login" method="POST"  class="sign-in-form">
+                <h2 class="sign-in-title">Log In</h2>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="Email" required />
+                </div>
 
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" id="password" name="password" required/>
-                    </div>
-                    <input type="submit" value="Login" class="btn solid" />
-                    </form>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Password" required />
+
+                </div>
+                <input type="submit" value="Login" class="btn solid" />
+                </form>
             </div>
         </div>
   
@@ -32,7 +33,7 @@
                 <div class="content">
                     <h3>New to Pharmacy Finder ?</h3>
                     <p>Register your pharmacy as a service provider and increase your sales.</p>
-                    <button type="button" class="btn transparent" id="sign-up-btn" onclick="location.href='./pharmacy_signup.html'">Sign Up</button>
+                    <button type="button" class="btn transparent" id="sign-up-btn" onclick="location.href='/pharmacy/signup'">Sign Up</button>
                 </div>
                 <img src="/assets/images/sign_in.svg" class="image" alt="" />
             </div>

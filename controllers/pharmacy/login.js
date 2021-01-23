@@ -32,7 +32,7 @@ const loginPharmacy = async (request, response) => {
         console.log(err_msg);
         // return response.status(400).send(error.message);
 
-        return response.render('pharmacy/login_error', { err_data: err_msg });
+        return response.render('login_error', { err_data: err_msg });
     }
 
     try {
@@ -44,7 +44,7 @@ const loginPharmacy = async (request, response) => {
 
             // return response.status(401).send(err_msg);
 
-            return response.render('pharmacy/login_error', { err_data: err_msg });
+            return response.render('login_error', { err_data: err_msg });
         }
 
         if (result[0].approved_state == "Not Approved"){

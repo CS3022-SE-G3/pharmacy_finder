@@ -4,8 +4,6 @@
 const express = require('express');
 const router = express.Router();
 const isSystemAdmin = require('../../middleware/isSystemAdmin');
-
-
 const {viewPharmacyInfo,viewPendingPharmacies,approvePharmacy,getSearchPharmacy,postSearchPharmacy} = require('../../controllers/system_admin/pharmacy');
 
 /**
