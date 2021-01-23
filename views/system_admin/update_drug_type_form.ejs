@@ -4,23 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
+    <script src = "/assets/bootstrap3.min.js"></script>
     <title>Update Drug Type Form</title>
 </head>
 
 <body>
+<div class="col-md-8 col-md-offset-2 well formUnderNav">
+    <h2 class="text-center">Update Drug Type</h2>
+    <hr>
     <!-- TODO: notify update successful/fail and redirect to all drugs -->
     <form method="POST" action="/system_admin/drug_type/update">
-
-        Drug Type ID: <input type="text" id="drug_type_id" name="drug_type_id" value="<%=drugType.drug_type_id%>"
-            required readonly>
-        <br>
-
-        Drug Type Name: <input type="text" id="drug_type_name" name="drug_type_name"
-            value="<%=drugType.drug_type_name%>" required>
-        <br>
-
-        <button type="submit">Update</button>
+        <div class="form-group col-md-6">
+            <label for="drug_type_id">Drug Type ID </label>
+            <input type="text" class="form-control" id="drug_type_id" name="drug_type_id" value="<%=drugType.drug_type_id%>" required readonly>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="drug_type_name">Drug Type Name </label>
+            <input type="text" class="form-control" id="drug_type_name" name="drug_type_name" value="<%=drugType.drug_type_name%>" required>
+        </div>
+        <div class="col-md-12 text-right">
+            <a href="/system_admin/drug_type" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
     </form>
+
+</div>
 
 </body>
 
