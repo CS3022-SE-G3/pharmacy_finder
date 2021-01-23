@@ -81,6 +81,7 @@ const editProfileInformation = async (request, response) => {
         return response.status(400).send(error.message);
     }
     try {
+        request.session.user.email = request.body.email;
         const result = await Customer.editProfileDetails(_.pick(request.body,
             [
                 "customer_id",
