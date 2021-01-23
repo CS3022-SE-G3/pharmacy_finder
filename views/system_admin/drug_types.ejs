@@ -11,18 +11,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
     <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
-    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
+    <script src="/assets/jquery.min.js"></script>
     <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+<%- include('../includes/admin-navbar.ejs') %>
     <h2 class="text-center">
         Drug Types
     </h2>
         <div class="container well">
             <div class="text-center">
                 <form action="/system_admin/drug_type/add" method="get">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Add New Drug Type</button>
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add New Drug Type</button>
                 </form>
             </div>
         <hr>
@@ -47,14 +49,14 @@
                                     action="/system_admin/drug_type/update/<%=drugType.drug_type_id%>/<%=drugType.drug_type_name%>"
                                     method="get">
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-pencil-square-o"></i> Update
+                                        <i class="fas fa-edit"></i> Update
                                     </button>
                                 </form>
                             </td>
                             <td class="text-center">
                                 <form action="/system_admin/drug_type/delete/<%=drugType.drug_type_id%>" method="get">
                                     <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i> Delete
+                                        <i class="fas fa-trash"></i> Delete
                                     </button>
                                 </form>
                             </td>
@@ -67,4 +69,3 @@
 </body>
 
 </html>
-<script src="/js/admin.js"></script>

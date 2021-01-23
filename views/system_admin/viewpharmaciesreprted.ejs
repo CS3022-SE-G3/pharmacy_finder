@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title="no title"
-        charset="utf-8">
-    <script src="/assets/bootstrap3.min.js"></script>
+    <script src="/assets/jquery.min.js"></script>
+    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <title>Reported Pharmacy</title>
 </head>
 
 <!-- http://localhost:3000/system_admin/report/view/reportedPharmacies -->
 
 <body>
+<%- include('../includes/admin-navbar.ejs') %>
     <h2 class="text-center"> Reported Pharmacies </h2>
     <hr>
     <!--<div class="container well">-->
@@ -85,12 +86,12 @@
                                     <button class="delete_record btn btn-danger btn-sm"
                                         data-pharmacy_id="<%= element.pharmacy_id%>"
                                         data-customer_id="<%= element.customer_id%>" onclick="deleteRecord(this)"><i
-                                            class="fa fa-trash"></i> Delete this
+                                            class="fas fa-trash"></i> Delete this
                                         Report</button>
                                     <button class="disable_pharmacy btn btn-primary btn-sm"
                                         data-pharmacy_id="<%= element.pharmacy_id%>"
                                         data-customer_id="<%= element.customer_id%>"
-                                        onclick="deletePharmacyAccount(this)"><i class="fa fa-ban"></i> Disable this
+                                        onclick="deletePharmacyAccount(this)"><i class="fas fa-ban"></i> Disable this
                                         Pharmacy</button>
                                 </div>
                             </td>
