@@ -23,3 +23,27 @@
 .form-on-sameline {
     display: inline;
 }
+
+.navbar{
+    background-color: #007bff !important;
+    border-radius: 0;
+    margin: 0;
+}
+
+.navbar a{
+    color: white !important;
+}
+.navbar a:hover{
+    background-color: #0073ee !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+.navbar ul{
+    background-color: #007bff !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #0073ee !important;
+}
