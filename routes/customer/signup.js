@@ -11,7 +11,7 @@ const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
  * @method GET
  */
 router.get('/', (request, response) => {
-    return response.render('customer/signup');
+        return res.sendFile(path.join(__dirname, '../../views/customer/signup.html'));
 });
 
 /**

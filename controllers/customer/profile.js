@@ -9,30 +9,20 @@ function validateCustomerId(customerId){
     
     // schema to validate
     const schema = Joi.object({
-        
         "customerId"    : Joi.number().integer().min(10001).required(),
-        
     });
 
     // return valid or not
     return schema.validate(customerId)
 }
 
-
 const viewProfileInformation = async (req, res) => {
 
-    // get customerId from SESSION
     const customerId = req.session.user.id; 
-
-    // validating
     const {error} = validateCustomerId({customerId:customerId});
 
     if (error) {
-
-        // log the error
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
-
-        // send bad request
         return res.status(400).send("Invalid Customer ID");
     }
 
@@ -55,9 +45,7 @@ const viewProfileInformation = async (req, res) => {
 
         // send 'internal server error'
         return res.status(500).render('500');
-        
     }
-
 }
 
 function validateCustomer(customer) {
@@ -76,8 +64,6 @@ function validateCustomer(customer) {
 }
 
 const editProfileInformation = async (request, response) => {
-    
-        
         const { error } = validateCustomer(_.pick(request.body,
         [
             "customer_id",
@@ -93,7 +79,6 @@ const editProfileInformation = async (request, response) => {
 
     if (error) {
         return response.status(400).send(error.message);
-
     }
     try {
         const result = await Customer.editProfileDetails(_.pick(request.body,
@@ -107,41 +92,24 @@ const editProfileInformation = async (request, response) => {
                 "dob",
                 "contact_no"
             ]
-            
         ));
-
-    
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
-
-        // return response.status(500).send(err_msg);
-
         return response.render('500');
-
     }
     return response.status(200).redirect('/customer/profile/view');
 }
 
 const loadEditProfile = async (request, response) => {
-    // get customerId from SESSION
     const customerId = request.params.customerId; 
-
-    // validating
     const {error} = validateCustomerId({customerId:customerId});
 
     if (error) {
-
-        // log the error
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
-
-        // send bad request
         return response.status(400).send("Invalid Customer ID");
     }
-
-
-    // get the profile information
     try
     {
         const result = await Customer.getProfileDetails(customerId);
