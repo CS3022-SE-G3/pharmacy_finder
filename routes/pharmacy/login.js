@@ -6,7 +6,7 @@ const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
 const { loginPharmacy } = require('../../controllers/pharmacy/login');
 
 router.get('/', ifNotLoggedIn, (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../views/pharmacy/login.html'));
+    return res.sendFile(path.join(__dirname, '../../views/pharmacy/pharmacy_signin.html'));
 });
 
 router.post('/', ifNotLoggedIn, loginPharmacy);

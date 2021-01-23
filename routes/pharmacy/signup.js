@@ -7,7 +7,8 @@ const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
 
 // URL: localhost3000/pharmacy/signup, method is GET
 router.get('/', ifNotLoggedIn, (request, response) => {
-    response.render('pharmacy/signup');
+        return response.sendFile(path.join(__dirname, '../../views/pharmacy/pharmacy_signup.html'));
+
 });
 
 // URL: localhost3000/pharmacy/signup, method is POST
