@@ -52,7 +52,6 @@
                             <th scope="col">ID</th>
                             <th scope="col">Customer Name</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Time</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -62,9 +61,8 @@
                                 <th scope="row"><%= i+1 %></th>
                                 <td><%= data.requests[i].request_id %></td>
                                 <td><%= data.requests[i].customer_name %></td>
-                                <td><%= data.requests[i].date_created.substr(0, 10) %></td>
-                                <td><%= data.requests[i].date_created.substr(11).substr(0,5) %></td>
-                                <td><button type="button" class="btn btn-primary btn-sm" id="respond_btn" data-toggle="modal" data-target="#respondModal" data-id="data.requests[i].request_id">Respond</button></td>
+                                <td><%= data.requests[i].date_created%></td>
+                                <td><button type="button" class="btn btn-primary btn-sm" id="respond_btn" data-toggle="modal" data-target="#respondModal" data-id=<%= data.requests[i].request_id%>>Respond</button></td>
                             </tr>
                         <% } %>
                     </tbody>
@@ -80,7 +78,6 @@
                             <th scope="col">ID</th>
                             <th scope="col">Customer Name</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Time</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -90,9 +87,8 @@
                                 <th scope="row"><%= i+1 %></th>
                                 <td><%= data.responded_requests[i].request_id %></td>
                                 <td><%= data.responded_requests[i].customer_name %></td>
-                                <td><%= data.responded_requests[i].date_created.substr(0, 10) %></td>
-                                <td><%= data.responded_requests[i].date_created.substr(11).substr(0,5) %></td>
-                                <td><a type="button" class="btn btn-primary btn-sm" id="edit_response_btn" data-toggle="modal" data-target="#editRespondModal" data-id="data.responded_requests[i].request_id">Edit Response</a></td>
+                                <td><%= data.responded_requests[i].date_created %></td>
+                                <td><a type="button" class="btn btn-primary btn-sm" id="edit_response_btn" data-toggle="modal" data-target="#editRespondModal" data-id=<%=data.responded_requests[i].request_id%>>Edit Response</a></td>
                             </tr>
                         <% } %>
                     </tbody>
@@ -108,7 +104,7 @@
                     <h5 class="modal-title" id="respondModalTitle">Request Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="" method="POST">
+                <form action="/pharmacy/response/respond" method="POST">
                     <div class="modal-body">
                         <ul>
                             <li>Name : <span id="c_name"></span></li>

@@ -377,9 +377,9 @@ class Pharmacy{
         });
     }
 
-    static storeInResponse(response_id, request_id, pharmacy_id) {
+    static storeInResponse(request_id, pharmacy_id) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("INSERT INTO response VALUES (?, ?, ?)", [response_id, request_id, pharmacy_id], (err, results, fields) => {
+            const result = pool.query("INSERT INTO response(request_id, pharmacy_id) VALUES (?, ?)", [request_id, pharmacy_id], (err, results, fields) => {
                 if (err) {
                     reject(err);
                 }
