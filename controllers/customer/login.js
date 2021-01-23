@@ -1,11 +1,8 @@
-const express = require('express');
-const router = express.Router();
+
 const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const crypto = require('crypto');
 const Customer = require('../../models/Customer');
-const path = require('path');
 
 function validateCustomerLoginInfo(customer) {
     const schema = Joi.object().keys({
@@ -29,7 +26,7 @@ const loginCustomer = async (request, response) => {
         var err_msg = "Customer Login error validation " + error.message;
         console.log(err_msg);
         // return response.status(400).send(error.message);
-
+        winston.log('error', error.message);
         return response.render('customer/login_error', { err_data: err_msg });
 
 
@@ -42,7 +39,7 @@ const loginCustomer = async (request, response) => {
             var err_msg = "Email is not registered";
             console.log(err_msg);
             // return response.status(401).send("Email is not registered");
-
+            
             return response.render('customer/login_error', { err_data: err_msg });
 
         }
@@ -67,6 +64,7 @@ const loginCustomer = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
+
         // return response.status(500).send("Internal server error " + error.message);
 
         return response.render('500');
