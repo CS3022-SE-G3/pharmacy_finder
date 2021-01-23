@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= pageTitle %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<main>
+    <table>
+        <h2>Requested Drugs:</h2>
+        <br>
+             Drug Types:
+                <%if (drug_types.length==0){%>
+                    <br>
+                        No drug types were selected
+                    <%} else{%>
+                        <table>
+                            <thead>
+                                <th></th>
+                                <th>Drug Type</th>
+                            </thead>
+                            <tbody>
+                                    <% for(var i=0; i < drug_types.length; i++) { %>
+
+                                <tr>
+                                    <td> <%= i+1%></td>
+                                    <td> <%= drug_types[i].drug_type_name %></td>
+                                    <%}%>
+                                </tr>
+                            </tbody>
+                        </table>
+             <%}%>
+             <br><br>
+
+             Branded Drugs:
+                <%if (branded_drugs.length==0){%>
+                    No branded drugs were selected
+                    <%} else{%>
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th>Brand Name</th>
+                            <th>Drug Type Name</th>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i < branded_drugs.length; i++) { %>
+                            <tr>
+                                <td> <%= i+1%></td>
+                                <td> <%= branded_drugs[i].brand_name  %></td>
+                                <td> <%= branded_drugs[i].drug_type_name %></td>
+                                <%}%>
+                                </tr>
+                            </tbody>
+                        </table>
+             <%}%>
+             
+             <br><br>
+           
+    </table>
+
+    
+
+</main>
+</body>
+</html>

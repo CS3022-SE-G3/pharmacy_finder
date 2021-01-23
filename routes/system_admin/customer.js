@@ -1,16 +1,26 @@
 // view customer info
 const express = require('express');
 const router = express.Router();
-const view_customer_information = require('../../controllers/system_admin/customer');
+const { viewCustomerInformation, renderForm } = require('../../controllers/system_admin/customer');
+const isSystemAdmin = require('../../middleware/isSystemAdmin');
 
 /**
- * @view_customer_information  - module that handle system admin's request to view customer information
- * @route - localhost:3000/system_admin/customer/viewcustomerinformation/{account id of the customer}
  * 
- * route to view customer information by system admin
+ * @URL http://localhost:3000/system_admin/customer/search
+ * @description Search for customer by entering customer ID
+ * @method GET
  */
 
-router.get('/view/:accountId', view_customer_information);
+router.get('/search', isSystemAdmin, renderForm);
+
+/**
+ * 
+ * @URL http://localhost:3000/system_admin/customer/view/{accountID}
+ * @description Load the customer whose ID was searched for
+ * @method GET
+ */
+
+router.get('/view/:accountId', isSystemAdmin, viewCustomerInformation);
 
 
 module.exports = router;

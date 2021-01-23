@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h2>
+        Branded Drugs
+    </h2>
+    <main>
+        <div>
+            <table>
+                <thead>
+                    <th>Branded Drug ID</th>
+                    <th>Brand Name</th>
+                    <th>Manufacturer</th>
+                    <th>Drug Type</th>
+                    <th>Update Info</th>
+                    <th>Delete</th>
+                </thead>
+                <tbody>
+                    <% for (let drug of drugs) { %>
+                        <tr>
+                            <td>
+                                <%=drug.branded_drug_id%>
+                            </td>
+                            <td>
+                                <%=drug.brand_name%>
+                            </td>
+                            <td>
+                                <%=drug.manufacturer%>
+                            </td>
+
+                            <td>
+                                <a href="/system_admin/drug_type/view/<%=drug.drug_type_id%>">View</a>
+                            </td>
+                            <td>
+                                <form
+                                    action="/system_admin/drug/update/<%=drug.branded_drug_id%>/<%=drug.brand_name%>/<%=drug.manufacturer%>/<%=drug.drug_type_id%>"
+                                    method="get">
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/system_admin/drug/delete/<%=drug.branded_drug_id%>" method="get">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <form action="/system_admin/drug/add" method="get">
+                <button type="submit">Add New Branded Drug</button>
+            </form>
+        </div>
+    </main>
+    </main>
+</body>
+
+</html>
+<script src="/js/admin.js"></script>

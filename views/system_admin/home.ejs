@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        <%= pageTitle %>
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h2>Home</h2>
+    <main>
+        <div>
+            <form action="/system_admin/drug_type" method="GET">
+                <button type="submit">View Drug Types</button>
+            </form>
+        </div>
+        <div>
+            <form action="/system_admin/drug" method="GET">
+                <button type="submit">View Branded drugs</button>
+            </form>
+        </div>
+        <div>
+            <form action="/system_admin/pharmacy/search" method="GET">
+                <button type="submit">Search Pharmacy</button>
+            </form>
+        </div>
+        <div>
+            <form action="/system_admin/pharmacy/pending" method="GET">
+                <button type="submit">Approval Pending Pharmacies</button>
+            </form>
+        </div>
+        <!-- View reported Pharmacies -->
+        <div>
+            <form action="/system_admin/report/view/reportedPharmacies" method="GET">
+                <button type="submit">View reported Pharmacies</button>
+            </form>
+        </div>
+        <div>
+            <form action="/system_admin/customer/search" method="GET">
+                <button type="submit">Search customer</button>
+            </form>
+        </div>
+
+        <div>
+            <form action="/logout" method="POST">
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

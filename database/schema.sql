@@ -7,6 +7,8 @@ CREATE TABLE customer (
     nic varchar(30) NOT NULL,
     email varchar(50) NOT NULL,
     address varchar(50) NOT NULL,
+    longitude numeric(8, 6) NOT NULL,
+    latitude numeric(8, 6) NOT NULL,
     gender ENUM('Male', 'Female', 'Other') NOT NULL,
     dob date NOT NULL,
     contact_no bigint NOT NULL,
@@ -15,14 +17,15 @@ CREATE TABLE customer (
 );
 
 ALTER TABLE customer AUTO_INCREMENT = 10001;
+ALTER TABLE `customer` CHANGE `dob` `dob` TEXT NOT NULL;
 
 CREATE TABLE pharmacy (
     pharmacy_id int auto_increment,
     approved_state ENUM('Not Approved', 'Approved') NOT NULL DEFAULT 'Not Approved',
     name varchar(50) NOT NULL,
     address varchar(70),
-    longitude numeric(10,6) NOT NULL,
-    latitude numeric(10,6) NOT NULL,
+    longitude numeric(8,6) NOT NULL,
+    latitude numeric(8,6) NOT NULL,
     email varchar(50) NOT NULL,
     contact_no bigint NOT NULL,
     password varchar (50) NOT NULL,
@@ -138,18 +141,9 @@ CREATE TABLE reported_pharmacies (
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-----------------Session Table Schema------------------------------
-
-CREATE TABLE "session" (
-    "sid" varchar NOT NULL COLLATE "default",
-    "sess" json NOT NULL,
-    "expire" timestamp(6) NOT NULL
-)
-WITH (
-    OIDS = FALSE
+CREATE TABLE system_admin(
+    sys_admin_id int AUTO_INCREMENT,
+    username varchar(30),
+    password varchar(70),
+    PRIMARY KEY (sys_admin_id)
 );
-
-ALTER TABLE "session"
-    ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
-
-CREATE INDEX "IDX_session_expire" ON "session" ("expire");
