@@ -5,97 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="">
-    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
-    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
-    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
-    <script src = "/assets/bootstrap3.min.js"></script>
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title="no title"
+        charset="utf-8">
+    <script src="/assets/bootstrap3.min.js"></script>
     <title>Reported Pharmacy</title>
 </head>
 
 <!-- http://localhost:3000/system_admin/report/view/reportedPharmacies -->
 
 <body>
-<h2 class="text-center"> Reported Pharmacies </h2>
-<hr>
-<!--<div class="container well">-->
+    <h2 class="text-center"> Reported Pharmacies </h2>
+    <hr>
+    <!--<div class="container well">-->
     <table class="table table-striped table-condensed table-bordered table-hover">
         <thead>
-        <th>Pharmacy ID</th>
-        <th>Reported By</th>
-        <th>Name</th>
-        <th>Reason</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>Contact No</th>
-        <th></th>
+            <th>Pharmacy ID</th>
+            <th>Reported By</th>
+            <th>Name</th>
+            <th>Reason</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Contact No</th>
+            <th></th>
         </thead>
         <tbody>
-        <%if(data.length>0) {%>
-        <%data.forEach(element=> {%>
-        <div id=<%=element.pharmacy_id.toString()+element.customer_id.toString() %> >
-            <tr>
+            <%if(data.length>0) {%>
+                <%data.forEach(element=> {%>
+                    <div>
+                        <tr id=<%=element.pharmacy_id.toString()+element.customer_id.toString() %>>
 
-                <td>
-                    <div class="pharmacy_id">
-                        <%= element.pharmacy_id%>
+                            <td>
+                                <div class="pharmacy_id">
+                                    <%= element.pharmacy_id%>
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <div class="customer_id">
+                                    <%= element.customer_id%>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="name">
+                                    <%= element.name%>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="reasons">
+                                    <%= element.reasons%>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="address">
+                                    <%= element.address%>
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <div class="email">
+                                    <%= element.email%>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="contact_no">
+                                    <%= element.contact_no%>
+                                </div>
+                            </td>
+
+                            <td class="text-center">
+                                <div>
+                                    <button class="delete_record btn btn-danger btn-sm"
+                                        data-pharmacy_id="<%= element.pharmacy_id%>"
+                                        data-customer_id="<%= element.customer_id%>" onclick="deleteRecord(this)"><i
+                                            class="fa fa-trash"></i> Delete this
+                                        Report</button>
+                                    <button class="disable_pharmacy btn btn-primary btn-sm"
+                                        data-pharmacy_id="<%= element.pharmacy_id%>"
+                                        data-customer_id="<%= element.customer_id%>"
+                                        onclick="deletePharmacyAccount(this)"><i class="fa fa-ban"></i> Disable this
+                                        Pharmacy</button>
+                                </div>
+                            </td>
+                        <tr>
                     </div>
-                </td>
 
-
-                <td>
-                    <div class="customer_id">
-                        <%= element.customer_id%>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="name">
-                        <%= element.name%>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="reasons">
-                        <%= element.reasons%>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="address">
-                        <%= element.address%>
-                    </div>
-                </td>
-
-
-                <td>
-                    <div class="email">
-                        <%= element.email%>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="contact_no">
-                        <%= element.contact_no%>
-                    </div>
-                </td>
-
-                <td class="text-center">
-                <div>
-                    <button class="delete_record btn btn-danger btn-sm" data-pharmacy_id="<%= element.pharmacy_id%>"
-                            data-customer_id="<%= element.customer_id%>" onclick="deleteRecord(this)"><i class="fa fa-trash"></i> Delete this
-                        Report</button>
-                    <button class="disable_pharmacy btn btn-primary btn-sm" data-pharmacy_id="<%= element.pharmacy_id%>"
-                            data-customer_id="<%= element.customer_id%>" onclick="deletePharmacyAccount(this)"><i class="fa fa-ban"></i> Disable this
-                        Pharmacy</button>
-                </div>
-                </td>
-            <tr>
-        </div>
-
-        <%})};%>
+                    <%})};%>
         </tbody>
     </table>
-<!--</div>-->
+    <!--</div>-->
 
 
 </body>
