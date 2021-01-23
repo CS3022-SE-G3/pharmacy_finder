@@ -20,7 +20,6 @@ router.get('/', isAPharmacy, function (request, response) {
         try{
             const drug = await getPharmacyDrugTypes(pharmacy_id);
             const brand = await getPharmacyBrandedDrugs(pharmacy_id);
-            
             response.render('pharmacy/drugList',{drug_types: drug, branded_drugs: brand});
         }
         catch(err){
