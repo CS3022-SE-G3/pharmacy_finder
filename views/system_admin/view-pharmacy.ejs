@@ -6,21 +6,27 @@
     <title><%= pageTitle %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
+    <script src = "/assets/bootstrap3.min.js"></script>
 </head>
 <body>
-<main>
-    <h1>Pharmacy ID: <%= pharmacyInfo.pharmacy_id %></h1>
-    <h2>Approved State : <%=pharmacyInfo.approved_state%></h2>
-    <div>
-        <p>Name: <%=pharmacyInfo.name%></p>
-        <p>Address: <%=pharmacyInfo.address%></p>
-        <p>Longitude: <%=pharmacyInfo.longitude%></p>
-        <p>Latitude: <%=pharmacyInfo.latitude%></p>
-        <p>Email: <%=pharmacyInfo.email%></p>
-        <p>Contact No: <%=pharmacyInfo.contact_no%></p>
+<div class="col-md-8 col-md-offset-2 well formUnderNav">
+    <h2 class="text-center">Pharmacy ID: <%= pharmacyInfo.pharmacy_id %></h2>
+    <h3 class="text-center">State : <%=pharmacyInfo.approved_state%></h3>
+    <hr>
+    <div class="col-md-6">
+        <p><strong>Name: </strong><%=pharmacyInfo.name%></p>
+        <p><strong>Address: </strong><%=pharmacyInfo.address%></p>
+        <p><strong>Contact No: </strong><%=pharmacyInfo.contact_no%></p>
+        <p><strong>Email: </strong><%=pharmacyInfo.email%></p>
     </div>
+    <div class="col-md-6">
+        <p><strong>Longitude: </strong><%=pharmacyInfo.longitude%></p>
+        <p><strong>Latitude: </strong><%=pharmacyInfo.latitude%></p>
+    </div>
+</div>
 
-</main>
 </body>
 </html>
