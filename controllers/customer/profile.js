@@ -91,7 +91,7 @@ const editProfileInformation = async (request, response) => {
         ]
     ));
 
-    if(error) {
+    if (error) {
         return response.status(400).send(error.message);
 
     }
@@ -115,6 +115,7 @@ const editProfileInformation = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
+
         // return response.status(500).send(err_msg);
 
         return response.render('500');
@@ -157,7 +158,6 @@ const loadEditProfile = async (request, response) => {
     }
     catch (error) {
         console.log(error)
-
         // send 'internal server error'
         return response.status(500).render('500');
         

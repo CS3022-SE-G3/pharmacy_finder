@@ -10,6 +10,7 @@ const MySQLStore = require('express-mysql-session')(session);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 const options = {
     host: config.get("host"),
     port: config.get("port"),
