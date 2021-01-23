@@ -93,7 +93,7 @@
         if (window.confirm("Are you sure?")) {
             console.log("ok")
             try {
-                const res = await fetch("http://localhost:3000/system_admin/report/pharmacy/delete", {
+                const res = await fetch("/system_admin/report/pharmacy/delete", {
                     method: "DELETE",
                     mode: 'cors',
                     body: JSON.stringify({
