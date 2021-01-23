@@ -3,7 +3,6 @@ const routes = require('express').Router();
 routes.use('/account', require('./account'));
 routes.use('/drug', require('./drug'));
 routes.use('/addDrug', require('./addDrug'));
-routes.use('/request', require('./request'));
 routes.use('/response', require('./response'));
 routes.use('/signup', require('./signup'));
 routes.use('/login', require('./login'));
