@@ -15,13 +15,13 @@ router.post("/edit_response", isAPharmacy, (req, res) => {
     storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, response_id, request_id, pharmacy_id)
 });
 
-// localhost:3000/pharmacy/respond
+// localhost:3000/pharmacy/response/respond
 router.get("/respond", isAPharmacy, (req, res) => {
     let info = [];
     displayRequestInfo(info, res, request_id);
 });
 
-// localhost:3000/pharmacy/respond
+// localhost:3000/pharmacy/response/respond
 
 router.post("/respond", isAPharmacy, (req, res) => {
     let drug_type_ids = req.body.drug_type_ids;
