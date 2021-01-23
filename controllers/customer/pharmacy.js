@@ -44,7 +44,6 @@ const viewPharmacyInformation = async(req, res) => {
     try{
         if(pharmacyInformation.length === 0){
             return res.status(404).render('404');
-            
         }
         
         // send data to front end
@@ -55,7 +54,6 @@ const viewPharmacyInformation = async(req, res) => {
         });
     }catch(error){
         console.log(error.message)
-
         // send 'internal server error'
         return res.status(500).render('500');
     }
@@ -98,10 +96,7 @@ const postCustomerSearchPharmacy = async(req,res)=>{
         console.log(error.message);
         return res.status(500).render('500');
     }
-        
 }
-
-
 
 exports.viewPharmacyInformation = viewPharmacyInformation;
 exports.getCustomerSearchPharmacy = getCustomerSearchPharmacy;
