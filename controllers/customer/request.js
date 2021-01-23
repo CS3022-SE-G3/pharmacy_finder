@@ -167,16 +167,21 @@ const createBroadcastRequest = async (request, response) => {
         console.log("Pharmacies entered status");
         console.log(id1);
         console.log("");
-
-        const id2 = await Customer.enterDrugTypes(drugTypes);
-        console.log("Drug types entered status");
-        console.log(id2);
-        console.log("");
-
-        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
-        console.log("Branded drugs entered status");
-        console.log(id3);
-        console.log("");
+        if (drugTypes.length>0)
+        {
+            const id2 = await Customer.enterDrugTypes(drugTypes);
+            console.log("Drug types entered status");
+            console.log(id2);
+            console.log("");
+        }
+        if (brandedDrugs.length > 0)
+        {
+            const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+            console.log("Branded drugs entered status");
+            console.log(id3);
+            console.log("");
+        }
+        
         return response.status(200).redirect('/customer/home');
         
     }

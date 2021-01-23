@@ -7,9 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
-  "engine": {
-    "node": "14.15.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CS3022-SE-G3/pharmacy_finder.git"
@@ -36,8 +33,7 @@
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.17",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "path": "^0.12.7",
-    "winston": "^3.3.3"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
