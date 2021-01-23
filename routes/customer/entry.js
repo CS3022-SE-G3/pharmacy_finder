@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
 
-router.get('/', (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../views/customer/entry.html'));
+router.get('/', ifNotLoggedIn, (req, res) => {
+    return res.render('customer/entry');
 });
 
 module.exports = router;

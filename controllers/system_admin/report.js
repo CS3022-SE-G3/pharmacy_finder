@@ -34,6 +34,8 @@ const deleteRecordOfReportedPharmacy = async (req, res) => {
     const pharmacyID = req.body.pharmacyID;
     const customerID = req.body.customerID;
 
+        console.log(req.body)
+
     // validate
     const { error } = validateIds(pharmacyID,customerID);
 
@@ -104,6 +106,8 @@ const deletePharmacy = async (req, res) => {
 
     const pharmacyID = req.body.pharmacyID;
     const customerID = req.body.customerID;
+
+    console.log(req.body)
 
     const { error } = validateIds(pharmacyID,customerID)
 

@@ -35,35 +35,31 @@ const viewRespondedPharmacies = async (req, res) => {
         console.error('ValidationError:customer-requestId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Request ID");
-
-        res.end()
-
-        // stop execution
-        return;
+        return res.status(400).send("Invalid Request ID");
     }
 
     // get the information of the responded pharmacies as requested
     try
     {
         const result = await Customer.getRespondedPharmacies(requestId);
+        console.log(result);
         if (result.length === 0) {
-            return res.status(400).send(" Responded pharmacies not found");
+            return res.status(404).render('404');
         }
-        return res.status(200).json(result);
-
-        // send data to front end
-
-        return res.status(200).json(data);
+        
+        return res.status(200).render('customer/view_responded_pharmacies',{
+            res_pharm_info:result,
+            pageTitle: 'Responded Pharmacies'
+        });
     }
     catch (error) {
         console.log(error)
 
         // send 'internal server error'
-        return res.status(500).send("Internal Server Error")
+        return res.status(500).render('500');
         
     }
 
 }
 
-module.exports.viewRespondedPharmacies = viewRespondedPharmacies;
+exports.viewRespondedPharmacies = viewRespondedPharmacies;

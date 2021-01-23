@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { viewAllReportedPharmacies, deleteRecordOfReportedPharmacy, deletePharmacy } = require('../../controllers/system_admin/report');
+const isSystemAdmin = require('../../middleware/isSystemAdmin');
 
 
 /**
@@ -11,7 +12,7 @@ const { viewAllReportedPharmacies, deleteRecordOfReportedPharmacy, deletePharmac
  */
 
 
-router.get('/view/reportedPharmacies', viewAllReportedPharmacies);
+router.get('/view/reportedPharmacies', isSystemAdmin, viewAllReportedPharmacies);
 
 
 /**
@@ -20,14 +21,14 @@ router.get('/view/reportedPharmacies', viewAllReportedPharmacies);
  * @method DELETE
  */
 
-router.delete('/pharmacy/delete', deletePharmacy);
+router.delete('/pharmacy/delete', isSystemAdmin, deletePharmacy);
 
 /**
  * @URL - http://localhost:3000/system_admin/report/delete
  * @description Delete record of the reported pharmacy
  * @method DELETE
  */
-router.post('/delete', deleteRecordOfReportedPharmacy);
+router.delete('/delete', isSystemAdmin, deleteRecordOfReportedPharmacy);
 
 
 module.exports = router;

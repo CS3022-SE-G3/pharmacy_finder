@@ -1,6 +1,7 @@
 
 const Joi = require('joi');
 const Customer = require('../../models/Customer');
+const SystemAdmin = require('../../models/SystemAdmin');
 const Lookup = require('../../models/Lookup');
 
 // ======================================USE CASE: BROADCAST REQUESTS==================================================//
@@ -12,58 +13,182 @@ const Lookup = require('../../models/Lookup');
  * @todo return the broadcast form
  * @todo get all drugs and drug types? from system admin
  */
-const getBroadcastForm = (request, response) => {
-    return response.send(200).send("Broadcast Form placeholder");
+const getBroadcastForm = async (request, response) => {
+    const drug_types = await SystemAdmin.getAllDrugTypesandIDs();
+    const branded_drugs = await SystemAdmin.getAllDrugs();
+    console.log(drug_types);
+    console.log(branded_drugs);
+
+    return response.status(200).render('customer/broadcastForm', {
+        pageTitle: "Broadcast Form",
+        drug_types: drug_types,
+        branded_drugs: branded_drugs,
+        hasErrors: false
+    });
 }
 
 // STEP 2 - GET FILLED FORM INFO FROM CUSTOMER
 
 const createBroadcastRequest = async (request, response) => {
-    const customerID = request.body.id;
-    const customerLocation = await Customer.getLocation(customerID);
-    const drugTypes = []
-    const brandedDrugs = []
 
-    const tempDrugTypes = request.body.drug_types;
-    const tempBrandedDrugs = request.body.branded_drugs;
+    //@todo: get customer id either from session or from post request
+    const customerID = request.session.user.id;
+    console.log("Customer ID");
+    console.log(customerID);
+    console.log("");
 
-    const pharmacies = await Lookup.lookupPharmacies(customerLocation, tempBrandedDrugs, tempDrugTypes);
-    console.log(pharmacies);
-    console.log(tempDrugTypes);
-    console.log(tempBrandedDrugs);
+    const customerLocation = await Customer.getLocation(customerID);    //lat and longitude
+    console.log("Customer Location");
+    console.log(customerLocation);
+    console.log("");
+
+    let tempDrugTypes = [];
+    let tempBrandedDrugs = [];
+    let tempDrugTypesBeforeProcessing = [];
+    let tempBrandedDrugsBeforeProcessing = [];
+
+    //both are defined
+    if (request.body.drug_types) {
+        tempDrugTypesBeforeProcessing = request.body.drug_types;
+    }
+
+    if (request.body.branded_drugs) {
+        tempBrandedDrugsBeforeProcessing = request.body.branded_drugs;
+    }
     
+    /**
+     * @todo add validation? minimum one drug has to be selected
+     */
+    if (tempDrugTypesBeforeProcessing.length == 0 && tempBrandedDrugsBeforeProcessing.length == 0) {
+        return response.send("You have not selected any drugs")
+    }
+    console.log("Drug types entered by customer");
+    console.log(tempDrugTypesBeforeProcessing);
+    console.log("");
+
+    console.log("Branded drugs entered by customer");
+    console.log(tempBrandedDrugsBeforeProcessing);
+
+    if (typeof tempBrandedDrugsBeforeProcessing === 'string' || tempBrandedDrugsBeforeProcessing instanceof String) {
+        tempBrandedDrugs.push(tempBrandedDrugsBeforeProcessing);
+    }
+    else {
+        tempBrandedDrugs = tempBrandedDrugsBeforeProcessing;
+    }
+
+    if (typeof tempDrugTypesBeforeProcessing === 'string' || tempDrugTypesBeforeProcessing instanceof String) {
+        tempDrugTypes.push(tempDrugTypesBeforeProcessing);
+    } else {
+        tempDrugTypes = tempDrugTypesBeforeProcessing;
+    }
+
+    const tempPharmaciesToLookUp = await Lookup.lookupPharmaciesForDrugs(tempBrandedDrugs, tempDrugTypes);
+
+    let pharmaciesToLookUp = [];
+    tempPharmaciesToLookUp.forEach(value => {
+            pharmaciesToLookUp.push(value.pharmacy_id);
+    });
+
+    console.log("Pharmacies that contain the drugs needed by the customer");
+    console.log(pharmaciesToLookUp);
+    console.log("");
+
+    const latitude = customerLocation.latitude;
+    const longitude = customerLocation.longitude;
+    const left = longitude - 0.27027;
+    const right = longitude + 0.27027;
+    const up = latitude + 0.27027;
+    const down = latitude - 0.27027;
+    console.log("Distance ranges");
+    console.log("left");
+    console.log(left);
+    console.log("");
+
+    console.log("right");
+    console.log(right);
+    console.log("");
+
+    console.log("up");
+    console.log(up);
+    console.log("");
+
+    console.log("down");
+    console.log(down);
+    console.log("");
+
+    // latitude +- 0.27027
+    // longitude +- 0.27027
     try
     {
-        const id = await Customer.enterRequest(customerID);
+        const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
+        if (!pharmacies || pharmacies.length==0) {
+            return response.send("There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results");
+        }
+        console.log("pharmacies in the distance range");
+        console.log(pharmacies);
+        console.log("");
+
+        const id = await Customer.enterRequestPart1();
+        const waiting = await Customer.enterRequestPart2(id, customerID);
+
+        console.log("request id to be entered");
         console.log(id);
+        console.log("");
+
+        let drugTypes = [];
+        let brandedDrugs = [];
+        let requestablePharmacies = [];
 
         tempDrugTypes.forEach(function (drugType) {
             drugTypes.push([id, drugType]);
         });
 
+        console.log("drug types to be entered");
+        console.log(drugTypes);
+        console.log("");
+
         tempBrandedDrugs.forEach(function (brandedDrug) {
             brandedDrugs.push([id, brandedDrug]);
         });
-        
-        console.log(pharmacies);
-        console.log(drugTypes);
+
+        console.log("branded drugs to be entered");
         console.log(brandedDrugs);
+        console.log("");
 
-        const id1 = await Customer.enterPharmacies(pharmacies);
-        const id2 = await Customer.enterDrugTypes(drugTypes);
-        const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+        pharmacies.forEach(function (pharmacy) {
+            requestablePharmacies.push([id, pharmacy.pharmacy_id]);
+        });
 
-        // const id1 = await Customer.enterPharmacies([[id, '30001'],[id,'30002']]);     //pharmacies
-        // const id2 = await Customer.enterDrugTypes([[id,'40001'], [id,'40002']]);      //drug types
-        // const id3 = await Customer.enterBrandedDrugs([[id,'50001'],[id, '50002']]);      //branded drugs
+        console.log("pharmacies to be entered");
+        console.log(requestablePharmacies);
+        console.log("");
 
-        response.status(200).send("OK");
+        const id1 = await Customer.enterPharmacies(requestablePharmacies);
+        console.log("Pharmacies entered status");
+        console.log(id1);
+        console.log("");
+        if (drugTypes.length>0)
+        {
+            const id2 = await Customer.enterDrugTypes(drugTypes);
+            console.log("Drug types entered status");
+            console.log(id2);
+            console.log("");
+        }
+        if (brandedDrugs.length > 0)
+        {
+            const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+            console.log("Branded drugs entered status");
+            console.log(id3);
+            console.log("");
+        }
+        
+        return response.status(200).redirect('/customer/home');
+        
     }
     catch (error) {
-        response.status(500).send("Internal Server error");
         console.log(error);
+        return response.status(500).render('500');
     }
-    
 }
 
 function validateBroadcast(broadcaset) {
@@ -77,6 +202,69 @@ function validateBroadcast(broadcaset) {
 
 
 // ======================================USE CASE: VIEW BROADCASTED REQUESTS==================================================//
+/**
+ * 
+ * @param {number} customerId
+ */
+function validateRequestId(requestId){
+    
+    // schema to validate
+    const schema = Joi.object({
+        
+        "requestId"    : Joi.number().integer().min(60001).required(),
+        
+    });
+
+    // return valid or not
+    return schema.validate(requestId)
+}
+
+
+const viewBroadcastedRequests = async(req, res) => {
+
+    // get customerId from URL
+    const requestID = req.params.requestId; 
+
+    // validating
+    const {error} = validateRequestId({requestId:requestID});
+
+    if (error) {
+
+        // log the error
+        console.error('ValidationError:customer-requestId: '+error.details[0].message)
+
+        // send bad request
+        return res.status(400).send("Invalid Request");
+
+    }
+
+    // get the information of the broadcasted requests as requested
+    // const result = await Customer.getBroadcastedRequests(requestId);
+    const drug_types = await Customer.getDrugTypesFromRequest(requestID);
+    const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
+    console.log("Drug types request:")
+    console.log(drug_types);
+    console.log("Branded Drugs request:")
+    console.log(branded_drugs);
+    
+    try{
+        if(drug_types.length === 0 && branded_drugs.length===0){
+            return res.status(404).render('404');
+        }
+        return res.status(200).render('customer/view_requests',{
+            drug_types: drug_types,
+            branded_drugs: branded_drugs,
+            pageTitle: 'Request Details'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+}
+
+// ====================================================END OF USE CASE======================================================//
+// ======================================USE CASE: VIEW ALL REQUESTS==================================================//
 /**
  * 
  * @param {number} customerId
@@ -95,10 +283,9 @@ function validateCustomerId(customerId){
 }
 
 
-const viewBroadcastedRequests = (req, res) => {
+const viewAllRequests = async(req, res) => {
 
-    // get customerId from URL
-    const customerId = req.params.id; 
+    const customerId = req.session.user.id;
 
     // validating
     const {error} = validateCustomerId({customerId:customerId});
@@ -109,40 +296,41 @@ const viewBroadcastedRequests = (req, res) => {
         console.error('ValidationError:customer-customerId: '+error.details[0].message)
 
         // send bad request
-        res.status(400).send("Invalid Customer");
-
-        res.end()
-
-        // stop execution
-        return
+        return res.status(400).send("Invalid Customer");
     }
 
     // get the information of the broadcasted requests as requested
-    const result = Customer.getBroadcastedRequests(customerId);
-
-    result.then((data) => {
-
-        if(data.length === 0){
-            return res.status(400).send(" customerID not found");
+    let result = await Customer.getAllRequests(customerId);
+    
+    try{
+        if(result.length === 0){
+            return res.status(404).render('404');
             
         }
-        
-        // send data to front end
-        
-        res.status(200).json(data)
-        res.end()
-    })
-    .catch(error => {
-        console.log(error)
 
-        // send 'internal server error'
-        res.status(500).send("Internal Server Error")
-    })
+        return res.status(200).render('customer/home',{
+            all_requests: result,
+            pageTitle: 'Requests'
+        });
+    }
+    catch(error){
+        console.log(error.message);
+        return res.status(500).render('500');
+    }
+   
 
 }
 
 // ====================================================END OF USE CASE======================================================//
 
+const deleteBroadcast = async (req, res) => {
+    const requestID = req.body.requestID;
+    result = await Customer.deleteRequest(requestID);
+    res.status(200).redirect('/customer');
+}
+
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
 module.exports.getBroadcastForm = getBroadcastForm;
 module.exports.createBroadcastRequest = createBroadcastRequest;
+module.exports.viewAllRequests = viewAllRequests;
+module.exports.deleteBroadcast = deleteBroadcast;

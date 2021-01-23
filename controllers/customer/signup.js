@@ -1,15 +1,11 @@
+const express = require('express');
+const router = express.Router();
 const Joi = require('joi');
 const _ = require('lodash');
 const Customer = require('../../models/Customer');
 const { generatePassword } = require('../password');
-const Lookup = require('../../models/lookup.js');
+const path = require('path');
 
-const lookup = async (email) => {
-    const user = await Lookup.lookupEmail(email);
-    if (user) {
-        throw new Joi.ValidationError('Email already registered');
-    }
-};
 /**
  * 
  * @todo add regex for NIC 
@@ -18,8 +14,10 @@ function validateCustomerAccount(customer) {
     const schema = Joi.object({
         "full_name"             : Joi.string().required(),
         "nic"                   : Joi.string().required(),
-        "email"                 : Joi.string().email().required().external(lookup),           
+        "email"                 : Joi.string().email().required(),           
         "address"               : Joi.string().required(),
+        "latitude"              : Joi.number().min(5.916667).max(9.850000).required(),
+        "longitude"             : Joi.number().min(79.683333).max(81.883333).required(),
         "gender"                : Joi.string().required(),
         "dob"                   : Joi.date().required(),
         "contact_no"            : Joi.number().integer().required(),
@@ -27,7 +25,6 @@ function validateCustomerAccount(customer) {
         "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validateAsync(customer);
-
 }
 
 const signupCustomer = async (request, response) => {
@@ -39,17 +36,32 @@ const signupCustomer = async (request, response) => {
             "nic",
             "email",
             "address",
+            "latitude",
+            "longitude",
             "gender",
             "dob",
             "contact_no",
             "password",
-            "password_confirmation"
+            "confirm_password"
         ]
-    ));}
+        ));
+    }
 
     catch (error) {
-        console.log("Customer error validation" + error.message);
-        return response.status(400).send(error.message);
+        var err_msg = "Customer error validation " + error.message;
+        console.log(err_msg);
+        // return response.status(400).send(error.message);
+
+        var data = {error_msg: err_msg, post_body: request.body};
+        return response.render('customer/signup', {err_data: data});
+    }
+
+    if (await Customer.isEmailRegistered(request.body.email)){
+        var err_msg = "Email is already registered";
+        console.log(err_msg);
+        // return response.status(400).send(err_msg);
+        var data = {error_msg: err_msg, post_body: request.body};
+        return response.render('customer/signup', {err_data: data});
     }
 
     request.body.password = await generatePassword(request.body.password);
@@ -58,11 +70,11 @@ const signupCustomer = async (request, response) => {
         const result = await Customer.enterCustomer(request.body);
     }
     catch (error) {
+        var err_msg = "Internal server error " + error.message;
         console.log(error);
-        return response.status(500).send("Internal server error" + error.message);
+        return response.render('500');
     }
-
-    return response.status(200).send("OK");
+    return response.status(200).redirect('/customer/home');
 }
 
 exports.signupCustomer = signupCustomer;
