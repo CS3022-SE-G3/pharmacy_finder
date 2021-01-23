@@ -27,7 +27,7 @@ $('#respond_btn').on('click', function(){
         url: 'http://localhost:3000/pharmacy/response/respond/' + request_id,
         success:function(data)
         {
-            let info = data.info;;
+            let info = data.info;
             $('#c_name').html(info[0][0].full_name);
             $('#c_email').html(info[0][0].email);
             $('#c_address').html(info[0][0].address);
@@ -85,7 +85,7 @@ $('#edit_response_btn').on('click', function(){
         url: 'http://localhost:3000/pharmacy/response/edit_response/' + request_id,
         success:function(data)
         {
-            let info = data.info;;
+            let info = data.info;
             $('#c_name').html(info[0][0].full_name);
             $('#c_email').html(info[0][0].email);
             $('#c_address').html(info[0][0].address);
