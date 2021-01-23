@@ -4,18 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
+    <script src = "/assets/bootstrap3.min.js"></script>
     <title>Add Drug Type Form</title>
 </head>
 
 <body>
-
+<div class="col-md-8 col-md-offset-2 well formUnderNav">
+    <h2 class="text-center">Add Drug Type</h2>
+    <hr>
     <form method="POST" action="/system_admin/drug_type/add">
-
-        Drug Type Name: <input type="text" id="drug_type_name" name="drug_type_name" required>
-        <br>
-
-        <button type="submit">Add</button>
+        <div class="form-group col-md-6">
+            <label for="drug_type_name">Drug Type Name </label>
+            <input type="text" class="form-control" id="drug_type_name" name="drug_type_name" required>
+        </div>
+        <div class="col-md-12 text-left">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
     </form>
+
+</div>
 
 </body>
 

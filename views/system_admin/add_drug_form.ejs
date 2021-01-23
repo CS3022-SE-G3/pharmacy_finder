@@ -4,34 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" media="screen" title = "no title" charset = "utf-8">
+    <script src = "/assets/bootstrap3.min.js"></script>
     <title>Add Branded Drug Form</title>
 </head>
 
 <body>
-
+<div class="col-md-8 col-md-offset-2 well formUnderNav">
+    <h2 class="text-center">Add Branded Drug</h2>
+    <hr>
     <form method="POST" action="/system_admin/drug/add">
-
-        Brand Name: <input type="text" id="brand_name" name="brand_name" required>
-        <br>
-
-        Manufacturer: <input type="text" id="manufacturer" name="manufacturer" required>
-        <br>
-
-        <!-- TODO: implement a database search to select drug type -->
-        Drug Type: <select type="text" id="drug_type_id" name="drug_type_id" required>
-            <% for (let drugType of drugTypes) { %>
+        <div class="form-group col-md-6">
+            <label for="brand_name">Brand Name </label>
+            <input type="text" class="form-control" id="brand_name" name="brand_name" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="manufacturer">Manufacturer </label>
+            <input type="text" class="form-control" id="manufacturer" name="manufacturer" required>
+        </div>
+        <div class="form-group col-md-6">
+            <!-- TODO: implement a database search to select drug type -->
+            <label for="drug_type_id">Drug Type </label>
+            <select type="text" class="form-control" id="drug_type_id" name="drug_type_id" required>
+                <% for (let drugType of drugTypes) { %>
                 <option value="<%=drugType.drug_type_id%>">
                     <%=drugType.drug_type_name%>
                 </option>
                 <%}%>
-        </select>
-        <br>
+            </select>
+        </div>
+        <div class="col-md-12 text-left">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <div class="col-md-12 text-center">
+        <hr>
+        <form action="/system_admin/drug_type/add" method="get">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Add New Drug Type</button>
+        </form>
 
-        <button type="submit">Add</button>
-    </form>
-    <form action="/system_admin/drug_type/add" method="get">
-        <button type="submit">Add New Drug Type</button>
-    </form>
+    </div>
+</div>
+
+
+<!--    <form action="/system_admin/drug_type/add" method="get">-->
+<!--        <button type="submit">Add New Drug Type</button>-->
+<!--    </form>-->
 
 </body>
 
