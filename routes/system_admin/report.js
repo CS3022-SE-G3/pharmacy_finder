@@ -28,7 +28,7 @@ router.delete('/pharmacy/delete', isSystemAdmin, deletePharmacy);
  * @description Delete record of the reported pharmacy
  * @method DELETE
  */
-router.post('/delete', isSystemAdmin, deleteRecordOfReportedPharmacy);
+router.delete('/delete', isSystemAdmin, deleteRecordOfReportedPharmacy);
 
 
 module.exports = router;
