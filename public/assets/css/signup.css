@@ -1,0 +1,19 @@
+.reg_card {
+  margin: 1.5% auto;
+  max-width: 700px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.75),rgba(255, 255, 255, 0.8)), url(../Images/homepage_logo.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.reg_card_body {
+  padding-left: 3%;
+}
+footer {
+  text-align: center;
+  margin-bottom: 1%;
+}
+@media (max-width: 720px) {
+  .reg_card {
+    margin: 1.5%;
+  }
+}

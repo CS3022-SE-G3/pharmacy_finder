@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+main {
+  margin: 1.5%;
+}
+.wrapper_1 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1.5%;
+}
+.wrapper_1 > div {
+  background: #eee;
+  padding: 3%;
+}
+.wrapper_2 {
+  margin-top: 1.5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1.5%;
+}
+.wrapper_2 > div {
+  background: #eee;
+  padding-left: 3%;
+  padding-top: 3%;
+  padding-right: 3%;
+  padding-bottom: 1%;
+}
+.table_wrapper {
+  min-height: 270px;
+  max-height: 86%;
+  overflow: auto;
+  display:inline-block;
+}
+footer {
+  text-align: center;
+  margin-bottom: 1%;
+}
