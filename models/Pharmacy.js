@@ -133,6 +133,21 @@ class Pharmacy{
             )
         } )
     }
+
+    static getDrugTypesOfSelectedBrandedDrugs(data) {
+        return new Promise((resolve, reject) =>{
+            const branded_drug_id=data;
+            const result = pool.query('SELECT drug_type_id FROM branded_drug WHERE branded_drug_id=?',branded_drug_id,
+                
+                function (error, results, fields) {
+                    if (error) {
+                        reject (new Error(error.message));
+                    }
+                    resolve(results);
+                }
+            )
+        } )
+    }
       
     static getPharmacyDrugTypes(pharmacy_id) {
         return new Promise((resolve, reject) =>{
