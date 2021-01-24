@@ -9,26 +9,28 @@
     </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <script src="/assets/jquery.min.js"></script>
+    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h2>Delete Drug Type?</h2>
-    <main>
+<%- include('../includes/admin-navbar.ejs') %>
+<div class="row">
+    <div class="text-center">
+        <h3>Delete Drug Type?</h3>
+        <form action="/system_admin/drug_type/delete" method="POST" class="form-on-sameline">
+            <input type="hidden" name="drug_type_id" value="<%=drug_type_id%>">
+            <button type="submit" class="btn btn-lg btn-primary">Delete</button>
+        </form>
+        <form action="/system_admin/drug_type" method="get" class="form-on-sameline">
+            <button type="submit" class="btn btn-lg btn-default">Cancel</button>
+        </form>
+    </div>
+</div>
 
-        <div>
-            <form action="/system_admin/drug_type/delete" method="POST">
-                <input type="hidden" name="drug_type_id" value="<%=drug_type_id%>">
-                <button type="submit">Delete</button>
-            </form>
-            <form action="/system_admin/drug_type" method="get">
-                <button type="submit">Cancel</button>
-            </form>
-        </div>
-
-
-    </main>
 </body>
 
 </html>
-<script src="/js/admin.js"></script>

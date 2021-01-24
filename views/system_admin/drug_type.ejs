@@ -9,35 +9,27 @@
     </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <script src="/assets/jquery.min.js"></script>
+    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h2>
-        Drug Type
-    </h2>
-    <main>
-        <div>
-            <table>
-                <thead>
-                    <th>Drug Type ID</th>
-                    <th>Drug Type</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <%=drug_type.drug_type_id%>
-                        </td>
-                        <td>
-                            <%=drug_type.drug_type_name%>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<%- include('../includes/admin-navbar.ejs') %>
+
+        <div class="col-md-8 col-md-offset-2 well formUnderNav">
+            <a href="/system_admin/drug" class="btn btn-xs btn-default">Back</a>
+            <h2 class="text-center">Drug Type</h2>
+            <hr>
+            <div class="col-md-6">
+                <p><strong>Drug Type ID: </strong> <%=drug_type.drug_type_id%></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Drug Type: </strong> <%=drug_type.drug_type_name%></p>
+            </div>
         </div>
-    </main>
-    </main>
 </body>
 
 </html>
-<script src="/js/admin.js"></script>
