@@ -49,7 +49,7 @@
                 const customer_id = form.customer_id.value;
                 document.getElementById('details').style['display'] = 'none'
                 if (Number.isInteger(parseInt(customer_id))) {
-                    fetch(`http://localhost:3000/system_admin/customer/view/${customer_id}`)
+                    fetch(`/system_admin/customer/view/${customer_id}`)
                         .then(response => {
                             if (response.status == 200) {
                                 const e = document.getElementById("e")
