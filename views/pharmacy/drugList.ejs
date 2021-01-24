@@ -1,83 +1,97 @@
-<html>
-    <head>
-        <title>Drug Details</title>
-        
-        <link rel="stylesheet" href="/assets/bootstrap.min.css">
-        <script src="/assets/jquery.js" ></script>
-        <script src="/assets/drugJS.js" ></script>
-        <script src="/assets/bootstrap.min.js"></script>
-        
-    </head>
-    <body>
-
-        
-<form method="post">
-        <div class="content-table">
-            <div class="content pb-0">
-                <div class="orders">
-                    <div class="row">
-
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body--">
-                                    <div class="table-stats ov-h">
-                                        <table class="table  table-dark table-hover">
-        
-                                            <thead>
-                                                <tr>
-                                                    <th width="70%" ><h3>Drug Type</h3></th>
-                                                    <th width="30%"></th>
-                                                </tr>
-                                            </thead>
-
-                                            <% for(var i=0; i < drug_types.length; i++){ %>
-                                                <tr>
-                                                    <td><%= drug_types[i].drug_type_name  %></td>
-                                                    <td><button class="btn btn-danger" name="delete_drug_type" value="<%= drug_types[i].drug_type_id%>">Delete</button></td>
-                                                </tr> 
-                                            <% } %>
-                                            
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="png" href="/assets/images/head_logo.png">
+    <title>Pharmacy | Drugs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(204, 201, 201);
+        }
+        .home_card {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a href="#" style="color: white;">
+                <i class="fas fa-clinic-medical"></i>
+            </a>
+            <a class="navbar-brand ml-3" href="#">Dashboard · View Drugs</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <form action="/logout" method="POST">
+                        <input type="submit" value="LOG OUT" class="btn btn-secondary my-2 my-sm-0" role="button">
+                    </form>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="card home_card">
+            <div class="column">
+                <div class="row" style="justify-content: center;">
+                    <div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-responsive table-bordered">
+                                <thead class="thead-dark" style="text-align: center;">
+                                    <tr>
+                                        <th width="70%" scope="col">Drug Types</th>
+                                        <th width="30%" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i=0; i < drug_types.length; i++){ %>
+                                        <tr>
+                                            <td><%= drug_types[i].drug_type_name  %></td>
+                                            <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_drug_type" value="<%= drug_types[i].drug_type_id%>">Delete</button></td>
+                                        </tr> 
+                                    <% } %>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body--">
-                                    <div class="table-stats ov-h">
-                                        <table class="table  table-dark table-hover">
-        
-                                            <thead>
-                                                <tr>
-                                                    <th width="70%" ><h3>Branded Drug</h3></th>
-                                                    <th width="30%"></th>
-                                                    
-                                                </tr>
-                                            </thead>
-                                            <% for(var i=0; i < branded_drugs.length; i++){ %>
-                                                <tr>
-                                                    <td><%= branded_drugs[i].brand_name  %></td>
-                                                    <td><button class="btn btn-danger" name="delete_branded_drug" value="<%= branded_drugs[i].branded_drug_id%>">Delete</button></td>
-                                                </tr>
-                                                
-                                            <% } %>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-responsive table-bordered">
+                                <thead class="thead-dark" style="text-align: center;">
+                                    <tr>
+                                        <th width="70%" scope="col">Branded Drugs</th>
+                                        <th width="30%" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i=0; i < branded_drugs.length; i++){ %>
+                                        <tr>
+                                            <td><%= branded_drugs[i].brand_name  %></td>
+                                            <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_branded_drug" value="<%= branded_drugs[i].branded_drug_id%>">Delete</button></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
                         </div>
-
                     </div>
                 </div>
-            </div> 
-        </div>  
-        
-</form>
-
-        <a href="/pharmacy/addDrug"><button class="btn btn-lg btn-info">ADD DRUG</button></a>
-  
-    </body>
-
-        
+                <div align="center" class="mt-2">
+                    <h5>Click here to add a new drug to the drug list -> <span>
+                        <a href="/pharmacy/addDrug"><button class="btn btn-sm btn-info">ADD A NEW DRUG</button></a>
+                    </span></h5>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bottom" style="text-align: center; margin-bottom: 1%;">Pharmacy Finder - Version 1.0.0 © 2021 | <a href="">Contact Us</a></footer>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
 </html>

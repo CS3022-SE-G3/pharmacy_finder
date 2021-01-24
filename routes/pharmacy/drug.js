@@ -63,8 +63,8 @@ router.post('/', isAPharmacy, function (request, response) {
         try{
             const drug= await getPharmacyDrugTypes();
             const brand = await getPharmacyBrandedDrugs();
-            
-            response.render('pharmacy/drugList',{drug_types: drug, branded_drugs: brand});
+            response.status(200).redirect("/pharmacy/drug");
+            // response.render('pharmacy/drugList',{drug_types: drug, branded_drugs: brand});
         }
         catch(err){
             console.log(err);

@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 main {
   margin: 1.5%;
@@ -27,12 +26,6 @@ main {
   padding-top: 3%;
   padding-right: 3%;
   padding-bottom: 1%;
-}
-.table_wrapper {
-  min-height: 270px;
-  max-height: 86%;
-  overflow: auto;
-  display:inline-block;
 }
 footer {
   text-align: center;
