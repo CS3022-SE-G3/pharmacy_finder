@@ -34,7 +34,7 @@ const addNewDrugType = async (request, response) => {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
