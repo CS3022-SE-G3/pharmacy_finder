@@ -18,13 +18,17 @@ CREATE TABLE customer (
 );
 
 ALTER TABLE customer AUTO_INCREMENT = 10001;
+ALTER TABLE customer ADD INDEX  (`email`);
+ALTER TABLE customer ADD INDEX  (`longitude`);
+ALTER TABLE customer ADD INDEX  (`latitude`);
+
 
 CREATE TABLE pharmacy (
     pharmacy_id int auto_increment,
     approved_state ENUM('Not Approved', 'Approved') NOT NULL DEFAULT 'Not Approved',
     name varchar(50) NOT NULL,
     address varchar(70) NOT NULL,
-    longitude numeric(8,6) NOT NULL,
+     numeric(8,6) NOT NULL,
     latitude numeric(8,6) NOT NULL,
     email varchar(50) NOT NULL,
     contact_no bigint NOT NULL,
@@ -34,6 +38,10 @@ CREATE TABLE pharmacy (
 );
 
 ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
+ALTER TABLE pharmacy ADD INDEX  (`approved_state`);
+ALTER TABLE pharmacy ADD INDEX  (`email`);
+ALTER TABLE pharmacy ADD INDEX  (`longitude`);
+ALTER TABLE pharmacy ADD INDEX  (`latitude`);
 
 CREATE TABLE drug_type (
     drug_type_id int auto_increment,
@@ -44,12 +52,13 @@ CREATE TABLE drug_type (
 );
 
 ALTER TABLE drug_type AUTO_INCREMENT = 40001;
+ALTER TABLE drug_type ADD INDEX  (`is_deleted`);
 
 CREATE TABLE branded_drug (
     branded_drug_id int auto_increment,
     brand_name varchar(50) NOT NULL,
     manufacturer varchar(50) NOT NULL,
-    drug_type_id int NOT NULL,
+     int NOT NULL,
     is_deleted TINYINT(1) DEFAULT 0,
     PRIMARY KEY (branded_drug_id),
     UNIQUE(brand_name),
@@ -57,6 +66,8 @@ CREATE TABLE branded_drug (
 );
 
 ALTER TABLE branded_drug AUTO_INCREMENT = 50001;
+ALTER TABLE branded_drug ADD INDEX  (`is_deleted`);
+ALTER TABLE branded_drug ADD INDEX  (`drug_type_id`);
 
 CREATE TABLE requests (
     request_id int auto_increment,
@@ -67,6 +78,7 @@ CREATE TABLE requests (
 );
 
 ALTER TABLE requests AUTO_INCREMENT = 60001;
+ALTER TABLE branded_drug ADD INDEX  (`customer_id`);
 
 CREATE TABLE response (
     response_id int auto_increment,
@@ -79,6 +91,8 @@ CREATE TABLE response (
 );
 
 ALTER TABLE response AUTO_INCREMENT = 70001;
+ALTER TABLE response ADD INDEX  (`request_id`);
+ALTER TABLE response ADD INDEX  (`pharmacy_id`);
 
 CREATE TABLE pharmacy_drug_types (
     pharmacy_id int,
