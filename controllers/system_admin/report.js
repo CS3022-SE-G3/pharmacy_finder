@@ -84,12 +84,19 @@ const viewAllReportedPharmacies = (req, res) => {
 
         // send no reported pharamacies
         if(data.length === 0){
-            return res.status(400).send("No reported pharamacies");
-            
+            return res.render('system_admin/viewpharmaciesreprted', {
+                title: 'welcome',
+                hasPharmacies: false
+            });
         }
         
         // send data to front end
-        return res.render('system_admin/viewpharmaciesreprted',{title: 'welcome',data: data});
+        return res.render('system_admin/viewpharmaciesreprted',
+            {
+                title: 'welcome',
+                data: data,
+                hasPharmacies:true
+            });
     })
     .catch(error => {
         var err_msg = "Internal server error " + error.message;
