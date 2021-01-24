@@ -68,34 +68,12 @@ class SystemAdmin {
     }
 
     /**
-     * Used to get all drug type ids and names from the database
-     * Used for the boradcast request use case of customer
-     */
-
-    static getAllDrugTypesandIDs() {
-        return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_id,drug_type_name FROM drug_type ORDER BY drug_type_name",
-                function (error, results, fields) {
-                    if (error) {
-                        console.log(query.sql);
-                        console.log(error);
-                        reject(error);
-                        return;
-                    };
-                    console.log(results);
-                    resolve(results);
-                }
-            )
-        })
-    }
-
-    /**
      * @description Get all drug types from database
      * 
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
-            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE is_deleted = ?",
+            const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE is_deleted = ? ORDER BY drug_type_name",
                 [false],
                 function (error, results, fields) {
                     if (error) {
