@@ -6,7 +6,7 @@ const ifNotLoggedIn = require('../../middleware/ifNotLoggedIn');
 const { loginSysAdmin } = require('../../controllers/system_admin/login');
 
 router.get('/', ifNotLoggedIn, (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../views/system_admin/login.html'));
+    return res.render('system_admin/login');
 });
 
 router.post('/', ifNotLoggedIn, loginSysAdmin);
