@@ -27,8 +27,6 @@ const loginCustomer = async (request, response) => {
         console.log(err_msg);
         // return response.status(400).send(error.message);
         return response.render('customer/login_error', { err_data: err_msg });
-
-
     }
 
     try {
