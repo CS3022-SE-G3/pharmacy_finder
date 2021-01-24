@@ -34,7 +34,7 @@ const addNewDrug = async (request, response) => {
 
     } catch (error) {
         console.log(error.message);
-        return response.status(500).send("Internal Server Error");
+        return response.status(500).render('500');
     }
 }
 
@@ -52,7 +52,7 @@ const viewAllDrugs = async (request, response) => {
     }
     catch (error) {
         console.log(error);
-        return response.status(500).send("internal server error");
+        return response.status(500).render('500');
     }
 }
 
@@ -70,7 +70,7 @@ const viewAddDrugForm = async (request, response) => {
     }
     catch (error) {
         console.log(error.message);
-        return response.status(500).send("internal server error");
+        return response.status(500).render('500');
     }
 }
 
@@ -96,7 +96,7 @@ const viewUpdateDrugForm = async (request, response) => {
     }
     catch (error) {
         console.log(error.message);
-        return response.status(500).send("Internal Server Error");
+        return response.status(500).render('500');
     }
 }
 
@@ -130,7 +130,7 @@ const updateDrugDetails = async (request, response) => {
 
     } catch (error) {
         console.log(error.message);
-        return response.status(500).send("Internal Server Error");
+        return response.status(500).render('500');
     }
     return response.status(200).redirect('/system_admin/drug');
 }
@@ -161,7 +161,7 @@ const deleteDrug = async (request, response) => {
         return response.status(200).redirect('system_admin/drug');
     } catch (error) {
         console.log(error.message);
-        return response.status(500).send("Internal Server Error");
+        return response.status(500).render('500');
     }
 }
 
