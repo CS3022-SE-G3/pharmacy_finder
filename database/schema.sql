@@ -1,6 +1,4 @@
 
--------------Tables-------------------------------
-
 CREATE TABLE customer (
     customer_id int auto_increment,
     full_name varchar(50) NOT NULL,
@@ -28,11 +26,11 @@ CREATE TABLE pharmacy (
     approved_state ENUM('Not Approved', 'Approved') NOT NULL DEFAULT 'Not Approved',
     name varchar(50) NOT NULL,
     address varchar(70) NOT NULL,
-     numeric(8,6) NOT NULL,
+    longitude numeric(8,6) NOT NULL,
     latitude numeric(8,6) NOT NULL,
     email varchar(50) NOT NULL,
     contact_no bigint NOT NULL,
-    password varchar (50) NOT NULL,
+    password varchar (70) NOT NULL,
     PRIMARY KEY (pharmacy_id),
     UNIQUE(email)
 );
@@ -58,7 +56,7 @@ CREATE TABLE branded_drug (
     branded_drug_id int auto_increment,
     brand_name varchar(50) NOT NULL,
     manufacturer varchar(50) NOT NULL,
-     int NOT NULL,
+    drug_type_id int NOT NULL,
     is_deleted TINYINT(1) DEFAULT 0,
     PRIMARY KEY (branded_drug_id),
     UNIQUE(brand_name),
@@ -78,7 +76,7 @@ CREATE TABLE requests (
 );
 
 ALTER TABLE requests AUTO_INCREMENT = 60001;
-ALTER TABLE branded_drug ADD INDEX  (`customer_id`);
+ALTER TABLE requests ADD INDEX  (`customer_id`);
 
 CREATE TABLE response (
     response_id int auto_increment,
