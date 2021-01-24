@@ -327,15 +327,12 @@ function validateCustomerId(customerId){
 const viewAllRequests = async(req, res) => {
 
     const customerId = req.session.user.id;
+    console.log(customerId);
     // get the information of the broadcasted requests as requested
-    let result = await Customer.getAllRequests(customerId);
     
-    try{
-        if(result.length === 0){
-            return res.status(404).render('404');
-            
-        }
-
+    
+    try {
+        let result = await Customer.getAllRequests(customerId);
         return res.status(200).render('customer/home',{
             all_requests: result,
             pageTitle: 'Requests'
