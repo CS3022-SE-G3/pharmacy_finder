@@ -9,16 +9,26 @@
     </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <script src="/assets/jquery.min.js"></script>
+    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h2>
+<%- include('../includes/admin-navbar.ejs') %>
+    <h2 class="text-center">
         Drug Types
     </h2>
-    <main>
-        <div>
-            <table>
+        <div class="container well">
+            <div class="text-center">
+                <form action="/system_admin/drug_type/add" method="get">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add New Drug Type</button>
+                </form>
+            </div>
+        <hr>
+            <table class="table table-striped table-condensed table-bordered table-hover">
                 <thead>
                     <th>Drug Type ID</th>
                     <th>Drug Type Name</th>
@@ -34,16 +44,20 @@
                             <td>
                                 <%=drugType.drug_type_name%>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <form
                                     action="/system_admin/drug_type/update/<%=drugType.drug_type_id%>/<%=drugType.drug_type_name%>"
                                     method="get">
-                                    <button type="submit">Update</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i> Update
+                                    </button>
                                 </form>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <form action="/system_admin/drug_type/delete/<%=drugType.drug_type_id%>" method="get">
-                                    <button type="submit">Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -51,14 +65,7 @@
                 </tbody>
             </table>
         </div>
-        <div>
-            <form action="/system_admin/drug_type/add" method="get">
-                <button type="submit">Add New Drug Type</button>
-            </form>
-        </div>
-    </main>
-    </main>
+
 </body>
 
 </html>
-<script src="/js/admin.js"></script>
