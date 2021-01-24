@@ -18,7 +18,9 @@
 <div class="col-md-8 col-md-offset-2 well formUnderNav">
     <h2 class="text-center">Add Branded Drug</h2>
     <hr>
-    <form method="POST" action="/system_admin/drug/add">
+    <div id='e' class="bg-danger form-errors text-center text-danger" style='display: none;'>
+    </div>
+    <form>
         <div class="form-group col-md-6">
             <label for="brand_name">Brand Name </label>
             <input type="text" class="form-control" id="brand_name" name="brand_name" required>
@@ -50,6 +52,49 @@
 
     </div>
 </div>
+<script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const brand_name = form.brand_name.value;
+        const manufacturer = form.manufacturer.value;
+        const drug_type_id = form.drug_type_id.value;
+        
+        if (!(brand_name.length==0 || manufacturer.length==0 || drug_type_id.length==0)) {
+            fetch(`/system_admin/drug/add`,{
+                    method: "POST",
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        brand_name: brand_name,
+                        manufacturer: manufacturer,
+                        drug_type_id: drug_type_id
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+
+                })
+                .then(response => {
+                    if (response.status == 200) {
+                        const e = document.getElementById("e")
+                        e.innerHTML = '<p><p>'
+                        e.style['display'] = 'block';
+                        alert("Branded drug successfully added!")
+                        window.location.href = '/system_admin/drug'
+                    }
+                    else {
+                        const e = document.getElementById("e")
+                        e.innerHTML = '<p>Failed to add branded drug<p>'
+                        e.style['display'] = 'block';
+                    }
+                })
+        } else {
+            const e = document.getElementById("e")
+
+            e.innerHTML = '<p>No field should be empty<p>'
+            e.style['display'] = 'block';
+        }
+
+    })
+</script>
 
 </body>
 

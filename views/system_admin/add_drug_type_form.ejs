@@ -18,7 +18,9 @@
 <div class="col-md-8 col-md-offset-2 well formUnderNav">
     <h2 class="text-center">Add Drug Type</h2>
     <hr>
-    <form method="POST" action="/system_admin/drug_type/add">
+    <div id='e' class="bg-danger form-errors text-center text-danger" style='display: none;'>
+    </div>
+    <form>
         <div class="form-group col-md-6">
             <label for="drug_type_name">Drug Type Name </label>
             <input type="text" class="form-control" id="drug_type_name" name="drug_type_name" required>
@@ -29,6 +31,46 @@
     </form>
 
 </div>
+<script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const drug_type_name = form.drug_type_name.value;
+        
+        if (!(drug_type_name.length==0)) {
+            fetch(`/system_admin/drug_type/add`,{
+                    method: "POST",
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        drug_type_name: drug_type_name
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+
+                })
+                .then(response => {
+                    if (response.status == 200) {
+                        const e = document.getElementById("e")
+                        e.innerHTML = '<p><p>'
+                        e.style['display'] = 'block';
+                        alert("Drug type successfully added!")
+                        window.location.href = '/system_admin/drug_type'
+                    }
+                    else {
+                        const e = document.getElementById("e")
+                        e.innerHTML = '<p>Failed to add drug type<p>'
+                        e.style['display'] = 'block';
+                    }
+                })
+        } else {
+            const e = document.getElementById("e")
+
+            e.innerHTML = '<p>No field should be empty<p>'
+            e.style['display'] = 'block';
+        }
+
+    })
+</script>
+
 
 </body>
 
