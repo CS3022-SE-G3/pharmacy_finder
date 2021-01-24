@@ -1,5 +1,6 @@
-
-const { pool } = require('../database/connection');
+const {
+    pool
+} = require('../database/connection');
 
 
 class SystemAdmin {
@@ -95,7 +96,7 @@ class SystemAdmin {
     static getDrugType(drug_type_id) {
         return new Promise((resolve, reject) => {
             const query = pool.query("SELECT drug_type_id, drug_type_name FROM drug_type WHERE drug_type_id = ? AND is_deleted = ?",
-                [drug_type_id,false],
+                [drug_type_id, false],
                 function (error, results, fields) {
                     if (error) {
                         console.log(query.sql);
@@ -201,10 +202,10 @@ class SystemAdmin {
     }
 
     /**
- *  
- *  @description - getting customer infromation from database from accountID
- *  @param {number} accountId - customerId
- */
+     *  
+     *  @description - getting customer infromation from database from accountID
+     *  @param {number} accountId - customerId
+     */
     static async getCustomerAccountInformation(accountId) {
 
         try {
@@ -220,8 +221,7 @@ class SystemAdmin {
                     console.log(res)
                     resolve(res);
                 })
-            }
-            )
+            })
 
             return response;
 
@@ -231,17 +231,17 @@ class SystemAdmin {
     }
 
     /**
-    *  
-    *  @description - getting customer infromation from database from accountID
-    *  @todo delete report
-    */
+     *  
+     *  @description - getting customer infromation from database from accountID
+     *  @todo delete report
+     */
     static async getReportedPharmaciesInformation() {
 
         try {
             const response = await new Promise((resolve, reject) => {
                 // if query succces we gonna resolve the result
                 // else we gonna reject it
-                const qry = "SELECT `pharmacy_id`,`name`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
+                const qry = "SELECT `pharmacy_id`,`customer_id`,`reasons`,`address`,`longitude`,`latitude`,`email`,`contact_no` FROM `reported_pharmacies` NATURAL JOIN `pharmacy`"; // query
                 pool.query(qry, (err, res) => {
                     if (err) {
                         // testing - pass
@@ -254,8 +254,7 @@ class SystemAdmin {
                     console.log(res)
                     resolve(res);
                 })
-            }
-            )
+            })
 
             // testing - pass
             console.log(`response to view reported pharamcy qry `)
@@ -283,11 +282,11 @@ class SystemAdmin {
     }
 
     /**
-*  
-*  @description - delete record of reported paharamcy
-*  @param {number} accountId - customerId
-*  @param {number} pharamacyId - pharamacy Id
-*/
+     *  
+     *  @description - delete record of reported paharamcy
+     *  @param {number} accountId - customerId
+     *  @param {number} pharamacyId - pharamacy Id
+     */
     static async deleteRecord(pharamacyId, accountId) {
 
         try {
@@ -303,8 +302,7 @@ class SystemAdmin {
                     console.log(res)
                     resolve(res);
                 })
-            }
-            )
+            })
 
             return response;
 
@@ -314,12 +312,12 @@ class SystemAdmin {
     }
 
     /**
-*  
-*  @description - getting pharmacy is in the reported pharmacy list
-*  @param {number} accountId - customerId
-*  @param {number} pharamacyId - pharmacy Id
-*  
-*/
+     *  
+     *  @description - getting pharmacy is in the reported pharmacy list
+     *  @param {number} accountId - customerId
+     *  @param {number} pharamacyId - pharmacy Id
+     *  
+     */
     static async getReportedPharmacyInformation(pharmacyID, customerID) {
 
         return new Promise((resolve, reject) => {
@@ -335,8 +333,7 @@ class SystemAdmin {
 
                 resolve(res.length > 0);
             })
-        }
-        )
+        })
 
         // testing - pass
         return response;
@@ -344,11 +341,11 @@ class SystemAdmin {
     }
 
     /**
-*  
-*  @description - deleting pharmacy account
-*  @param {number} pharamacyId - pharmacy Id
-*  
-*/
+     *  
+     *  @description - deleting pharmacy account
+     *  @param {number} pharamacyId - pharmacy Id
+     *  
+     */
     static async deleteAccount(pharamacyId) {
 
         return new Promise((resolve, reject) => {
@@ -366,8 +363,7 @@ class SystemAdmin {
                 // testing -pass
                 console.log
                 resolve(true);
-            }
-            )
+            })
         })
 
 
