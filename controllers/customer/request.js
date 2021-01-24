@@ -14,7 +14,7 @@ const Lookup = require('../../models/Lookup');
  * @todo get all drugs and drug types? from system admin
  */
 const getBroadcastForm = async (request, response) => {
-    const drug_types = await SystemAdmin.getAllDrugTypesandIDs();
+    const drug_types = await SystemAdmin.getAllDrugTypes();
     const branded_drugs = await SystemAdmin.getAllDrugs();
     console.log(drug_types);
     console.log(branded_drugs);
@@ -286,8 +286,12 @@ const viewBroadcastedRequests = async(req, res) => {
         
     }
     catch(error){
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 
@@ -342,8 +346,12 @@ const viewAllRequests = async(req, res) => {
         });
     }
     catch(error){
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
    
 

@@ -23,18 +23,16 @@ router.get('/search', isSystemAdmin, getSearchPharmacy);
 router.post('/search', isSystemAdmin, postSearchPharmacy);
 
 /**
- * @description Load the data of all approval pending pharmacies
+ * @description Load the data of all approval pending pharmacies into pending pharmacy view
  * @URL http://localhost:3000/system_admin/pharmacy/pending
  * @method GET
- * @todo return results in response body in html file
  */
 router.get('/pending', isSystemAdmin, viewPendingPharmacies);
 
 /**
- * @description Load the data of a pharmacy given a pharmacy ID
+ * @description Load the data of a pharmacy given a pharmacy ID into pharmacy info view
  * @URL http://localhost:3000/system_admin/pharmacy/view/{pharmacyid}
  * @method GET
- * @todo return results in response body in html file
  */
 router.get('/view/:pharmacyid', isSystemAdmin, viewPharmacyInfo);
 

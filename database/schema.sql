@@ -10,26 +10,27 @@ CREATE TABLE customer (
     longitude numeric(8, 6) NOT NULL,
     latitude numeric(8, 6) NOT NULL,
     gender ENUM('Male', 'Female', 'Other') NOT NULL,
-    dob date NOT NULL,
+    dob text NOT NULL,
     contact_no bigint NOT NULL,
     password varchar(70) NOT NULL,
-    PRIMARY KEY (customer_id)
+    PRIMARY KEY (customer_id),
+    UNIQUE(email)
 );
 
 ALTER TABLE customer AUTO_INCREMENT = 10001;
-ALTER TABLE `customer` CHANGE `dob` `dob` TEXT NOT NULL;
 
 CREATE TABLE pharmacy (
     pharmacy_id int auto_increment,
     approved_state ENUM('Not Approved', 'Approved') NOT NULL DEFAULT 'Not Approved',
     name varchar(50) NOT NULL,
-    address varchar(70),
+    address varchar(70) NOT NULL,
     longitude numeric(8,6) NOT NULL,
     latitude numeric(8,6) NOT NULL,
     email varchar(50) NOT NULL,
     contact_no bigint NOT NULL,
     password varchar (50) NOT NULL,
-    PRIMARY KEY (pharmacy_id)
+    PRIMARY KEY (pharmacy_id),
+    UNIQUE(email)
 );
 
 ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
@@ -37,7 +38,8 @@ ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
 CREATE TABLE drug_type (
     drug_type_id int auto_increment,
     drug_type_name varchar(50) NOT NULL,
-    PRIMARY KEY (drug_type_id)
+    PRIMARY KEY (drug_type_id),
+    UNIQUE(drug_type_name)
 );
 
 ALTER TABLE drug_type AUTO_INCREMENT = 40001;
@@ -48,6 +50,7 @@ CREATE TABLE branded_drug (
     manufacturer varchar(50) NOT NULL,
     drug_type_id int NOT NULL,
     PRIMARY KEY (branded_drug_id),
+    UNIQUE(brand_name),
     FOREIGN KEY (drug_type_id) REFERENCES drug_type(drug_type_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -56,25 +59,24 @@ ALTER TABLE branded_drug AUTO_INCREMENT = 50001;
 CREATE TABLE requests (
     request_id int auto_increment,
     customer_id int NOT NULL,
+    date_created text NOT NULL,
     PRIMARY KEY (request_id),
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 ALTER TABLE requests AUTO_INCREMENT = 60001;
-ALTER TABLE requests ADD date_created DATE;
 
 CREATE TABLE response (
     response_id int auto_increment,
     request_id int NOT NULL,
     pharmacy_id int NOT NULL,
+    date_created text NOT NULL,
     PRIMARY KEY(response_id),
     FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (pharmacy_id) REFERENCES pharmacy(pharmacy_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 ALTER TABLE response AUTO_INCREMENT = 70001;
-ALTER TABLE response ADD date_created DATE;
 
 CREATE TABLE pharmacy_drug_types (
     pharmacy_id int,

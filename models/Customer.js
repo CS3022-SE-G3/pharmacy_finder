@@ -38,6 +38,7 @@ class Customer{
                     if (error) {
                         reject(new Error(error.message));
                     }
+                    pool.close();
                     resolve(results);
                 }
             )

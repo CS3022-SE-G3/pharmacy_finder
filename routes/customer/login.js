@@ -7,7 +7,6 @@ const { loginCustomer } = require('../../controllers/customer/login');
 
 router.get('/', ifNotLoggedIn, (req, res) => {
         return res.render('customer/login');
-
 });
 
 router.post('/', ifNotLoggedIn, loginCustomer);

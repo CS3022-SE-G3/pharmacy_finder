@@ -101,6 +101,10 @@ const editProfileInformation = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
         return response.render('500');
     }
     return response.status(200).redirect('/customer/profile/view');
@@ -129,9 +133,12 @@ const loadEditProfile = async (request, response) => {
         });
     }
     catch (error) {
-        console.log(error)
-        // send 'internal server error'
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
         
     }
 

@@ -9,50 +9,67 @@
     </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title = "no title" charset = "utf-8">
+    <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title = "no title" charset = "utf-8">
+    <script src="/assets/jquery.min.js"></script>
+    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h2>Home</h2>
-    <main>
-        <div>
-            <form action="/system_admin/drug_type" method="GET">
-                <button type="submit">View Drug Types</button>
+<%- include('../includes/admin-navbar.ejs') %>
+    <h2 class="text-center">Home</h2>
+    <hr>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/drug-type.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/drug_type" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">View Drug Types</button>
             </form>
         </div>
-        <div>
-            <form action="/system_admin/drug" method="GET">
-                <button type="submit">View Branded drugs</button>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/branded-drug.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/drug" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">View Branded drugs</button>
             </form>
         </div>
-        <div>
-            <form action="/system_admin/pharmacy/search" method="GET">
-                <button type="submit">Search Pharmacy</button>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/search-pharmacy.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/pharmacy/search" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">Search for Pharmacy</button>
             </form>
         </div>
-        <div>
-            <form action="/system_admin/pharmacy/pending" method="GET">
-                <button type="submit">Approval Pending Pharmacies</button>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/approval-pending.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/pharmacy/pending" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">Approval Pending Pharmacies</button>
             </form>
         </div>
         <!-- View reported Pharmacies -->
-        <div>
-            <form action="/system_admin/report/view/reportedPharmacies" method="GET">
-                <button type="submit">View reported Pharmacies</button>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/pharmacy-report.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/report/view/reportedPharmacies" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">View Reported Pharmacies</button>
             </form>
         </div>
-        <div>
-            <form action="/system_admin/customer/search" method="GET">
-                <button type="submit">Search customer</button>
+        <div class="col-md-2">
+            <div class="container serviceImgCover">
+                <img src="/assets/images/search-customer.svg" class="servicesSVG"/>
+            </div>
+            <form action="/system_admin/customer/search" method="GET" class="text-center">
+                <button type="submit" class="btn btn-primary">Search for Customer</button>
             </form>
         </div>
 
-        <div>
-            <form action="/logout" method="POST">
-                <button type="submit">Log Out</button>
-            </form>
-        </div>
-    </main>
 </body>
 
 </html>
