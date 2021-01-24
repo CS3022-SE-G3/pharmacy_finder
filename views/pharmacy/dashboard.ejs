@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="png" href="/assets/images/head_logo.png">
     <title>Pharmacy | Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/assets/css/dashboard.css">
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -15,7 +18,8 @@
                 <i class="fas fa-clinic-medical"></i>
             </a>
             <a class="navbar-brand ml-3" href="#">Dashboard</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -29,13 +33,25 @@
     <main>
         <div class="wrapper_1">
             <div>
-                <h5><%= data.pharmacy_info.name %></h5>
+                <h5>
+                    <%= data.pharmacy_info.name %>
+                </h5>
                 <hr class="my-3">
-                <h6>Address : <span><%= data.pharmacy_info.address %></span></h6>
-                <h6>Longitude : <span><%= data.pharmacy_info.longitude %></span></h6>
-                <h6>Latitude : <span><%= data.pharmacy_info.latitude %></span></h6>
-                <h6>Email : <span><%= data.pharmacy_info.email %></span></h6>
-                <h6>Hotline : <span><%= data.pharmacy_info.contact_no %></span></h6>
+                <h6>Address : <span>
+                        <%= data.pharmacy_info.address %>
+                    </span></h6>
+                <h6>Longitude : <span>
+                        <%= data.pharmacy_info.longitude %>
+                    </span></h6>
+                <h6>Latitude : <span>
+                        <%= data.pharmacy_info.latitude %>
+                    </span></h6>
+                <h6>Email : <span>
+                        <%= data.pharmacy_info.email %>
+                    </span></h6>
+                <h6>Hotline : <span>
+                        <%= data.pharmacy_info.contact_no %>
+                    </span></h6>
             </div>
             <div>
                 <a type="button" class="btn btn-primary btn-lg btn-block mt-4">View Drugs</a>
@@ -58,15 +74,28 @@
                     <tbody>
                         <% for(let i=0; i < data.requests.length; i++){ %>
                             <tr>
-                                <th scope="row"><%= i+1 %></th>
-                                <td><%= data.requests[i].request_id %></td>
-                                <td><%= data.requests[i].customer_name %></td>
-                                <td><%= data.requests[i].date_created%></td>
-                                <td><button type="button" class="btn btn-primary btn-sm" id="respond_btn" data-toggle="modal" data-target="#respondModal" data-id=<%= data.requests[i].request_id%>>Respond</button></td>
+                                <th scope="row">
+                                    <%= i+1 %>
+                                </th>
+                                <td>
+                                    <%= data.requests[i].request_id %>
+                                </td>
+                                <td>
+                                    <%= data.requests[i].customer_name %>
+                                </td>
+                                <td>
+                                    <%= data.requests[i].date_created%>
+                                </td>
+                                <td><button type="button" class="btn btn-primary abc" id="<%= data.requests[i].request_id %>"
+                                        data-toggle="modal" data-target="#respondModal"
+                                        >Respond</button></td>
                             </tr>
-                        <% } %>
+                            
+                            <% } %>
+
+
                     </tbody>
-                </table>                
+                </table>
             </div>
             <div class="table-responsive table_wrapper">
                 <h5>Responded Requests</h5>
@@ -84,34 +113,50 @@
                     <tbody>
                         <% for(let i=0; i < data.responded_requests.length; i++){ %>
                             <tr>
-                                <th scope="row"><%= i+1 %></th>
-                                <td><%= data.responded_requests[i].request_id %></td>
-                                <td><%= data.responded_requests[i].customer_name %></td>
-                                <td><%= data.responded_requests[i].date_created %></td>
-                                <td><a type="button" class="btn btn-primary btn-sm" id="edit_response_btn" data-toggle="modal" data-target="#editRespondModal" data-id=<%=data.responded_requests[i].request_id%>>Edit Response</a></td>
+                                <th scope="row">
+                                    <%= i+1 %>
+                                </th>
+                                <td>
+                                    <%= data.responded_requests[i].request_id %>
+                                </td>
+                                <td>
+                                    <%= data.responded_requests[i].customer_name %>
+                                </td>
+                                <td>
+                                    <%= data.responded_requests[i].date_created %>
+                                </td>
+                                <td><a type="button" class="btn btn-primary def" id="<%=data.responded_requests[i].request_id%>"
+                                        data-toggle="modal" data-target="#editRespondModal"
+                                        >Edit Response</a></td>
                             </tr>
-                        <% } %>
+                            <% } %>
                     </tbody>
-                </table>                
+                </table>
             </div>
         </div>
     </main>
 
-    <div class="modal fade bd-example-modal-sm" id="respondModal" tabindex="-1" role="dialog" aria-labelledby="respondModalTitle" aria-hidden="true">
+    <div class="modal fade bd-example-modal-sm" id="respondModal" tabindex="-1" role="dialog"
+        aria-labelledby="respondModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="respondModalTitle">Request Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
                 <form action="/pharmacy/response/respond" method="POST">
                     <div class="modal-body">
                         <ul>
                             <li>Name : <span id="c_name"></span></li>
-                            <li>Email : <span id="c_email"></span></li></li>
-                            <li>Address : <span id="c_address"></span></li></li>
-                            <li>Gender : <span id="c_gender"></span></li></li>
-                            <li>Contact No. : <span id="c_contact"></span></li></li>
+                            <li>Email : <span id="c_email"></span></li>
+                            </li>
+                            <li>Address : <span id="c_address"></span></li>
+                            </li>
+                            <li>Gender : <span id="c_gender"></span></li>
+                            </li>
+                            <li>Contact No. : <span id="c_contact"></span></li>
+                            </li>
                         </ul>
                         <div class="row">
                             <table class="table table-striped">
@@ -143,21 +188,27 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-sm" id="editRespondModal" tabindex="-1" role="dialog" aria-labelledby="editRespondModalTitle" aria-hidden="true">
+    <div class="modal fade bd-example-modal-sm" id="editRespondModal" tabindex="-1" role="dialog"
+        aria-labelledby="editRespondModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editRespondModalTitle">Responded Request Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="" method="POST">
+                <form action="/pharmacy/response/edit_response" method="POST">
                     <div class="modal-body">
                         <ul>
-                            <li>Name : <span id="c_name"></span></li>
-                            <li>Email : <span id="c_email"></span></li></li>
-                            <li>Address : <span id="c_address"></span></li></li>
-                            <li>Gender : <span id="c_gender"></span></li></li>
-                            <li>Contact No. : <span id="c_contact"></span></li></li>
+                            <li>Name : <span id="c_name1"></span></li>
+                            <li>Email : <span id="c_email1"></span></li>
+                            </li>
+                            <li>Address : <span id="c_address1"></span></li>
+                            </li>
+                            <li>Gender : <span id="c_gender1"></span></li>
+                            </li>
+                            <li>Contact No. : <span id="c_contact1"></span></li>
+                            </li>
                         </ul>
                         <div class="row">
                             <table class="table table-striped">
@@ -191,10 +242,17 @@
 
     <footer class="fixed-bottom">Pharmacy Finder - Version 1.0.0 © 2021 | <a href="">Contact Us</a></footer>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-    <script src="/assets/js/dashboard.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+        <script src='/assets/js/dashboard.js'></script>
+        <script src='/assets/js/dashboard2.js'></script>
 </body>
+
 </html>

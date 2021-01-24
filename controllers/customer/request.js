@@ -297,7 +297,7 @@ function validateCustomerId(customerId){
 const viewAllRequests = async(req, res) => {
 
     const customerId = req.session.user.id;
-
+    console.log("Viewing all requests");
     // validating
     const {error} = validateCustomerId({customerId:customerId});
 

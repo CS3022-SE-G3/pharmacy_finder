@@ -262,7 +262,7 @@ class Pharmacy{
         )
         })
 
-        console.log(responded_requests)
+        // console.log(responded_requests)
 
         var requests = await new Promise((resolve,reject)=>{
             const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM requests_and_associated_pharmacies WHERE request_id NOT IN (SELECT request_id FROM response WHERE pharmacy_id = ?) AND pharmacy_id = ?); ',
@@ -276,7 +276,7 @@ class Pharmacy{
         )
         })
 
-        console.log(requests)
+        // console.log(requests)
 
 
         return [responded_requests, requests];
@@ -308,6 +308,7 @@ class Pharmacy{
         });
     }
     static deletePreviousRespone(response_id) {
+        console.log(response_id);
         return new Promise((resolve, reject) => {
             const result = pool.query("DELETE FROM response WHERE response_id = ?", [response_id], (err, rows, fields) => {
                 if (err) {
@@ -368,7 +369,7 @@ class Pharmacy{
 
     static getRespondedDrugTypes(response_id) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("SELECT DISTINCT(drug_type_id) FROM response NATURAL JOIN responses_and_associated_drug_types WHERE response_id = ?", [response_id], (err, rows, fields) => {
+            const result = pool.query("SELECT DISTINCT(drug_type_id) FROM responses_and_associated_drug_types WHERE response_id = ?", [response_id], (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -379,7 +380,7 @@ class Pharmacy{
 
     static storeInResponse(request_id, pharmacy_id) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("INSERT INTO response(request_id, pharmacy_id) VALUES (?, ?)", [request_id, pharmacy_id], (err, results, fields) => {
+            const result = pool.query("INSERT INTO response(request_id, pharmacy_id, date_created) VALUES (?, ?, CURDATE())", [request_id, pharmacy_id], (err, results, fields) => {
                 if (err) {
                     reject(err);
                 }
@@ -390,7 +391,7 @@ class Pharmacy{
 
     static getRespondedBrandedDrugs(response_id) {
         return new Promise((resolve, reject) => {
-            const result = pool.query("SELECT DISTINCT(branded_drug_id) FROM response NATURAL JOIN responses_and_associated_branded_drugs WHERE response_id = ?", [response_id], (err, rows, fields) => {
+            const result = pool.query("SELECT DISTINCT(branded_drug_id) FROM responses_and_associated_branded_drugs WHERE response_id = ?", [response_id], (err, rows, fields) => {
                 if (err) {
                     reject(err);
                 }
