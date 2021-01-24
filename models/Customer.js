@@ -175,9 +175,14 @@ class Customer{
                         if (error) {
                             reject(new Error(error.message));
                         }
-                        console.log(result.sql);
-                        console.log(results[0].id);
-                        resolve(results[0].id);
+                        if (!results || results.length==0) {
+                            return resolve(60001);
+                        }
+                        else {
+                            console.log(results[0].id);
+                            resolve(results[0].id);
+                        }
+                        
                     }
                 )
             })
@@ -193,6 +198,7 @@ class Customer{
                     [requestID, customerID, Lookup.getDate()],
                     function (error, results) {
                         if (error) {
+                            console.log(result.sql);
                             reject(new Error(error.message));
                         }
                         resolve(true);
