@@ -33,28 +33,19 @@
     <main>
         <div class="wrapper_1">
             <div>
-                <h5>
-                    <%= data.pharmacy_info.name %>
-                </h5>
+                <h5><%= data.pharmacy_info.name %></h5>
                 <hr class="my-3">
-                <h6>Address : <span>
-                        <%= data.pharmacy_info.address %>
-                    </span></h6>
-                <h6>Longitude : <span>
-                        <%= data.pharmacy_info.longitude %>
-                    </span></h6>
-                <h6>Latitude : <span>
-                        <%= data.pharmacy_info.latitude %>
-                    </span></h6>
-                <h6>Email : <span>
-                        <%= data.pharmacy_info.email %>
-                    </span></h6>
-                <h6>Hotline : <span>
-                        <%= data.pharmacy_info.contact_no %>
-                    </span></h6>
+                <h6>Address : <span><%= data.pharmacy_info.address %></span></h6>
+                <h6>Longitude : <span><%= data.pharmacy_info.longitude %></span></h6>
+                <h6>Latitude : <span><%= data.pharmacy_info.latitude %></span></h6>
+                <h6>Email : <span><%= data.pharmacy_info.email %></span></h6>
+                <h6>Hotline : <span><%= data.pharmacy_info.contact_no %></span></h6>
             </div>
             <div>
-                <a href="/pharmacy/drug" type="button" class="btn btn-primary btn-lg btn-block mt-4">View Drugs</a>
+                <h5>Instructions</h5>
+                <hr class="my-3">
+                <p>★ Click here to view your drug list<a href="/pharmacy/drug" type="button" class="btn btn-primary btn-sm ml-2">View Drugs</a> .</p>
+                <p>★ Click on<a type="button" class="btn btn-primary btn-sm ml-2">ADD A NEW DRUG</a> to add new drugs to your drug list and <a type="button" class="btn btn-danger btn-sm ml-1">Delete</a> to remove drugs from your drug list.</p>
             </div>
         </div>
         <div class="wrapper_2">
