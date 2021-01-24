@@ -38,13 +38,12 @@ const viewCustomerInformation = (req, res) => {
         // log the error
         console.error('ValidationError:system_admin-customer_account_id: '+error.details[0].message)
 
-        // send bad request
-        res.status(400).send("Invalid Account ID provided");
-
-        res.end()
-
-        // stop execution
-        return
+        return response.status(400).render('400', {
+            err_data: "Invalid Account Information Provided",
+            redirect_to: "/system_admin/home",
+            button_message: "Try Again",
+            form_method: "GET"
+        });
     }
 
     // get the account information of the customer as requested
@@ -53,8 +52,12 @@ const viewCustomerInformation = (req, res) => {
     result.then((data) => {
 
         if(data.length === 0){
-            return res.status(400).send("Account ID not found");
-            
+            return response.status(400).render('400', {
+                err_data: "Account ID was not found.",
+                redirect_to: "/system_admin/search",
+                button_message: "Try Again",
+                form_method: "GET"
+            });
         }
         
         // send data to front end

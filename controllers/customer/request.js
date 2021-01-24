@@ -250,8 +250,13 @@ const viewBroadcastedRequests = async(req, res) => {
     const {error} = validateRequestId({requestId:requestID});
 
     if (error) {
-        console.error('ValidationError:customer-requestId: '+error.details[0].message)
-        return res.status(400).send("Invalid Request");
+        console.error('ValidationError:customer-requestId: ' + error.details[0].message);
+        return response.status(400).render('400', {
+            err_data: "Invalid Request",
+            redirect_to: "/customer/home",
+            button_message: "Return to home page",
+            form_method: "GET"
+        });
 
     }
     const drug_types = await Customer.getDrugTypesFromRequest(requestID);
@@ -322,19 +327,6 @@ function validateCustomerId(customerId){
 const viewAllRequests = async(req, res) => {
 
     const customerId = req.session.user.id;
-    console.log("Viewing all requests");
-    // validating
-    const {error} = validateCustomerId({customerId:customerId});
-
-    if (error) {
-
-        // log the error
-        console.error('ValidationError:customer-customerId: '+error.details[0].message)
-
-        // send bad request
-        return res.status(400).send("Invalid Customer");
-    }
-
     // get the information of the broadcasted requests as requested
     let result = await Customer.getAllRequests(customerId);
     
