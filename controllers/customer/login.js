@@ -35,7 +35,7 @@ const loginCustomer = async (request, response) => {
         if (!result[0]) {
             var err_msg = "Email is not registered";
             console.log(err_msg);
-            return response.render('login_error', { err_data: err_msg });
+            return response.render('customer/login_error', { err_data: err_msg });
 
         }
 
@@ -44,7 +44,7 @@ const loginCustomer = async (request, response) => {
         if (!passwordCorrect) {
             var err_msg = "Invalid email or password";
             console.log(err_msg);
-            return response.render('login_error', { err_data: err_msg });
+            return response.render('customer/login_error', { err_data: err_msg });
         }
         request.session.user = {};
         request.session.user.email = result[0].email;

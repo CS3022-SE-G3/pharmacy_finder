@@ -25,7 +25,7 @@ $(document).ready(function () {
     
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/pharmacy/response/respond/' + request_id,
+            url:  '/pharmacy/response/respond/' + request_id,
             success:function(data)
             {
                 let info = data.info;
@@ -86,7 +86,7 @@ $(document).ready(function () {
     
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/pharmacy/response/edit_response/' + request_id,
+            url: '/pharmacy/response/edit_response/' + request_id,
             success:function(data)
             {
                 let info = data.info;
