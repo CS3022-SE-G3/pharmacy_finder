@@ -6,6 +6,8 @@ Pharmacies can register on the site so that they can advertise the drugs and med
 ## Installation
 
 npm install
+
+
 npm start
 
 ## Deployment
