@@ -19,7 +19,7 @@ function sendEmail(emailTo) {
         html: `
                     <p>Your pharmacy account has been approved</p>
                     <p>Thank you for choosing PharmacyFinder</p>
-                    <p>Please return to the Pharmacy Finder database, and begin your work!</p>
+                    <p>Please return to the Pharmacy Finder website, and begin your work!</p>
                   `
     });
     console.log("Email sent to "+emailTo);
