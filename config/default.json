@@ -1,9 +1,8 @@
 {
     "host": "remotemysql.com",
-    "user": "Kkq09TT7JY",
-    "password": "UV24WrmAIM",
+    "user": "JEO1qJLGve",
+    "password": "EiHMUOYHkS",
     "port": 3306,
-    "database": "Kkq09TT7JY",
-    "session_secret":"session_cookie_secret"
-
+    "database": "JEO1qJLGve",
+    "session_secret": "session_cookie_secret"
 }
