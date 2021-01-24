@@ -105,7 +105,6 @@ const viewUpdateDrugForm = async (request, response) => {
  * @todo prompt operation status (success/fail)
  */
 const updateDrugDetails = async (request, response) => {
-    console.log("In drug controller");
     const { error } = validateUpdateDrugDetails(_.pick(request.body,
         [
             "branded_drug_id",

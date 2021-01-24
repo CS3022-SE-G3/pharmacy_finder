@@ -65,9 +65,8 @@ const viewDrugType = async (request, response) => {
         });
     }
     catch (error) {
-        return response.status(500).send("internal server error");
-    }
-    //return response.sendFile(path.join(__dirname, '../../views/system_admin/drug.html')); 
+        return response.status(500).send(error.message);
+    } 
 }
 
 /** 
