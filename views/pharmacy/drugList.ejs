@@ -39,48 +39,50 @@
     <main>
         <div class="card home_card">
             <div class="column">
-                <div class="row" style="justify-content: center;">
-                    <div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-responsive table-bordered">
-                                <thead class="thead-dark" style="text-align: center;">
-                                    <tr>
-                                        <th width="70%" scope="col">Drug Types</th>
-                                        <th width="30%" scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for(var i=0; i < drug_types.length; i++){ %>
+                <form method="post">
+                    <div class="row" style="justify-content: center;">
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive table-bordered">
+                                    <thead class="thead-dark" style="text-align: center;">
                                         <tr>
-                                            <td><%= drug_types[i].drug_type_name  %></td>
-                                            <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_drug_type" value="<%= drug_types[i].drug_type_id%>">Delete</button></td>
-                                        </tr> 
-                                    <% } %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ml-3">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-responsive table-bordered">
-                                <thead class="thead-dark" style="text-align: center;">
-                                    <tr>
-                                        <th width="70%" scope="col">Branded Drugs</th>
-                                        <th width="30%" scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for(var i=0; i < branded_drugs.length; i++){ %>
-                                        <tr>
-                                            <td><%= branded_drugs[i].brand_name  %></td>
-                                            <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_branded_drug" value="<%= branded_drugs[i].branded_drug_id%>">Delete</button></td>
+                                            <th scope="col">Drug Types</th>
+                                            <th scope="col"></th>
                                         </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var i=0; i < drug_types.length; i++){ %>
+                                            <tr>
+                                                <td><%= drug_types[i].drug_type_name  %></td>
+                                                <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_drug_type" value="<%= drug_types[i].drug_type_id%>">Delete</button></td>
+                                            </tr> 
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-responsive table-bordered">
+                                    <thead class="thead-dark" style="text-align: center;">
+                                        <tr>
+                                            <th scope="col">Branded Drugs</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var i=0; i < branded_drugs.length; i++){ %>
+                                            <tr>
+                                                <td><%= branded_drugs[i].brand_name  %></td>
+                                                <td style="text-align: center;"><button class="btn btn-danger btn-sm" name="delete_branded_drug" value="<%= branded_drugs[i].branded_drug_id%>">Delete</button></td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <div align="center" class="mt-2">
                     <h5>Click here to add a new drug to the drug list -> <span>
                         <a href="/pharmacy/addDrug"><button class="btn btn-sm btn-info">ADD A NEW DRUG</button></a>
