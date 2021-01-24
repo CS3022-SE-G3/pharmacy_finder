@@ -33,7 +33,7 @@ INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`e
 
 
 
-INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nimal Kalansooriya','951234567V','nimal@gmail.com','12/3,first lane,Borella','6.9134329','79.8785155','MALE','1995-10-08','0712222222','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nimal Kalansooriya','951234567V','nimal1@gmail.com','12/3,first lane,Borella','6.9134329','79.8785155','MALE','1995-10-08','0712222222','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 
 INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Kasuni Perera','975143265V','kasuni@gmail.com','23/5,second lane,Nugegoda','6.871311', '79.895603','FEMALE','1997-08-04','0773333333','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 

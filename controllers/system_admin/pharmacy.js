@@ -10,7 +10,8 @@ const transporter = nodemailer.createTransport(sendgridTransport({
     }
 }));
 
-function sendEmail(emailTo){
+function sendEmail(emailTo) {
+    const url = `http://localhost:${process.env.PORT}/pharmacy/login`;
     transporter.sendMail({
         to: emailTo,
         from: 'finderpharmacy@gmail.com',
@@ -18,7 +19,7 @@ function sendEmail(emailTo){
         html: `
                     <p>Your pharmacy account has been approved</p>
                     <p>Thank you for choosing PharmacyFinder</p>
-                    <p>Click this <a href="/pharmacy/login">link</a> to Login and begin using your account!</p>
+                    <p>Please return to the Pharmacy Finder database, and begin your work!</p>
                   `
     });
     console.log("Email sent to "+emailTo);
