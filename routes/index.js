@@ -11,10 +11,6 @@ routes.use('/system_admin', require('./system_admin'));
 routes.use(express.static('./public'));
 
 routes.get('/logout', ifLoggedIn, (req, res) => {
-    return res.sendFile(path.join(__dirname, '../views/logout.html'));
-});
-
-routes.post('/logout', ifLoggedIn, (req, res) => {
     req.session.destroy();
     console.log("Logged out");
     res.redirect('/');
