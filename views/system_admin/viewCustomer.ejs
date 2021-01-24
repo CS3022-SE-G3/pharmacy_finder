@@ -7,79 +7,90 @@
     <link rel="stylesheet" href="/assets/bootstrap3.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/assets/css/customAdmin.css" media="screen" title="no title" charset="utf-8">
     <script src="/assets/jquery.min.js"></script>
-    <script src = "/assets/bootstrap3.min.js"></script>
+    <script src="/assets/bootstrap3.min.js"></script>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <title>View Customer Details</title>
 </head>
 
 <body>
-<%- include('../includes/admin-navbar.ejs') %>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 well formUnderNav">
-            <h2 class="text-center">View Customer Details</h2>
-            <hr>
-            <form>
-                <div class="form-group col-md-6">
-                    <!-- input customer_id -->
-                    <label for="customer_id">Enter customer ID </label>
-                    <input type="text" class="form-control" name="customer_id" id="customer_id" required>
-                </div>
-                <div class="col-md-12 text-left">
-                    <!-- submit button -->
-                    <button type="submit" class="btn btn-primary">View details</button>
-                </div>
-            </form>
+    <%- include('../includes/admin-navbar.ejs') %>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 well formUnderNav">
+                <h2 class="text-center">View Customer Details</h2>
+                <hr>
+                <form>
+                    <div class="form-group col-md-6">
+                        <div id='e' class="bg-danger form-errors text-center text-danger" style='display: none;'>
+                        </div>
+                        <!-- input customer_id -->
+                        <label for="customer_id">Enter customer ID </label>
+                        <input type="text" class="form-control" name="customer_id" id="customer_id" required>
+                    </div>
+                    <div class="col-md-12 text-left">
+                        <!-- submit button -->
+                        <button type="submit" class="btn btn-primary">View details</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <div id="details">
+            <div class="NIC"></div>
+            <div class="name"></div>
+            <div class="address"></div>
+            <div class="contact_no"></div>
+            <div class="email"></div>
+            <div class="dob"></div>
+            <div class="gender"></div>
+        </div>
+        <script>
+            const form = document.querySelector("form");
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const customer_id = form.customer_id.value;
+                document.getElementById('details').style['display'] = 'none'
+                if (Number.isInteger(parseInt(customer_id))) {
+                    fetch(`http://localhost:3000/system_admin/customer/view/${customer_id}`)
+                        .then(response => {
+                            if (response.status == 200) {
+                                const e = document.getElementById("e")
+                                e.style['display'] = 'none';
+                                return response.json()
+                            }
+                            else {
+                                const e = document.getElementById("e")
+                                e.innerHTML = '<p>Account not found<p>'
+                                e.style['display'] = 'block';
+                            }
+                        })
+                        .then(data => {
+                            let details = document.getElementById("details")
+                            details.className = 'col-md-8 col-md-offset-2 well';
+                            details.querySelector('.NIC').innerHTML = '<p><strong>NIC: </strong>' + data.nic + '</p>';
 
+                            details.querySelector('.name').innerHTML = '<p><strong>Name: </strong>' + data.full_name + '</p>';
 
-    </div>
-    <div id="details">
-        <div class="NIC"></div>
-        <div class="name"></div>
-        <div class="address"></div>
-        <div class="contact_no"></div>
-        <div class="email"></div>
-        <div class="dob"></div>
-        <div class="gender"></div>
-    </div>
+                            details.querySelector('.address').innerHTML = '<p><strong>Address: </strong>' + data.address + '</p>';
 
-    <script>
+                            details.querySelector('.contact_no').innerHTML = '<p><strong>Contact No.: </strong>' + data.contact_no + '</p>';
 
-        const form = document.querySelector("form");
-        form.addEventListener("submit", (e) => {
-            const customer_id = form.customer_id.value;
-            e.preventDefault();
-            fetch(`http://localhost:3000/system_admin/customer/view/${customer_id}`)
-                .then(response => {
-                    if (response.status == 200) {
-                        return response.json()
-                    }
-                    else {
-                        window.alert('Account not found')
-                        return response.json()
-                    }
-                })
-                .then(data => {
-                    let details = document.getElementById("details")
-                    details.className = 'col-md-8 col-md-offset-2 well';
-                    details.querySelector('.NIC').innerHTML = '<p><strong>NIC: </strong>' + data.nic + '</p>';
+                            details.querySelector('.email').innerHTML = '<p><strong>Email: </strong>' + data.email + '</p>';
 
-                    details.querySelector('.name').innerHTML = '<p><strong>Name: </strong>' + data.full_name + '</p>';
+                            details.querySelector('.dob').innerHTML = '<p><strong>Date of Birth: </strong>' + data.dob + '</p>';
 
-                    details.querySelector('.address').innerHTML = '<p><strong>Address: </strong>' + data.address + '</p>';
+                            details.querySelector('.gender').innerHTML = '<p><strong>Gender: </strong>' + data.gender + '</p>';
 
-                    details.querySelector('.contact_no').innerHTML = '<p><strong>Contact No.: </strong>' + data.contact_no + '</p>';
+                            details.style['display'] = 'block';
 
-                    details.querySelector('.email').innerHTML = '<p><strong>Email: </strong>' + data.email + '</p>';
+                        })
+                } else {
+                    const e = document.getElementById("e")
 
-                    details.querySelector('.dob').innerHTML = '<p><strong>Date of Birth: </strong>' + data.dob + '</p>';
+                    e.innerHTML = '<p>ID should be a number<p>'
+                    e.style['display'] = 'block';
+                }
 
-                    details.querySelector('.gender').innerHTML = '<p><strong>Gender: </strong>' + data.gender + '</p>';
-
-
-                })
-        })
-    </script>
+            })
+        </script>
 
 </body>
 
