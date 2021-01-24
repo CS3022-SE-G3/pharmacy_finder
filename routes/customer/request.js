@@ -6,18 +6,11 @@ const router = express.Router();
 const {
     viewBroadcastedRequests,
     getBroadcastForm,
-    viewAllRequests,
     createBroadcastRequest,
     deleteBroadcast
 } = require('../../controllers/customer/request');
 const isACustomer = require('../../middleware/isACustomer');
 
-/**
- * @description Load and view all requests of a customer or request details 
- * @URL localhost:3000/customer/request/view
- * @method GET
- */
-router.get('/view', isACustomer, viewAllRequests);
 
 
 /**

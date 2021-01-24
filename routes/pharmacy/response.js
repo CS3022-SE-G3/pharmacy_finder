@@ -3,30 +3,40 @@ const { displayResponseInfo, storeEditedResponseInfo, displayRequestInfo, storeR
 const isAPharmacy = require('../../middleware/isAPharmacy');
 
 // localhost:3000/pharmacy/response/edit
-router.get("/edit", isAPharmacy, (req, res) => {
+router.get("/edit_response/:request_id", isAPharmacy, (req, res) => {
     let info = [];
-    displayResponseInfo(info, res, response_id, request_id);
+    var pharmacy_id = req.session.user.id;
+    let request_id = req.params.request_id;
+    req.session.user.req_res_id = request_id;
+    return displayResponseInfo(info, res, pharmacy_id, request_id);
 });
 
 // localhost:3000/pharmacy/response/edit_response
 router.post("/edit_response", isAPharmacy, (req, res) => {
     let drug_type_ids = req.body.drug_type_ids;
     let branded_drug_ids = req.body.branded_drug_ids;
-    storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, response_id, request_id, pharmacy_id)
+    var pharmacy_id = req.session.user.id;
+    let request_id = req.session.user.req_res_id;
+    return storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
 });
 
-// localhost:3000/pharmacy/respond
-router.get("/respond", isAPharmacy, (req, res) => {
+// localhost:3000/pharmacy/response/respond
+router.get("/respond/:request_id", isAPharmacy, (req, res) => {
     let info = [];
-    displayRequestInfo(info, res, request_id);
+    let request_id = req.params.request_id;
+    req.session.user.req_id = request_id;
+    console.log(123456);
+    return displayRequestInfo(info, res, request_id);
 });
 
-// localhost:3000/pharmacy/respond
+// localhost:3000/pharmacy/response/respond
 
 router.post("/respond", isAPharmacy, (req, res) => {
     let drug_type_ids = req.body.drug_type_ids;
     let branded_drug_ids = req.body.branded_drug_ids;
-    storeResponseInfo(res, drug_type_ids, branded_drug_ids, response_id, request_id, pharmacy_id);
+    var pharmacy_id = req.session.user.id;
+    let request_id = req.session.user.req_id;
+    return storeResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
 });
 
 module.exports = router;

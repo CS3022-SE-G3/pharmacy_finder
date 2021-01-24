@@ -359,12 +359,14 @@ class Customer{
     static editProfileDetails(customers) {
         console.log("Editing profile details");
             return new Promise((resolve, reject) => {
-                const result = pool.query('UPDATE `customer` SET `full_name`=?,`nic`=?,`email`=?,`address`=?,`gender`=?,`dob`=?,`contact_no`=? WHERE customer_id=?;',
+                const result = pool.query('UPDATE `customer` SET `full_name`=?,`nic`=?,`email`=?,`address`=?,`latitude`=?,`longitude`=?,`gender`=?,`dob`=?,`contact_no`=? WHERE customer_id=?;',
                 [
                     customers.full_name,
                     customers.nic,
                     customers.email,
                     customers.address,
+                    customers.latitude,
+                    customers.longitude,
                     customers.gender,
                     customers.dob,
                     customers.contact_no,
