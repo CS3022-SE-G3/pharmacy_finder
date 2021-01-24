@@ -38,6 +38,7 @@ ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
 CREATE TABLE drug_type (
     drug_type_id int auto_increment,
     drug_type_name varchar(50) NOT NULL,
+    is_deleted TINYINT(1) DEFAULT 0,
     PRIMARY KEY (drug_type_id),
     UNIQUE(drug_type_name)
 );
@@ -49,6 +50,7 @@ CREATE TABLE branded_drug (
     brand_name varchar(50) NOT NULL,
     manufacturer varchar(50) NOT NULL,
     drug_type_id int NOT NULL,
+    is_deleted TINYINT(1) DEFAULT 0,
     PRIMARY KEY (branded_drug_id),
     UNIQUE(brand_name),
     FOREIGN KEY (drug_type_id) REFERENCES drug_type(drug_type_id) ON DELETE CASCADE ON UPDATE CASCADE
