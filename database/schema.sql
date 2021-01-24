@@ -13,7 +13,8 @@ CREATE TABLE customer (
     dob date NOT NULL,
     contact_no bigint NOT NULL,
     password varchar(70) NOT NULL,
-    PRIMARY KEY (customer_id)
+    PRIMARY KEY (customer_id),
+    UNIQUE(email)
 );
 
 ALTER TABLE customer AUTO_INCREMENT = 10001;
@@ -29,7 +30,8 @@ CREATE TABLE pharmacy (
     email varchar(50) NOT NULL,
     contact_no bigint NOT NULL,
     password varchar (50) NOT NULL,
-    PRIMARY KEY (pharmacy_id)
+    PRIMARY KEY (pharmacy_id),
+    UNIQUE(email)
 );
 
 ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
@@ -37,7 +39,8 @@ ALTER TABLE pharmacy AUTO_INCREMENT = 30001;
 CREATE TABLE drug_type (
     drug_type_id int auto_increment,
     drug_type_name varchar(50) NOT NULL,
-    PRIMARY KEY (drug_type_id)
+    PRIMARY KEY (drug_type_id),
+    UNIQUE(drug_type_name)
 );
 
 ALTER TABLE drug_type AUTO_INCREMENT = 40001;
@@ -48,6 +51,7 @@ CREATE TABLE branded_drug (
     manufacturer varchar(50) NOT NULL,
     drug_type_id int NOT NULL,
     PRIMARY KEY (branded_drug_id),
+    UNIQUE(brand_name),
     FOREIGN KEY (drug_type_id) REFERENCES drug_type(drug_type_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
