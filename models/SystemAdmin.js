@@ -91,7 +91,7 @@ class SystemAdmin {
 
     /**
      * @description Get all drug types from database
-     * @todo Add 'is_deleted' to drug_type table
+     * 
      */
     static getAllDrugTypes() {
         return new Promise((resolve, reject) => {
@@ -125,7 +125,7 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    resolve(results);
+                    resolve(results[0]); //only 1st record is returned
                 }
             )
         })

@@ -63,6 +63,7 @@ const viewDrugType = async (request, response) => {
             drug_type: result,
             pageTitle: 'Drug Type'
         });
+        
     }
     catch (error) {
         return response.status(500).send(error.message);
