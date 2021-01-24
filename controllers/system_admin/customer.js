@@ -65,7 +65,7 @@ const viewCustomerInformation = (req, res) => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
+        res.status(500).render('500')
     })
 
 }
@@ -84,7 +84,7 @@ const renderForm = (req,res) => {
     } catch (error) {
 
         // send 'internal server error'
-        res.status(500).send("Internal Server Error")
+        res.status(500).render('500')
     }
 }
 module.exports.viewCustomerInformation = viewCustomerInformation;

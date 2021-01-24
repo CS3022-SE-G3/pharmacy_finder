@@ -74,7 +74,7 @@ const signupCustomer = async (request, response) => {
         console.log(error);
         return response.render('500');
     }
-    return response.status(200).redirect('/customer/home');
+    return response.status(200).redirect('/customer/login');
 }
 
 exports.signupCustomer = signupCustomer;

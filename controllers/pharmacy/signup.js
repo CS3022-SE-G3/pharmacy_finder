@@ -42,7 +42,7 @@ const signupPharmacy = async (request, response) => {
         // return response.status(400).send(error.message);
 
         var data = { error_msg: err_msg, post_body: request.body };
-        return response.render('pharmacy/signup', {err_data: data});
+        return response.render('pharmacy/signup_error', {err_data: data});
     }
 
     if (await Pharmacy.isEmailRegistered(request.body.email)){
@@ -51,7 +51,7 @@ const signupPharmacy = async (request, response) => {
         // return response.status(400).send(err_msg);
 
         var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('pharmacy/signup', {err_data: data});
+        return response.render('pharmacy/signup_error', {err_data: data});
     }
 
     request.body.password = await generatePassword(request.body.password);
@@ -67,7 +67,7 @@ const signupPharmacy = async (request, response) => {
         return response.render('500');
     }
 
-    return response.status(200).send("OK");
+    return response.status(200).redirect("/pharmacy/login");
 
 }
 

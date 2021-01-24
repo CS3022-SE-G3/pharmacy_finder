@@ -13,8 +13,8 @@
     <h2>Edit Profile</h2>
     <form action="/customer/profile/view/edit" method="POST">
 
-      Customer ID: <input type="text" id="customer_id" name="customer_id"
-      value="<%=customerId %>"  required readonly>
+       <input type="text" id="customer_id" name="customer_id"
+      value="<%=customerId %>"  hidden readonly>
   <br>
 
       Full Name: <input type="text" id="full_name" name="full_name" value=<%= profile[0].full_name %> required>
@@ -25,6 +25,16 @@
 
       Address: <input type="text" id="address" name="address" value=<%= profile[0].address %> required>
       <br>
+
+      Latitude:<input type="number" id="latitude" name="latitude" step="0.000001" min=5.916667 max=9.850000
+        value=<%= profile[0].latitude %> class="form-control" required>
+      <br>
+
+      Longitude:<input type="number" id="longitude" name="longitude" step="0.000001" min=79.683333 max=81.883333
+        value=<%= profile[0].longitude %>
+        class="form-control" required>
+      <br>
+
 
       Gender:
       <% if (profile[0].gender=="Female") {%>
@@ -51,7 +61,7 @@
       Email Address: <input type="email" id="email" name="email" value=<%= profile[0].email %> required>
       <br>
 
-      <button type="submit">Edit</button>
+      <button type="submit">Submit</button>
   </form>
   </div>
 </body>

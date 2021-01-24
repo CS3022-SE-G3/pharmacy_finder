@@ -60,7 +60,7 @@ const deleteRecordOfReportedPharmacy = async (req, res) => {
     catch (error) {
         console.log(error)
 
-        return res.status(500).send("Internal Server Error");
+        return res.status(500).render('500');
         
     }
 
@@ -92,7 +92,7 @@ const viewAllReportedPharmacies = (req, res) => {
         console.log(error)
 
         // send 'internal server error'
-        return res.status(500).send("Internal Server Error");
+        return res.status(500).render('500');
     })
 
 }
@@ -159,7 +159,7 @@ const deletePharmacy = async (req, res) => {
     catch (error) {
         // send 'internal server error'
         console.log(error);
-        return res.status(500).send("Internal Server Error");
+        return res.status(500).render('500');
     }
 }
 module.exports.viewAllReportedPharmacies = viewAllReportedPharmacies;

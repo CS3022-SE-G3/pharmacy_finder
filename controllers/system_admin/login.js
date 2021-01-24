@@ -32,7 +32,7 @@ const loginSysAdmin = async (request, response) => {
         console.log(err_msg);
         // return response.status(400).send(error.message);
 
-        return response.render('system_admin/login_error', { err_data: err_msg });
+        return response.render('login_error', { err_data: err_msg });
     }
 
     try {
@@ -43,7 +43,7 @@ const loginSysAdmin = async (request, response) => {
             console.log(err_msg);
             // return response.status(401).send(err_msg);
 
-            return response.render('system_admin/login_error', { err_data: err_msg });
+            return response.render('login_error', { err_data: err_msg });
         }
 
         const hashedPassword = result[0].password;
