@@ -14,7 +14,7 @@ const Lookup = require('../../models/Lookup');
  * @todo get all drugs and drug types? from system admin
  */
 const getBroadcastForm = async (request, response) => {
-    const drug_types = await SystemAdmin.getAllDrugTypesandIDs();
+    const drug_types = await SystemAdmin.getAllDrugTypes();
     const branded_drugs = await SystemAdmin.getAllDrugs();
     console.log(drug_types);
     console.log(branded_drugs);
