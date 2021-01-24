@@ -14,7 +14,7 @@ const Lookup = require('../../models/Lookup');
  * @todo get all drugs and drug types? from system admin
  */
 const getBroadcastForm = async (request, response) => {
-    const drug_types = await SystemAdmin.getAllDrugTypesandIDs();
+    const drug_types = await SystemAdmin.getAllDrugTypes();
     const branded_drugs = await SystemAdmin.getAllDrugs();
     console.log(drug_types);
     console.log(branded_drugs);
@@ -60,7 +60,14 @@ const createBroadcastRequest = async (request, response) => {
      * @todo add validation? minimum one drug has to be selected
      */
     if (tempDrugTypesBeforeProcessing.length == 0 && tempBrandedDrugsBeforeProcessing.length == 0) {
-        return response.send("You have not selected any drugs")
+        {
+            return response.status(400).render('400', {
+                err_data: "You have not selected any drugs. Please select at least one brand/drug type",
+                redirect_to: "/customer/request/broadcast",
+                button_message: "Try Again",
+                form_method:"GET"
+            });
+        }
     }
     console.log("Drug types entered by customer");
     console.log(tempDrugTypesBeforeProcessing);
@@ -92,102 +99,112 @@ const createBroadcastRequest = async (request, response) => {
     console.log("Pharmacies that contain the drugs needed by the customer");
     console.log(pharmaciesToLookUp);
     console.log("");
-
-    const latitude = customerLocation.latitude;
-    const longitude = customerLocation.longitude;
-    const left = longitude - 0.27027;
-    const right = longitude + 0.27027;
-    const up = latitude + 0.27027;
-    const down = latitude - 0.27027;
-    console.log("Distance ranges");
-    console.log("left");
-    console.log(left);
-    console.log("");
-
-    console.log("right");
-    console.log(right);
-    console.log("");
-
-    console.log("up");
-    console.log(up);
-    console.log("");
-
-    console.log("down");
-    console.log(down);
-    console.log("");
-
-    // latitude +- 0.27027
-    // longitude +- 0.27027
-    try
+    if (pharmaciesToLookUp.length>0)
     {
-        const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
-        if (!pharmacies || pharmacies.length==0) {
-            return response.send("There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results");
-        }
-        console.log("pharmacies in the distance range");
-        console.log(pharmacies);
+        const latitude = customerLocation.latitude;
+        const longitude = customerLocation.longitude;
+        const left = longitude - 0.27027;
+        const right = longitude + 0.27027;
+        const up = latitude + 0.27027;
+        const down = latitude - 0.27027;
+        console.log("Distance ranges");
+        console.log("left");
+        console.log(left);
         console.log("");
 
-        const id = await Customer.enterRequestPart1();
-        const waiting = await Customer.enterRequestPart2(id, customerID);
-
-        console.log("request id to be entered");
-        console.log(id);
+        console.log("right");
+        console.log(right);
         console.log("");
 
-        let drugTypes = [];
-        let brandedDrugs = [];
-        let requestablePharmacies = [];
-
-        tempDrugTypes.forEach(function (drugType) {
-            drugTypes.push([id, drugType]);
-        });
-
-        console.log("drug types to be entered");
-        console.log(drugTypes);
+        console.log("up");
+        console.log(up);
         console.log("");
 
-        tempBrandedDrugs.forEach(function (brandedDrug) {
-            brandedDrugs.push([id, brandedDrug]);
-        });
-
-        console.log("branded drugs to be entered");
-        console.log(brandedDrugs);
+        console.log("down");
+        console.log(down);
         console.log("");
 
-        pharmacies.forEach(function (pharmacy) {
-            requestablePharmacies.push([id, pharmacy.pharmacy_id]);
-        });
-
-        console.log("pharmacies to be entered");
-        console.log(requestablePharmacies);
-        console.log("");
-
-        const id1 = await Customer.enterPharmacies(requestablePharmacies);
-        console.log("Pharmacies entered status");
-        console.log(id1);
-        console.log("");
-        if (drugTypes.length>0)
+        // latitude +- 0.27027
+        // longitude +- 0.27027
+        try
         {
-            const id2 = await Customer.enterDrugTypes(drugTypes);
-            console.log("Drug types entered status");
-            console.log(id2);
+            const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
+            if (!pharmacies || pharmacies.length==0) {
+                return response.send("There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results");
+            }
+            console.log("pharmacies in the distance range");
+            console.log(pharmacies);
             console.log("");
-        }
-        if (brandedDrugs.length > 0)
-        {
-            const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
-            console.log("Branded drugs entered status");
-            console.log(id3);
+
+            const id = await Customer.enterRequestPart1();
+            const waiting = await Customer.enterRequestPart2(id, customerID);
+
+            console.log("request id to be entered");
+            console.log(id);
             console.log("");
+
+            let drugTypes = [];
+            let brandedDrugs = [];
+            let requestablePharmacies = [];
+
+            tempDrugTypes.forEach(function (drugType) {
+                drugTypes.push([id, drugType]);
+            });
+
+            console.log("drug types to be entered");
+            console.log(drugTypes);
+            console.log("");
+
+            tempBrandedDrugs.forEach(function (brandedDrug) {
+                brandedDrugs.push([id, brandedDrug]);
+            });
+
+            console.log("branded drugs to be entered");
+            console.log(brandedDrugs);
+            console.log("");
+
+            pharmacies.forEach(function (pharmacy) {
+                requestablePharmacies.push([id, pharmacy.pharmacy_id]);
+            });
+
+            console.log("pharmacies to be entered");
+            console.log(requestablePharmacies);
+            console.log("");
+
+            const id1 = await Customer.enterPharmacies(requestablePharmacies);
+            console.log("Pharmacies entered status");
+            console.log(id1);
+            console.log("");
+            if (drugTypes.length>0)
+            {
+                const id2 = await Customer.enterDrugTypes(drugTypes);
+                console.log("Drug types entered status");
+                console.log(id2);
+                console.log("");
+            }
+            if (brandedDrugs.length > 0)
+            {
+                const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
+                console.log("Branded drugs entered status");
+                console.log(id3);
+                console.log("");
+            }
+            
+            return response.status(200).redirect('/customer/home');
+            
         }
-        
-        return response.status(200).redirect('/customer/home');
-        
+        catch (error) {
+            console.log(error);
+            return response.status(500).render('500');
+            }
     }
-    catch (error) {
-        console.log(error);
-        return response.status(500).render('500');
+    else {
+        return response.status(400).render('400', {
+            err_data: "No pharmacies have the available drugs",
+            redirect_to: "/customer/home",
+            button_message: "Return to home page",
+            form_method:"GET"
+        });
     }
 }
 
@@ -269,8 +286,12 @@ const viewBroadcastedRequests = async(req, res) => {
         
     }
     catch(error){
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 
@@ -325,8 +346,12 @@ const viewAllRequests = async(req, res) => {
         });
     }
     catch(error){
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
    
 
