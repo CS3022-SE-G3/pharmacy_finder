@@ -1,9 +1,5 @@
-
 const Joi = require('joi');
-const { pool } = require('../../database/connection');
 const Customer = require('../../models/Customer');
-const pharmacy = require('../../models/Pharmacy');
-
 /**
  * 
  * @param {string} pharmacyName
@@ -30,12 +26,13 @@ const viewPharmacyInformation = async(req, res) => {
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
 
     if (error) {
-
-        // log the error
         console.error('ValidationError:customer-pharmacy_name: '+error.details[0].message)
-
-        // send bad request
-        return res.status(400).send("Invalid Pharmacy Name provided");
+        return response.status(400).render('400', {
+            err_data: "Invalid pharmacy name provided",
+            redirect_to: "/customer/pharmacy",
+            button_message: "Try Again",
+            form_method: "GET"
+        });
     }
 
     // get the information of the pharmacy as requested

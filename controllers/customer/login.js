@@ -25,7 +25,6 @@ const loginCustomer = async (request, response) => {
     if (error) {
         var err_msg = "Customer Login error validation " + error.message;
         console.log(err_msg);
-        // return response.status(400).send(error.message);
         return response.render('customer/login_error', { err_data: err_msg });
     }
 
