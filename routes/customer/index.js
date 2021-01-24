@@ -8,8 +8,11 @@ routes.use('/request', require('./request'));
 routes.use('/signup', require('./signup'));
 routes.use('/login', require('./login'));
 routes.use('/entry', require('./entry'));
-
+const { reportPharmacy } = require('../../controllers/customer/report');
 
 routes.use('/home', isACustomer, viewAllRequests);
+
+routes.use('/report', isACustomer, reportPharmacy);
+
 
 module.exports = routes;

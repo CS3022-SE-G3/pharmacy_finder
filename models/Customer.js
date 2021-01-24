@@ -48,7 +48,7 @@ class Customer{
 
     static getPharmacyInformation(pharmacyName){
         return new Promise((resolve,reject)=>{
-            const result = pool.query('SELECT name,address,email,contact_no FROM pharmacy WHERE name = ?',
+            const result = pool.query('SELECT pharmacy_id,name,address,email,contact_no FROM pharmacy WHERE name = ?',
             [pharmacyName],
             function (error, results) {
                 if (error) {
@@ -60,6 +60,23 @@ class Customer{
         )
         })
     }
+
+    static reportPharmacy(pharmacy_id, customer_id, reasons) {
+        return new Promise((resolve, reject) => {
+            const result = pool.query('INSERT INTO reported_pharmacies VALUES (?,?,?)',
+                [pharmacy_id, customer_id, reasons],
+                function (error, results) {
+                    if (error) {
+                        reject(new Error(error.message));
+                    }
+                    console.log(results);
+                    resolve(results);
+                }
+            )
+        })
+    }
+
+
     
     static getDrugTypesFromRequest(requestID){
         try{
