@@ -37,21 +37,23 @@ const signupPharmacy = async (request, response) => {
     ));
 
     if (error) {
-        var err_msg = "Pharmacy error validation " + error.message;
+        var err_msg = error.message;
         console.log(err_msg);
-        // return response.status(400).send(error.message);
 
-        var data = { error_msg: err_msg, post_body: request.body };
-        return response.render('pharmacy/signup_error', {err_data: data});
+        return response.render('pharmacy/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     if (await Pharmacy.isEmailRegistered(request.body.email)){
-        var err_msg = "Email is already registered";
+        var err_msg = "This email has already been registered";
         console.log(err_msg);
-        // return response.status(400).send(err_msg);
-
-        var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('pharmacy/signup_error', {err_data: data});
+        
+        return response.render('pharmacy/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     request.body.password = await generatePassword(request.body.password);
