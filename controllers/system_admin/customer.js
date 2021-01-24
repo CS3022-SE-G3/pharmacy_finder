@@ -52,7 +52,7 @@ const viewCustomerInformation = (req, res) => {
     result.then((data) => {
 
         if(data.length === 0){
-            return response.status(400).render('400', {
+            return res.status(400).render('400', {
                 err_data: "Account ID was not found.",
                 redirect_to: "/system_admin/search",
                 button_message: "Try Again",

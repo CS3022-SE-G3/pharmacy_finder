@@ -26,7 +26,7 @@ const sessionStore = new MySQLStore(options);
 app.use(session({
     store: sessionStore,
     key: 'session_cookie_name',
-    secret: 'session_cookie_secret',
+    secret: config.get("session_secret"),
     resave: false,
     saveUninitialized: false,
 }));
@@ -45,4 +45,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./startup/routes')(app);
 
 const port = process.env.PORT || 3000;
-app.listen(3000, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => console.log(`Listening on port ${port}...`));
