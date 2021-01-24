@@ -28,3 +28,25 @@ INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`e
 
 INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`password`) VALUES ('Not Approved', 'NuCare Pharmacy', '115/2, Akuressa Hwy, Matara.', 80.533891, 5.954067, 'info@nucarepharm.com', 0412658947, '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`password`) VALUES ('Not Approved', 'Hudson Pharmacy', '20/1, Sri Hemanandha Mw, Galle.', 80.212759, 6.054638, 'info@hudsonpharm.com', 0912365987, '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+-- Customers --
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nimal','951234567V','nimal@gmail.com','12/3,first lane,Borella','6.9134329','79.8785155','MALE','1995-10-08','0712222222','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Kasuni','975143265V','kasuni@gmail.com','23/5,second lane,Nugegoda','6.871311', '79.895603','FEMALE','1997-08-04','0773333333','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Kamal','926456778V','kamal@gmail.com','18/7,third lane,Battaramulla','6.898170', '79.920845','MALE','1992-12-22','0714444444','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nalin','883678783V','nalin@gmail.com','12/7,first lane,Rajagiriya','6.908951', '79.892441','MALE','1988-04-18','0775555555','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nayani','942466879V','nayani@gmail.com','23/4,first lane,Borella','6.911840', '79.880935',''FEMALE,'1994-04-02','0716666666','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Anura','935879800V','anura@gmail.com','12/7,second lane,Kiribathgoda','6.975049', '79.921089','MALE','1993-08-22','0771110711','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Amara','852456767V','amara@gmail.com','10/3,fifth lane,Nugegoda','6.869631', '79.898067','MALE','1985-12-05','0717777777','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Naduni','975442457V','naduni@gmail.com','16/4,third lane,Battaramulla','6.899470', '79.920689','FEMALE','1997-10-14','0778873888','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Amal','963257784V','amal@gmail.com','10/5,second lane,Kiribathgoda','6.975142', '79.923062','MALE','1996-12-23','0719999999','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
+
+INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Sahan','982134546V','sahan@gmail.com','14/9,first lane,Kiribathgoda','6.972936', '79.920307','MALE','1998-11-10','0701234567','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
