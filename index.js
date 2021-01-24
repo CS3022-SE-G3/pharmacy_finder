@@ -26,7 +26,7 @@ const sessionStore = new MySQLStore(options);
 app.use(session({
     store: sessionStore,
     key: 'session_cookie_name',
-    secret: 'session_cookie_secret',
+    secret: config.get("session_secret"),
     resave: false,
     saveUninitialized: false,
 }));

@@ -3,5 +3,7 @@
     "user": "Kkq09TT7JY",
     "password": "UV24WrmAIM",
     "port": 3306,
-    "database": "Kkq09TT7JY"
+    "database": "Kkq09TT7JY",
+    "session_secret":"session_cookie_secret"
+
 }

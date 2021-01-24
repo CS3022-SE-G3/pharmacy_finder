@@ -54,7 +54,6 @@ INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,
 INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Sahan Malwanage','982134546V','sahan@gmail.com','14/9,first lane,Kiribathgoda','6.972936', '79.920307','MALE','1998-11-10','0701234567','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 
 
-INSERT INTO `system_admin` (`username`, `password`) VALUES ('sysad', '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 
 
 INSERT INTO `pharmacy_branded_drugs` (`pharmacy_id`, `branded_drug_id`) VALUES
