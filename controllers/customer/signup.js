@@ -11,6 +11,9 @@ const path = require('path');
  * @todo add regex for NIC 
  */
 function validateCustomerAccount(customer) {
+    const now = Date.now();
+    const cutoffDate = new Date(now - (1000 * 60 * 60 * 24 * 365 * 18)); 
+
     const schema = Joi.object({
         "full_name"             : Joi.string().required(),
         "nic"                   : Joi.string().required(),
@@ -19,9 +22,12 @@ function validateCustomerAccount(customer) {
         "latitude"              : Joi.number().min(5.916667).max(9.850000).required(),
         "longitude"             : Joi.number().min(79.683333).max(81.883333).required(),
         "gender"                : Joi.string().required(),
-        "dob"                   : Joi.date().required(),
+        "dob"                   : Joi.date().max(cutoffDate).required()
+            .messages({
+                    'date.max': `You must be at least 18 years old to register on pharmacy-finder.`
+                }),
         "contact_no"            : Joi.number().integer().required(),
-        "password"              : Joi.string().required(),
+        "password"              : Joi.string().min(5).required(),
         "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validateAsync(customer);
@@ -48,20 +54,26 @@ const signupCustomer = async (request, response) => {
     }
 
     catch (error) {
-        var err_msg = "Customer error validation " + error.message;
+        var err_msg = error.message;
         console.log(err_msg);
-        // return response.status(400).send(error.message);
+        
 
-        var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('customer/signup', {err_data: data});
+        return response.render('customer/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     if (await Customer.isEmailRegistered(request.body.email)){
-        var err_msg = "Email is already registered";
+        var err_msg = "This email address has already been registered";
         console.log(err_msg);
-        // return response.status(400).send(err_msg);
+        console.log("Potatoes")
+        console.log(request.body);
         var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('customer/signup', {err_data: data});
+        return response.render('customer/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     request.body.password = await generatePassword(request.body.password);

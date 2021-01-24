@@ -53,9 +53,12 @@ const viewPharmacyInformation = async(req, res) => {
             pageTitle: 'Pharmacy Information'
         });
     }catch(error){
-        console.log(error.message)
-        // send 'internal server error'
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 const getCustomerSearchPharmacy = async (req,res)=>{
@@ -72,8 +75,12 @@ const postCustomerSearchPharmacy = async(req,res)=>{
     const pharmacyName = req.body.pharmacyName;
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
     if (error){
+        var err_msg = "Internal server error " + error.message;
         console.log(error);
-        return res.status(500).render('500');
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
     try{
         pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
@@ -99,7 +106,6 @@ const postCustomerSearchPharmacy = async(req,res)=>{
         return response.render('500', {
             err_data: err_msg
         });
-        return res.status(500).render('500');
     }
 }
 

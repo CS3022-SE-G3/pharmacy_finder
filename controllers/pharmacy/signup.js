@@ -15,7 +15,7 @@ function validatePharmacyAccount(pharmacy) {
         "latitude": Joi.number().required(),
         "email": Joi.string().email().required(),
         "contact_no": Joi.number().integer().required(),
-        "password": Joi.string().required(),
+        "password": Joi.string().min(5).required(),
         "confirm_password": Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validate(pharmacy);
@@ -37,21 +37,23 @@ const signupPharmacy = async (request, response) => {
     ));
 
     if (error) {
-        var err_msg = "Pharmacy error validation " + error.message;
+        var err_msg = error.message;
         console.log(err_msg);
-        // return response.status(400).send(error.message);
 
-        var data = { error_msg: err_msg, post_body: request.body };
-        return response.render('pharmacy/signup_error', {err_data: data});
+        return response.render('pharmacy/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     if (await Pharmacy.isEmailRegistered(request.body.email)){
-        var err_msg = "Email is already registered";
+        var err_msg = "This email has already been registered";
         console.log(err_msg);
-        // return response.status(400).send(err_msg);
-
-        var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('pharmacy/signup_error', {err_data: data});
+        
+        return response.render('pharmacy/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     request.body.password = await generatePassword(request.body.password);
@@ -64,7 +66,12 @@ const signupPharmacy = async (request, response) => {
         console.log(error);
         // return response.status(500).send(err_msg);
 
-        return response.render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 
     return response.status(200).redirect("/pharmacy/login");

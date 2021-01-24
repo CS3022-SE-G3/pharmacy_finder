@@ -53,8 +53,12 @@ const viewPharmacyInfo = async(req,res)=>{
         });
     }
     catch (error) {
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 };
 
@@ -74,8 +78,12 @@ const viewPendingPharmacies = async(req,res)=>{
         });
     }
     catch (error) {
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 };
 
@@ -101,8 +109,12 @@ const approvePharmacy = async (req,res)=>{
         return res.status(200).redirect('/system_admin/pharmacy/pending');
     }
     catch (error) {
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 };
 
@@ -145,8 +157,12 @@ const postSearchPharmacy = async(req,res)=>{
         });
     }
     catch (error) {
-        console.log(error.message);
-        return res.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 };
 
