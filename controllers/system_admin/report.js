@@ -58,9 +58,12 @@ const deleteRecordOfReportedPharmacy = async (req, res) => {
         return res.status(200).send(data);
     }
     catch (error) {
-        console.log(error)
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        return res.status(500).render('500');
+        return response.render('500', {
+            err_data: err_msg
+        });
         
     }
 
@@ -89,10 +92,12 @@ const viewAllReportedPharmacies = (req, res) => {
         return res.render('system_admin/viewpharmaciesreprted',{title: 'welcome',data: data});
     })
     .catch(error => {
-        console.log(error)
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        // send 'internal server error'
-        return res.status(500).render('500');
+        return response.render('500', {
+            err_data: err_msg
+        });
     })
 
 }
@@ -157,9 +162,12 @@ const deletePharmacy = async (req, res) => {
     }
     }
     catch (error) {
-        // send 'internal server error'
+        var err_msg = "Internal server error " + error.message;
         console.log(error);
-        return res.status(500).render('500');
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 module.exports.viewAllReportedPharmacies = viewAllReportedPharmacies;
