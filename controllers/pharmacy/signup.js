@@ -15,7 +15,7 @@ function validatePharmacyAccount(pharmacy) {
         "latitude": Joi.number().required(),
         "email": Joi.string().email().required(),
         "contact_no": Joi.number().integer().required(),
-        "password": Joi.string().required(),
+        "password": Joi.string().min(5).required(),
         "confirm_password": Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validate(pharmacy);

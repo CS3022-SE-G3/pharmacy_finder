@@ -11,6 +11,9 @@ const path = require('path');
  * @todo add regex for NIC 
  */
 function validateCustomerAccount(customer) {
+    const now = Date.now();
+    const cutoffDate = new Date(now - (1000 * 60 * 60 * 24 * 365 * 18)); 
+
     const schema = Joi.object({
         "full_name"             : Joi.string().required(),
         "nic"                   : Joi.string().required(),
@@ -19,9 +22,9 @@ function validateCustomerAccount(customer) {
         "latitude"              : Joi.number().min(5.916667).max(9.850000).required(),
         "longitude"             : Joi.number().min(79.683333).max(81.883333).required(),
         "gender"                : Joi.string().required(),
-        "dob"                   : Joi.date().required(),
+        "dob"                   : Joi.date().max(cutoffDate).required(),
         "contact_no"            : Joi.number().integer().required(),
-        "password"              : Joi.string().required(),
+        "password"              : Joi.string().min(5).required(),
         "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
     });
     return schema.validateAsync(customer);
