@@ -18,27 +18,17 @@
 
 <body>
 <%- include('../includes/admin-navbar.ejs') %>
-    <h2 class="text-center">
-        Drug Type
-    </h2>
 
-        <div>
-            <table>
-                <thead>
-                    <th>Drug Type ID</th>
-                    <th>Drug Type</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <%=drug_type.drug_type_id%>
-                        </td>
-                        <td>
-                            <%=drug_type.drug_type_name%>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-8 col-md-offset-2 well formUnderNav">
+            <a href="/system_admin/drug" class="btn btn-xs btn-default">Back</a>
+            <h2 class="text-center">Drug Type</h2>
+            <hr>
+            <div class="col-md-6">
+                <p><strong>Drug Type ID: </strong> <%=drug_type.drug_type_id%></p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Drug Type: </strong> <%=drug_type.drug_type_name%></p>
+            </div>
         </div>
 </body>
 
