@@ -129,8 +129,14 @@ const createBroadcastRequest = async (request, response) => {
         try
         {
             const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
-            if (!pharmacies || pharmacies.length==0) {
-                return response.send("There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results");
+            if (!pharmacies || pharmacies.length == 0) {
+                return response.status(400).render('400', {
+                    err_data: "There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results",
+                    redirect_to: "/customer/request/broadcast",
+                    button_message: "Try Again",
+                    form_method: "GET"
+                });
+            
             }
             console.log("pharmacies in the distance range");
             console.log(pharmacies);

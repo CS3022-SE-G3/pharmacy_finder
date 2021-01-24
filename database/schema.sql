@@ -163,3 +163,5 @@ CREATE TABLE system_admin(
     password varchar(70),
     PRIMARY KEY (sys_admin_id)
 );
+
+INSERT INTO `system_admin` (`username`, `password`) VALUES ('sysad', '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
