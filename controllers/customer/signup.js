@@ -22,7 +22,10 @@ function validateCustomerAccount(customer) {
         "latitude"              : Joi.number().min(5.916667).max(9.850000).required(),
         "longitude"             : Joi.number().min(79.683333).max(81.883333).required(),
         "gender"                : Joi.string().required(),
-        "dob"                   : Joi.date().max(cutoffDate).required(),
+        "dob"                   : Joi.date().max(cutoffDate).required()
+            .messages({
+                    'date.max': `You must be at least 18 years old to register on pharmacy-finder.`
+                }),
         "contact_no"            : Joi.number().integer().required(),
         "password"              : Joi.string().min(5).required(),
         "confirm_password"      : Joi.string().valid(Joi.ref('password')).required()
@@ -51,7 +54,7 @@ const signupCustomer = async (request, response) => {
     }
 
     catch (error) {
-        var err_msg = "Customer error validation " + error.message;
+        var err_msg = error.message;
         console.log(err_msg);
         
 
@@ -62,7 +65,7 @@ const signupCustomer = async (request, response) => {
     }
 
     if (await Customer.isEmailRegistered(request.body.email)){
-        var err_msg = "Email is already registered";
+        var err_msg = "This email address has already been registered";
         console.log(err_msg);
         console.log("Potatoes")
         console.log(request.body);
