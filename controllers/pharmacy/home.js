@@ -17,9 +17,6 @@ const viewHome = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error" + error.message;
         console.log(error);
-
-        // return response.status(500).send(err_msg);
-
         return response.render('500', { err_data: err_msg });
     }
 
