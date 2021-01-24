@@ -53,10 +53,12 @@ const viewRespondedPharmacies = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error)
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        // send 'internal server error'
-        return res.status(500).render('500');
+        return response.render('500', {
+            err_data: err_msg
+        });
         
     }
 

@@ -21,9 +21,11 @@ class Customer{
                 function (error, results, fields) {
                     if (error) {
                         console.log(result.sql);
+                        pool.close();
                         reject(error);
                         return;
                     };
+                    pool.close();
                     resolve(console.log("Done"));
                 }
             )
@@ -36,8 +38,10 @@ class Customer{
                 [pharmacyId],
                 function (error, results, fields) {
                     if (error) {
+                        pool.close();
                         reject(new Error(error.message));
                     }
+                    pool.close();
                     resolve(results);
                 }
             )
