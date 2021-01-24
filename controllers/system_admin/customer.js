@@ -65,7 +65,12 @@ const viewCustomerInformation = (req, res) => {
         console.log(error)
 
         // send 'internal server error'
-        res.status(500).render('500')
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     })
 
 }
@@ -84,7 +89,12 @@ const renderForm = (req,res) => {
     } catch (error) {
 
         // send 'internal server error'
-        res.status(500).render('500')
+       var err_msg = "Internal server error " + error.message;
+       console.log(error);
+
+       return response.render('500', {
+           err_data: err_msg
+       });
     }
 }
 module.exports.viewCustomerInformation = viewCustomerInformation;

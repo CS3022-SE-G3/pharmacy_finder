@@ -66,7 +66,12 @@ const signupPharmacy = async (request, response) => {
         console.log(error);
         // return response.status(500).send(err_msg);
 
-        return response.render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 
     return response.status(200).redirect("/pharmacy/login");

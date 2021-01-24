@@ -31,7 +31,12 @@ const addNewDrugType = async (request, response) => {
 
     } catch (error) {
         console.log(error.message);
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 
@@ -48,7 +53,12 @@ const viewAllDrugTypes = async (request, response) => {
         });
     }
     catch (error) {
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 
@@ -66,7 +76,12 @@ const viewDrugType = async (request, response) => {
         
     }
     catch (error) {
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     } 
 }
 
@@ -122,8 +137,12 @@ const updateDrugTypeDetails = async (request, response) => {
         ));
 
     } catch (error) {
-        console.log(error.message);
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
     return response.status(200).redirect('/system_admin/drug_type');
 }
@@ -154,7 +173,12 @@ const deleteDrugType = async (request, response) => {
         return response.status(200).redirect('/system_admin/drug_type');
     } catch (error) {
         console.log(error.message);
-        return response.status(500).render('500');
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 

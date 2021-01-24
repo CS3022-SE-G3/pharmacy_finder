@@ -41,10 +41,12 @@ const viewProfileInformation = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error)
+        var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        // send 'internal server error'
-        return res.status(500).render('500');
+        return response.render('500', {
+            err_data: err_msg
+        });
     }
 }
 
@@ -105,7 +107,6 @@ const editProfileInformation = async (request, response) => {
         return response.render('500', {
             err_data: err_msg
         });
-        return response.render('500');
     }
     return response.status(200).redirect('/customer/profile/view');
 }
