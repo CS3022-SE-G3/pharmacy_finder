@@ -53,18 +53,24 @@ const signupCustomer = async (request, response) => {
     catch (error) {
         var err_msg = "Customer error validation " + error.message;
         console.log(err_msg);
-        // return response.status(400).send(error.message);
+        
 
-        var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('customer/signup', {err_data: data});
+        return response.render('customer/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     if (await Customer.isEmailRegistered(request.body.email)){
         var err_msg = "Email is already registered";
         console.log(err_msg);
-        // return response.status(400).send(err_msg);
+        console.log("Potatoes")
+        console.log(request.body);
         var data = {error_msg: err_msg, post_body: request.body};
-        return response.render('customer/signup', {err_data: data});
+        return response.render('customer/signup_error', {
+            error_msg: err_msg,
+            post_body: request.body
+        });
     }
 
     request.body.password = await generatePassword(request.body.password);
