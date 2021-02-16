@@ -88,7 +88,6 @@ class Customer{
     static getBrandedDrugsFromRequest(requestID) {
         try {
             return new Promise((resolve, reject) => {
-                // 'SELECT request_id, drug_type_name, brand_name, manufacturer,drug_type_name FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs) NATURAL JOIN drug_type AS A WHERE request_id=?'
                 const result = pool.query(`SELECT branded_drug_id, brand_name,manufacturer, drug_type_name FROM (SELECT * FROM branded_drug NATURAL JOIN requests_and_associated_branded_drugs) AS A JOIN drug_type ON A.drug_type_id = drug_type.drug_type_id WHERE request_id=?`,
                     [requestID],
                     function (error, results) {
