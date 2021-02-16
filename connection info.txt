@@ -1,0 +1,21 @@
+Submitted for evaluation
+
+{
+    "host": "remotemysql.com",
+    "user": "JEO1qJLGve",
+    "password": "EiHMUOYHkS",
+    "port": 3306,
+    "database": "JEO1qJLGve",
+    "session_secret": "session_cookie_secret"
+}
+
+Testing
+
+{
+    "host": "remotemysql.com",
+    "user": "Kkq09TT7JY",
+    "password": "UV24WrmAIM",
+    "port": 3306,
+    "database": "Kkq09TT7JY",
+    "session_secret": "session_cookie_secret"
+}
