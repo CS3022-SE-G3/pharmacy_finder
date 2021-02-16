@@ -11,7 +11,6 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 function sendEmail(emailTo) {
-    const url = `http://localhost:${process.env.PORT}/pharmacy/login`;
     transporter.sendMail({
         to: emailTo,
         from: 'finderpharmacy@gmail.com',
