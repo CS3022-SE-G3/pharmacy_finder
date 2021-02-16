@@ -1,11 +1,13 @@
 let server;
 
-describe('Main suite description', () => {
+describe('Customer model', () => {
     beforeEach(() => {
-        server = require('../../../index');
+        server = require('../../index');
     });
 
-    afterEach(async () => {});
+    afterEach(async () => {
+        await server.close();
+    });
 
     describe('Suite description', () => {
         it("Test description", async () => {
