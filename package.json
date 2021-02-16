@@ -4,7 +4,7 @@
   "description": "Pharmacy Finder",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose --coverage",
+    "test": "jest",
     "start": "node index.js"
   },
   "repository": {
