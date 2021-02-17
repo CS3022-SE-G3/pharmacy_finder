@@ -20,14 +20,12 @@ const viewPharmacyInformation = async(req, res) => {
 
     // get pharmacyID from URL
     const pharmacyName = req.params.pharmacy_name; 
-    console.log(pharmacyName);
 
     // validating
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
 
     if (error) {
-        console.error('ValidationError:customer-pharmacy_name: '+error.details[0].message)
-        return response.status(400).render('400', {
+        return res.render('400', {
             err_data: "Invalid pharmacy name provided",
             redirect_to: "/customer/pharmacy",
             button_message: "Try Again",
@@ -36,24 +34,22 @@ const viewPharmacyInformation = async(req, res) => {
     }
 
     // get the information of the pharmacy as requested
-    const pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
-    console.log(pharmacyInformation);
-    try{
+    try {
+        const pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
         if(pharmacyInformation.length === 0){
-            return res.status(404).render('404');
+            return res.render('404');
         }
         
         // send data to front end
         
-        return res.status(200).render('customer/view_pharmacy',{
+        return res.render('customer/view_pharmacy',{
             pharmacyInformation: pharmacyInformation[0],
             pageTitle: 'Pharmacy Information'
         });
-    }catch(error){
+    }
+    catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
@@ -89,7 +85,6 @@ const postCustomerSearchPharmacy = async(req,res)=>{
                 errors: "Pharmacy not registered"
             });
         }
-        console.log(pharmacyInformation);
         return res.status(200).render('customer/view_pharmacy',{
             pageTitle: "Search Pharmacy",
             pharmacyInformation: pharmacyInformation[0],
@@ -98,8 +93,6 @@ const postCustomerSearchPharmacy = async(req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
         return response.render('500', {
             err_data: err_msg
         });

@@ -39,7 +39,6 @@ class Customer{
                 if (error) {
                     reject (new Error(error.message));
                 }
-                console.log(results);
                 resolve(results);
             }
         )
