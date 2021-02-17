@@ -13,6 +13,7 @@ describe('Customer model', () => {
 
     afterEach(async () => {
         await pool.query("ROLLBACK");
+        await pool.end();
         await server.close();
     });
 
