@@ -55,9 +55,6 @@ const signupCustomer = async (request, response) => {
 
     catch (error) {
         var err_msg = error.message;
-        console.log(err_msg);
-        
-
         return response.render('customer/signup_error', {
             error_msg: err_msg,
             post_body: request.body
@@ -66,10 +63,6 @@ const signupCustomer = async (request, response) => {
 
     if (await Customer.isEmailRegistered(request.body.email)){
         var err_msg = "This email address has already been registered";
-        console.log(err_msg);
-        console.log("Potatoes")
-        console.log(request.body);
-        var data = {error_msg: err_msg, post_body: request.body};
         return response.render('customer/signup_error', {
             error_msg: err_msg,
             post_body: request.body
@@ -79,17 +72,16 @@ const signupCustomer = async (request, response) => {
     request.body.password = await generatePassword(request.body.password);
 
     try {
-        const result = await Customer.enterCustomer(request.body);
+        await Customer.enterCustomer(request.body);
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
         return response.render('500', {
             err_data: err_msg
         });
     }
-    return response.status(200).redirect('/customer/login');
+    return response.redirect('/customer/login');
 }
 
 exports.signupCustomer = signupCustomer;

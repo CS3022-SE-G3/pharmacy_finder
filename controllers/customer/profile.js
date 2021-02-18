@@ -22,28 +22,28 @@ const viewProfileInformation = async (req, res) => {
     const {error} = validateCustomerId({customerId:customerId});
 
     if (error) {
-        console.error('ValidationError:customer-customerId: '+error.details[0].message)
-        return res.status(400).send("Invalid Customer ID");
+        return res.render("400", {
+            err_data: "Invalid customer ID",
+            redirect_to: "/customer/home",
+            button_message: "Try Again",
+            form_method: "GET"
+        });
     }
 
     // get the profile information
     try
     {
         const result = await Customer.getProfileDetails(customerId);
-        console.log(result);
         if (result.length === 0) {
-            return res.status(404).render('404');
+            return res.render('404');
         }
-        
-        return res.status(200).render('customer/view_profile',{
+        return res.render('customer/view_profile',{
             res_profile_info:result,
             pageTitle: 'My profile'
         });
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
         return response.render('500', {
             err_data: err_msg
         });
@@ -62,7 +62,7 @@ function validateCustomerAccount(customer) {
         "dob"                       : Joi.date().required(),
         "contact_no"                : Joi.number().integer().required()
     });
-    return schema.validateAsync(customer);
+    return schema.validate(customer);
 }
 
 const editProfileInformation = async (request, response) => {
@@ -81,7 +81,12 @@ const editProfileInformation = async (request, response) => {
         ));
 
     if (error) {
-        return response.status(400).send(error.message);
+        return response.render("400", {
+            err_data: error.message,
+            redirect_to: "/customer/home",
+            button_message: "Try Again",
+            form_method: "GET"
+        });
     }
     try {
         request.session.user.email = request.body.email;
@@ -99,16 +104,16 @@ const editProfileInformation = async (request, response) => {
                 "contact_no"
             ]
         ));
+        console.log(result);
+    return response.redirect('/customer/profile/view');
+
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
         return response.render('500', {
             err_data: err_msg
         });
     }
-    return response.status(200).redirect('/customer/profile/view');
 }
 
 const loadEditProfile = async (request, response) => {
@@ -116,29 +121,29 @@ const loadEditProfile = async (request, response) => {
     const {error} = validateCustomerId({customerId:customerId});
 
     if (error) {
-        console.error('ValidationError:customer-customerId: '+error.details[0].message)
-        return response.status(400).send("Invalid Customer ID");
+         return response.render("400", {
+             err_data: "Invalid customer ID",
+             redirect_to: "/customer/home",
+             button_message: "Try Again",
+             form_method: "GET"
+         });
     }
     try
     {
         const result = await Customer.getProfileDetails(customerId);
-        console.log(result);
         if (result.length === 0) {
-            return response.status(404).render('404');
+            return response.render('404');
         }
         
-        return response.status(200).render('customer/edit_profile',{
+        return response.render('customer/edit_profile',{
             customerId:customerId,
             profile:result
             
         });
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
         return response.render('500', {
-            err_data: err_msg
+            err_data: "Internal server error " + error.message
         });
         
     }
