@@ -24,25 +24,20 @@ const loginCustomer = async (request, response) => {
 
     if (error) {
         var err_msg = "Customer Login error validation " + error.message;
-        console.log(err_msg);
         return response.render('customer/login_error', { err_data: err_msg });
     }
 
     try {
         const result = await Customer.getCustomerInfoByEmail(request.body.email);
-
         if (!result[0]) {
             var err_msg = "Email is not registered";
-            console.log(err_msg);
             return response.render('customer/login_error', { err_data: err_msg });
-
         }
 
         const hashedPassword = result[0].password;
         const passwordCorrect = await bcrypt.compare(request.body.password, hashedPassword);
         if (!passwordCorrect) {
             var err_msg = "Invalid email or password";
-            console.log(err_msg);
             return response.render('customer/login_error', { err_data: err_msg });
         }
         request.session.user = {};
@@ -52,14 +47,13 @@ const loginCustomer = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
         return response.render('500', {
             err_data: err_msg
         });
     }
 
-    return response.status(200).redirect('/customer/home');
+    return response.redirect('/customer/home');
 
 }
 
