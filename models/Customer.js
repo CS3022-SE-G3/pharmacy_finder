@@ -35,10 +35,10 @@ class Customer{
         return new Promise((resolve,reject)=>{
             const result = pool.query('SELECT pharmacy_id,name,address,email,contact_no FROM pharmacy WHERE name = ?',
             [pharmacyName],
-            function (error, results) {
-                if (error) {
+                function (error, results) {
+                    if (error) {
                     reject (new Error(error.message));
-                }
+                    }
                 resolve(results);
             }
         )
@@ -333,7 +333,7 @@ class Customer{
         var result = await new Promise((resolve,reject)=>{
             const result = pool.query('SELECT customer_id FROM customer WHERE email = ?',
             [email],
-            function (error, results) {
+                function (error, results) {
                 if (error) {
                     reject (new Error(error.message));
                 }
