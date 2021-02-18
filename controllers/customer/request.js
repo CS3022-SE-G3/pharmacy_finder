@@ -93,7 +93,6 @@ const createBroadcastRequest = async (request, response) => {
                     button_message: "Try Again",
                     form_method: "GET"
                 });
-            
             }
             const id = await Customer.enterRequestPart1();
             const waiting = await Customer.enterRequestPart2(id, customerID);
@@ -124,7 +123,7 @@ const createBroadcastRequest = async (request, response) => {
             {
                 const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
             }
-            return response.status(200).redirect('/customer/home');
+            return response.redirect('/customer/home');
             
         }
         catch (error) {
@@ -143,12 +142,6 @@ const createBroadcastRequest = async (request, response) => {
             form_method:"GET"
         });
     }
-}
-
-function validateBroadcast(broadcaset) {
-    const schema = Joi.object({
-        
-    });
 }
 // ======================================END OF USE CASE==================================================//
 
@@ -241,7 +234,7 @@ const viewAllRequests = async(req, res) => {
     
     try {
         let result = await Customer.getAllRequests(customerId);
-        return res.status(200).render('customer/home',{
+        return res.render('customer/home',{
             all_requests: result,
             pageTitle: 'Requests'
         });

@@ -1,23 +1,6 @@
 const { pool } = require('../database/connection');
 
 class Lookup{
-
-    static lookupEmail(email) {
-        {
-            return new Promise((resolve, reject) => {
-                const result = pool.query('SELECT * FROM customer WHERE `email` = ?',
-                    [email],
-                    function (error, results, fields) {
-                        if (error) {
-                            reject(new Error(error.message));
-                        }
-                        resolve(results);
-                    }
-                )
-            })
-        }
-    }
-
     static getDate() {
         const date = new Date();
         let day = ("0" + date.getDate()).slice(-2);
@@ -37,7 +20,6 @@ class Lookup{
         {
             if (typeof tempBrandedDrugs === 'string' || tempBrandedDrugs instanceof String)
             {
-
                 //1 branded drug, 1 drug type
                 if (typeof tempDrugTypes === 'string' || tempDrugTypes instanceof String)
                 {
@@ -87,8 +69,8 @@ class Lookup{
                 // multiple branded drugs
                 query = `SELECT DISTINCT pharmacy_id FROM pharmacy_branded_drugs WHERE branded_drug_id IN (` + tempBrandedDrugs.join() + `)`;
             }
-
         }
+        
         return new Promise((resolve, reject) => {
             const result = pool.query(query,
                 [],

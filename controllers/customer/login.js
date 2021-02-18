@@ -46,10 +46,8 @@ const loginCustomer = async (request, response) => {
         request.session.user.class = 2;
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-
         return response.render('500', {
-            err_data: err_msg
+            err_data: "Internal server error " + error.message
         });
     }
 
