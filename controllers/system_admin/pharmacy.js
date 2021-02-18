@@ -41,9 +41,8 @@ const viewPharmacyInfo = async(req,res)=>{
         return;
     }
 
-    const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
-    console.log(pharmacyInfo);
     try{
+        const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
         if (pharmacyInfo.length===0){
             return res.status(404).render('404');
         }
