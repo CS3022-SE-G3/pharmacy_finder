@@ -65,12 +65,6 @@ const viewPendingPharmacies = async(req,res)=>{
     try{
         const pendingPharmacies = await Pharmacy.getPendingPharmacies();
         console.log(pendingPharmacies);
-        if (pendingPharmacies.length===0){
-            return res.status(200).render('system_admin/pending-pharmacies',{
-                pendingPharmacies: pendingPharmacies,
-                pageTitle: 'Approval Pending Pharmacies'
-            });  //404 or 200?
-        }
         return res.status(200).render('system_admin/pending-pharmacies',{
             pendingPharmacies: pendingPharmacies,
             pageTitle: 'Approval Pending Pharmacies'
