@@ -80,7 +80,6 @@ const approvePharmacy = async (req,res)=>{
     const pharmacyId = req.body.pharmacyId;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error) {
-        console.error('Validation Error: pharmacy_id: '+error.details[0].message);
         res.status(400).send("Invalid Account ID provided");
         res.end();
         return;
@@ -120,7 +119,6 @@ const postSearchPharmacy = async(req,res)=>{
     const pharmacyId = req.body.pharmacyId;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error){
-        console.log(error);
         return res.status(400).render('system_admin/search-pharmacy',{
             pageTitle: "Search Pharmacy",
             pharmacyInfo: [],
