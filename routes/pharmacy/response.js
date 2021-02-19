@@ -25,7 +25,6 @@ router.get("/respond/:request_id", isAPharmacy, (req, res) => {
     let info = [];
     let request_id = req.params.request_id;
     req.session.user.req_id = request_id;
-    console.log(123456);
     return displayRequestInfo(info, res, request_id);
 });
 
