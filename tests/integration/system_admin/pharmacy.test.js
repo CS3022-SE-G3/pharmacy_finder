@@ -91,7 +91,32 @@ describe('system_admin/pharmacy test cases', () => {
         });
 
         it("should return 200 and render if viewPendingPharmacies results found", async () => {
-
+            const expectedResult = {
+                pendingPharmacies: [{
+                    pharmacy_id: 100003,
+                    name: 'test pharmacy',
+                    address: '89/1, Galle.',
+                    email: 'test@gmail.com',
+                    contact_no: 773640022,
+                    latitude:79.123456,
+                    longitude:6.123456,
+                    approved_state:"Not Approved"
+                },
+                    {
+                        pharmacy_id: 100005,
+                        name: 'XYZ Pharmacy',
+                        address: '258/1, Kaduruketiya Rd, Gonawala.',
+                        email: 'info@xyzpharmacy.com',
+                        contact_no: 773640022,
+                        latitude:79.123456,
+                        longitude:6.123456,
+                        approved_state:"Not Approved"
+                    }],
+                pageTitle: 'Approval Pending Pharmacies'
+            };
+            await viewPendingPharmacies(req,res);
+            expect(res.status).toBeCalledWith(200);
+            expect(res.render).toHaveBeenCalledWith("system_admin/pending-pharmacies", expectedResult);
         });
 
         it("should return 200 and render if viewPendingPharmacies results is an empty array", async () => {

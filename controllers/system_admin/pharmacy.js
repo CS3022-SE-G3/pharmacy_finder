@@ -35,7 +35,6 @@ const viewPharmacyInfo = async(req,res)=>{
     const pharmacyId = req.params.pharmacyid;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error) {
-        console.error('Validation Error: pharmacy_id: '+error.details[0].message);
         res.status(400).send("Invalid Account ID provided");
         res.end();
         return;
@@ -63,7 +62,6 @@ const viewPharmacyInfo = async(req,res)=>{
 const viewPendingPharmacies = async(req,res)=>{
     try{
         const pendingPharmacies = await Pharmacy.getPendingPharmacies();
-        console.log(pendingPharmacies);
         return res.status(200).render('system_admin/pending-pharmacies',{
             pendingPharmacies: pendingPharmacies,
             pageTitle: 'Approval Pending Pharmacies'
