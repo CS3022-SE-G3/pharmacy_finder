@@ -1,5 +1,5 @@
 const { viewPharmacyInfo,viewPendingPharmacies } = require('../../../controllers/system_admin/pharmacy');
-
+const Pharmacy = require('../../../models/Pharmacy');
 
 let server;
 
@@ -58,21 +58,17 @@ describe('system_admin/pharmacy test cases', () => {
         });
 
         it("should return and render 500 if Internal server error", async () => {
-            //TODO
-            // const mockError = new Error("mock error");
-            // jest
-            //     .spyOn(Pharmacy, "getPharmacyInfo")
-            //     .mockImplementation((pharmacyId) => {return Promise.reject(new Error("error"))});
-            // // Pharmacy.getPharmacyInfo(req.params.pharmacyid).mockImplementation(() => {
-            // //     throw new Error(mockError);
-            // // });
-            // await viewPharmacyInfo(req,res);
-            //
-            // const expectedResult = {
-            //     err_data: "Internal server error " + mockError.message
-            // };
-            // expect(res.status).toHaveBeenCalledWith(500);
-            // expect(res.render).toHaveBeenCalledWith("500",expectedResult)
+            const mockError = new Error("Mock Fetch from Database Failed Error");
+            const mock = jest.spyOn(Pharmacy, "getPharmacyInfo").mockImplementation(() => {return Promise.reject(mockError)});
+
+            await viewPharmacyInfo(req,res);
+
+            const expectedResult = {
+                err_data: "Internal server error " + mockError.message
+            };
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.render).toHaveBeenCalledWith("500",expectedResult);
+            mock.mockRestore();
         });
 
     });
@@ -99,11 +95,29 @@ describe('system_admin/pharmacy test cases', () => {
         });
 
         it("should return 200 and render if viewPendingPharmacies results is an empty array", async () => {
+            const mock = jest.spyOn(Pharmacy, "getPendingPharmacies").mockImplementation(() => {return Promise.resolve([])});
 
+            const expectedResult = {
+                pendingPharmacies: [],
+                pageTitle: 'Approval Pending Pharmacies'
+            };
+            await viewPendingPharmacies(req,res);
+            expect(res.status).toBeCalledWith(200);
+            expect(res.render).toHaveBeenCalledWith("system_admin/pending-pharmacies", expectedResult);
+            mock.mockRestore();
         });
 
         it("should return and render 500 if Internal server error", async () => {
-            //TODO
+            const mockError = new Error("Mock Fetch from Database Failed Error");
+            const mock = jest.spyOn(Pharmacy, "getPendingPharmacies").mockImplementation(() => {return Promise.reject(mockError)});
+            await viewPendingPharmacies(req,res);
+
+            const expectedResult = {
+                err_data: "Internal server error " + mockError.message
+            };
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.render).toHaveBeenCalledWith("500",expectedResult);
+            mock.mockRestore();
         });
 
     });
