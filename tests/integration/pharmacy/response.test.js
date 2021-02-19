@@ -128,34 +128,34 @@ describe("Pharmacy Response", () => {
     });
   });
 
-  // describe("storeEditedResponseInfo", () => {
-  //   const res = {
-  //     json: jest.fn(),
-  //     redirect: jest.fn()
-  //   }
-  //   beforeEach(async () => {
-  //       server = require('../../../index');
-  //       await pool.query("SET autocommit = OFF");
-  //       await pool.query("BEGIN");
-  //   });
+  describe("storeEditedResponseInfo", () => {
+    const res = {
+      json: jest.fn(),
+      redirect: jest.fn()
+    }
+    beforeEach(async () => {
+        server = require('../../../index');
+        await pool.query("SET autocommit = OFF");
+        await pool.query("BEGIN");
+    });
 
-  //   afterEach(async () => {
-  //       await pool.query("ROLLBACK");
-  //       await pool.end();
-  //       await server.close();
-  //   });
+    afterEach(async () => {
+        await pool.query("ROLLBACK");
+        await pool.end();
+        await server.close();
+    });
 
-  //   it("200 Successful edited response info store", async () => {
-  //     const drug_type_ids = [];
-  //     const branded_drug_ids = [50015];
-  //     const pharmacy_id = 100006;
-  //     const request_id = 60020;
+    it("200 Successful edited response info store", async () => {
+      const drug_type_ids = undefined;
+      const branded_drug_ids = [50015];
+      const pharmacy_id = 100006;
+      const request_id = 60020;
 
-  //     await response.storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
+      await response.storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
 
-  //     expect(res.redirect).toHaveBeenCalledWith(
-  //       "/pharmacy/home"
-  //     );
-  //   });
-  // });
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/pharmacy/home"
+      );
+    });
+  });
 });

@@ -54,12 +54,7 @@ async function displayResponseInfo(info, res, pharmacy_id, request_id) {
 
 async function storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id) {
     try {
-        console.log(drug_type_ids);
-        console.log(branded_drug_ids);
-        console.log(pharmacy_id);
-        console.log(request_id);
         var response = await Pharmacy.getResponseID(pharmacy_id, request_id);
-        console.log(response);
         const dPR = await Pharmacy.deletePreviousRespone(response[0].response_id);
         const sIR = await Pharmacy.storeInResponse(request_id, pharmacy_id);
         response = await Pharmacy.getResponseID(pharmacy_id, request_id);
