@@ -4,7 +4,7 @@
   "description": "Pharmacy Finder",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --forceExit",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },

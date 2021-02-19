@@ -1,4 +1,3 @@
-
 const Joi = require('joi');
 const Customer = require('../../models/Customer');
 const SystemAdmin = require('../../models/SystemAdmin');
@@ -16,10 +15,8 @@ const Lookup = require('../../models/Lookup');
 const getBroadcastForm = async (request, response) => {
     const drug_types = await SystemAdmin.getAllDrugTypes();
     const branded_drugs = await SystemAdmin.getAllDrugs();
-    console.log(drug_types);
-    console.log(branded_drugs);
 
-    return response.status(200).render('customer/broadcastForm', {
+    return response.render('customer/broadcastForm', {
         pageTitle: "Broadcast Form",
         drug_types: drug_types,
         branded_drugs: branded_drugs,
@@ -31,16 +28,8 @@ const getBroadcastForm = async (request, response) => {
 
 const createBroadcastRequest = async (request, response) => {
 
-    //@todo: get customer id either from session or from post request
     const customerID = request.session.user.id;
-    console.log("Customer ID");
-    console.log(customerID);
-    console.log("");
-
-    const customerLocation = await Customer.getLocation(customerID);    //lat and longitude
-    console.log("Customer Location");
-    console.log(customerLocation);
-    console.log("");
+    const customerLocation = await Customer.getLocation(customerID);
 
     let tempDrugTypes = [];
     let tempBrandedDrugs = [];
@@ -55,13 +44,9 @@ const createBroadcastRequest = async (request, response) => {
     if (request.body.branded_drugs) {
         tempBrandedDrugsBeforeProcessing = request.body.branded_drugs;
     }
-    
-    /**
-     * @todo add validation? minimum one drug has to be selected
-     */
     if (tempDrugTypesBeforeProcessing.length == 0 && tempBrandedDrugsBeforeProcessing.length == 0) {
         {
-            return response.status(400).render('400', {
+            return response.render('400', {
                 err_data: "You have not selected any drugs. Please select at least one brand/drug type",
                 redirect_to: "/customer/request/broadcast",
                 button_message: "Try Again",
@@ -69,13 +54,6 @@ const createBroadcastRequest = async (request, response) => {
             });
         }
     }
-    console.log("Drug types entered by customer");
-    console.log(tempDrugTypesBeforeProcessing);
-    console.log("");
-
-    console.log("Branded drugs entered by customer");
-    console.log(tempBrandedDrugsBeforeProcessing);
-
     if (typeof tempBrandedDrugsBeforeProcessing === 'string' || tempBrandedDrugsBeforeProcessing instanceof String) {
         tempBrandedDrugs.push(tempBrandedDrugsBeforeProcessing);
     }
@@ -96,9 +74,6 @@ const createBroadcastRequest = async (request, response) => {
             pharmaciesToLookUp.push(value.pharmacy_id);
     });
 
-    console.log("Pharmacies that contain the drugs needed by the customer");
-    console.log(pharmaciesToLookUp);
-    console.log("");
     if (pharmaciesToLookUp.length>0)
     {
         const latitude = customerLocation.latitude;
@@ -107,47 +82,20 @@ const createBroadcastRequest = async (request, response) => {
         const right = longitude + 0.27027;
         const up = latitude + 0.27027;
         const down = latitude - 0.27027;
-        console.log("Distance ranges");
-        console.log("left");
-        console.log(left);
-        console.log("");
 
-        console.log("right");
-        console.log(right);
-        console.log("");
-
-        console.log("up");
-        console.log(up);
-        console.log("");
-
-        console.log("down");
-        console.log(down);
-        console.log("");
-
-        // latitude +- 0.27027
-        // longitude +- 0.27027
         try
         {
             const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
             if (!pharmacies || pharmacies.length == 0) {
-                return response.status(400).render('400', {
+                return response.render('400', {
                     err_data: "There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results",
                     redirect_to: "/customer/request/broadcast",
                     button_message: "Try Again",
                     form_method: "GET"
                 });
-            
             }
-            console.log("pharmacies in the distance range");
-            console.log(pharmacies);
-            console.log("");
-
             const id = await Customer.enterRequestPart1();
             const waiting = await Customer.enterRequestPart2(id, customerID);
-
-            console.log("request id to be entered");
-            console.log(id);
-            console.log("");
 
             let drugTypes = [];
             let brandedDrugs = [];
@@ -157,51 +105,29 @@ const createBroadcastRequest = async (request, response) => {
                 drugTypes.push([id, drugType]);
             });
 
-            console.log("drug types to be entered");
-            console.log(drugTypes);
-            console.log("");
-
             tempBrandedDrugs.forEach(function (brandedDrug) {
                 brandedDrugs.push([id, brandedDrug]);
             });
-
-            console.log("branded drugs to be entered");
-            console.log(brandedDrugs);
-            console.log("");
 
             pharmacies.forEach(function (pharmacy) {
                 requestablePharmacies.push([id, pharmacy.pharmacy_id]);
             });
 
-            console.log("pharmacies to be entered");
-            console.log(requestablePharmacies);
-            console.log("");
-
             const id1 = await Customer.enterPharmacies(requestablePharmacies);
-            console.log("Pharmacies entered status");
-            console.log(id1);
-            console.log("");
+
             if (drugTypes.length>0)
             {
                 const id2 = await Customer.enterDrugTypes(drugTypes);
-                console.log("Drug types entered status");
-                console.log(id2);
-                console.log("");
             }
             if (brandedDrugs.length > 0)
             {
                 const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
-                console.log("Branded drugs entered status");
-                console.log(id3);
-                console.log("");
             }
-            
-            return response.status(200).redirect('/customer/home');
+            return response.redirect('/customer/home');
             
         }
         catch (error) {
             var err_msg = "Internal server error " + error.message;
-            console.log(error);
 
             return response.render('500', {
                 err_data: err_msg
@@ -209,19 +135,13 @@ const createBroadcastRequest = async (request, response) => {
             }
     }
     else {
-        return response.status(400).render('400', {
+        return response.render('400', {
             err_data: "No pharmacies have the available drugs",
             redirect_to: "/customer/home",
             button_message: "Return to home page",
             form_method:"GET"
         });
     }
-}
-
-function validateBroadcast(broadcaset) {
-    const schema = Joi.object({
-        
-    });
 }
 // ======================================END OF USE CASE==================================================//
 
@@ -234,21 +154,15 @@ function validateBroadcast(broadcaset) {
  * @param {number} customerId
  */
 function validateRequestId(requestId){
-    
     // schema to validate
     const schema = Joi.object({
-        
         "requestId"    : Joi.number().integer().min(60001).required(),
-        
     });
-
     // return valid or not
     return schema.validate(requestId)
 }
 
-
 const viewBroadcastedRequests = async(req, res) => {
-
     // get customerId from URL
     const requestID = req.params.requestId; 
 
@@ -256,31 +170,23 @@ const viewBroadcastedRequests = async(req, res) => {
     const {error} = validateRequestId({requestId:requestID});
 
     if (error) {
-        console.error('ValidationError:customer-requestId: ' + error.details[0].message);
-        return response.status(400).render('400', {
+        return res.render('400', {
             err_data: "Invalid Request",
             redirect_to: "/customer/home",
             button_message: "Return to home page",
             form_method: "GET"
         });
-
     }
     const drug_types = await Customer.getDrugTypesFromRequest(requestID);
     const branded_drugs = await Customer.getBrandedDrugsFromRequest(requestID);
     const responded_pharmacies = await Customer.getRespondedPharmacies(requestID);
-
-    console.log("Drug types request:")
-    console.log(drug_types);
-    console.log("Branded Drugs request:")
-    console.log(branded_drugs);
     
     try{
         if(drug_types.length === 0 && branded_drugs.length===0){
-            return res.status(404).render('404');
+            return res.render('404');
         }
-
         if (responded_pharmacies.length === 0) {
-            return res.status(200).render('customer/view_requests', {
+            return res.render('customer/view_requests', {
                 drug_types: drug_types,
                 branded_drugs: branded_drugs,
                 hasPharmacies:false,
@@ -288,24 +194,18 @@ const viewBroadcastedRequests = async(req, res) => {
             });
         }
         else {
-            return res.status(200).render('customer/view_requests', {
+            return res.render('customer/view_requests', {
                 drug_types: drug_types,
                 branded_drugs: branded_drugs,
                 hasPharmacies: true,
                 pharmacies:responded_pharmacies,
                 pageTitle: 'Request Details'
             });
-            
         }
-
-        
     }
     catch(error){
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
-        return response.render('500', {
-            err_data: err_msg
+        return res.render('500', {
+            err_data: "Internal server error " + error.message
         });
     }
 }
@@ -320,33 +220,27 @@ function validateCustomerId(customerId){
     
     // schema to validate
     const schema = Joi.object({
-        
         "customerId"    : Joi.number().integer().min(10001).required(),
-        
     });
 
     // return valid or not
     return schema.validate(customerId)
 }
 
-
 const viewAllRequests = async(req, res) => {
 
     const customerId = req.session.user.id;
-    console.log(customerId);
     // get the information of the broadcasted requests as requested
-    
     
     try {
         let result = await Customer.getAllRequests(customerId);
-        return res.status(200).render('customer/home',{
+        return res.render('customer/home',{
             all_requests: result,
             pageTitle: 'Requests'
         });
     }
     catch(error){
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
         return response.render('500', {
             err_data: err_msg
@@ -361,7 +255,7 @@ const viewAllRequests = async(req, res) => {
 const deleteBroadcast = async (req, res) => {
     const requestID = req.body.requestID;
     result = await Customer.deleteRequest(requestID);
-    res.status(200).redirect('/customer/home');
+    res.redirect('/customer/home');
 }
 
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;
