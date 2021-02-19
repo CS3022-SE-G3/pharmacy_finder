@@ -53,9 +53,8 @@ const viewPharmacyInfo = async(req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
-        return res.render('500', {
+        return res.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -74,7 +73,7 @@ const viewPendingPharmacies = async(req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return res.render('500', {
+        return res.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -105,7 +104,7 @@ const approvePharmacy = async (req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return res.render('500', {
+        return res.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -153,7 +152,7 @@ const postSearchPharmacy = async(req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return res.render('500', {
+        return res.status(500).render('500', {
             err_data: err_msg
         });
     }
