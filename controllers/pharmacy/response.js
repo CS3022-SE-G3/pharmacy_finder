@@ -14,7 +14,7 @@ async function displayRequestInfo(info, res, request_id) {
         info.push(requestedBrandedDrugs);
         res.json({info: info});
     } catch (e) {
-        console.log(e.message);
+        // console.log(e.message);
     }
 }
 
@@ -26,7 +26,7 @@ async function storeResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_
         const sABD = await Pharmacy.storeAcceptedBrandedDrugs(response[0].response_id, branded_drug_ids);
         return res.redirect("/pharmacy/home");
     } catch (e) {
-        console.log(e.message);
+        // console.log(e.message);
     }
 }
 
@@ -46,7 +46,7 @@ async function displayResponseInfo(info, res, pharmacy_id, request_id) {
         info.push(respondedBrandedDrugs);
         res.json({info: info});
     } catch (e) {
-        console.log(e.message);
+        // console.log(e.message);
     }
 }
 
@@ -62,7 +62,7 @@ async function storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pha
         const sABD = await Pharmacy.storeAcceptedBrandedDrugs(response[0].response_id, branded_drug_ids);
         return res.redirect("/pharmacy/home");
     } catch (e) {
-        console.log(e.message);
+        // console.log(e.message);
     }
 }
 
