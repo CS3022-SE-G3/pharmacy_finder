@@ -41,9 +41,8 @@ const viewPharmacyInfo = async(req,res)=>{
         return;
     }
 
-    const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
-    console.log(pharmacyInfo);
     try{
+        const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
         if (pharmacyInfo.length===0){
             return res.status(404).render('404');
         }
@@ -56,7 +55,7 @@ const viewPharmacyInfo = async(req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
@@ -66,12 +65,6 @@ const viewPendingPharmacies = async(req,res)=>{
     try{
         const pendingPharmacies = await Pharmacy.getPendingPharmacies();
         console.log(pendingPharmacies);
-        if (pendingPharmacies.length===0){
-            return res.status(200).render('system_admin/pending-pharmacies',{
-                pendingPharmacies: pendingPharmacies,
-                pageTitle: 'Approval Pending Pharmacies'
-            });  //404 or 200?
-        }
         return res.status(200).render('system_admin/pending-pharmacies',{
             pendingPharmacies: pendingPharmacies,
             pageTitle: 'Approval Pending Pharmacies'
@@ -81,7 +74,7 @@ const viewPendingPharmacies = async(req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
@@ -112,7 +105,7 @@ const approvePharmacy = async (req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
@@ -160,7 +153,7 @@ const postSearchPharmacy = async(req,res)=>{
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
