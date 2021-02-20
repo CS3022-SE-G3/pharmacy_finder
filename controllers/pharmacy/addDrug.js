@@ -18,9 +18,8 @@ const getPharmacyDrugs = async (request, response) => {
     } 
 }
 
-const updatePharmacyDrugs = async (request, response) => {
+const updatePharmacyDrugs = (request, response) => {
     const pharmacy_id = request.session.user.id;
-    
     const result= Object.keys(request.body);
     const drug_type_data=[];
     const branded_drug_data= [];
@@ -94,12 +93,9 @@ async function insertDrugTypesOfSelectedPharmacyBrandedDrugs(pharmacy_id, brande
                         break;
                     }
                 } 
-            }       
+            }     
         }  
-        const drug= await Pharmacy.getDrugTypes(pharmacy_id);
-        const brand = await Pharmacy.getBrandedDrugs(pharmacy_id);
-        
-        return response.render('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
+         return response.redirect('/pharmacy/addDrug');
 
     }
     catch(err){

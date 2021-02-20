@@ -18,7 +18,7 @@ const getPharmacyDrugs = async (request, response) => {
     }        
 }
 
-const deletePharmacyDrugs = async (request, response) => {
+const deletePharmacyDrugs = (request, response) => {
     const pharmacy_id = request.session.user.id;
 
     const drug_types=request.body.delete_drug_type;
@@ -26,7 +26,7 @@ const deletePharmacyDrugs = async (request, response) => {
        
     deleteDrugTypes(drug_types, pharmacy_id);
     deleteBrandedDrugs(branded_drugs, pharmacy_id);
-    getPharmacyDrugs(request, response);
+    response.redirect('/pharmacy/drug');
 }
 
 //Delete data from pharmacy_drug_types table
@@ -35,7 +35,7 @@ async function deleteDrugTypes(drug_types, pharmacy_id){
         const drug = await Pharmacy.deletePharmacyDrugTypes(drug_types, pharmacy_id);
     }
     catch(err){
-        console.log(err);
+        // console.log(err);
     }      
 }
 
@@ -45,7 +45,7 @@ async function deleteBrandedDrugs(branded_drugs, pharmacy_id){
         const brand = await Pharmacy.deletePharmacyBrandedDrugs(branded_drugs, pharmacy_id);
     }
     catch(err){
-        console.log(err);
+        // console.log(err);
     }      
 }
 
