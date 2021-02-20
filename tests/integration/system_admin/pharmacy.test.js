@@ -188,7 +188,7 @@ describe('system_admin/pharmacy test cases', () => {
         });
 
         it("should return 409 if Pharmacy already approved", async () => {
-            req.body.pharmacyId = "100008"; //unlikely to exist
+            req.body.pharmacyId = "100008";
             await approvePharmacy(req, res);
             expect(res.status).toHaveBeenCalledWith(409);
             expect(res.send).toHaveBeenCalledWith("Pharmacy already approved");
@@ -196,7 +196,7 @@ describe('system_admin/pharmacy test cases', () => {
 
         it("should send email, return 200 and redirect if approval successful", async () => {
             req.body.pharmacyId = "100005";
-            // TODO
+            // TODO for some reason email function will be called but a real email won't be sent during testing which is exactly what we want
             await approvePharmacy(req,res);
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.redirect).toHaveBeenCalledWith("/system_admin/pharmacy/pending");
