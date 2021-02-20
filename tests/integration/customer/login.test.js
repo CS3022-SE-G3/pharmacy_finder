@@ -24,12 +24,12 @@ describe('customer/login test cases', () => {
         },
         session: {}
     }
-    it("200 Successful customer login", async () => {
+    it("should redirect to customer home page if log in was successful", async () => {
         await loginCustomer(req, res);
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 
-    it("400 Invalid customer login", async () => {
+    it("should display the 400 error page if email was invalid", async () => {
         req.body.email = "klkml";
         await loginCustomer(req, res);
         expect(res.render).toHaveBeenCalledWith('customer/login_error', {
@@ -37,7 +37,7 @@ describe('customer/login test cases', () => {
         });
     });
 
-     it("400 Email not registered", async () => {
+     it("should display the 400 error page if email was unregistered", async () => {
          req.body.email = "klkml@gmail.com";
          await loginCustomer(req, res);
          expect(res.render).toHaveBeenCalledWith('customer/login_error', {
@@ -45,7 +45,7 @@ describe('customer/login test cases', () => {
          });
      });
     
-    it("400 Password incorrect", async () => {
+    it("should display the 400 error page if password was incorrect", async () => {
         req.body.email="s@gmail.com"
         req.body.password = "654321";
         await loginCustomer(req, res);

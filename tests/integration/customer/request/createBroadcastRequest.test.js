@@ -27,7 +27,7 @@ describe('createBroadcastRequest', () => {
         render:jest.fn()
     }
 
-    it("Pharmacies out of range", async () => {
+    it("should redirect to the 400 error page if all pharmacies are out of range", async () => {
         req.body.drug_types = "40004";
         await createBroadcastRequest(req, res);
         expect(res.render).toHaveBeenCalledWith('400', {
@@ -38,7 +38,7 @@ describe('createBroadcastRequest', () => {
         });
     });
 
-    it("No pharmacies have the necessary drugs", async () => {
+    it("should redirect to the 400 error page if  no pharmacies have the necessary drugs", async () => {
         req.body.drug_types = [];
         req.body.branded_drugs = "50009";
         await createBroadcastRequest(req, res);
@@ -50,7 +50,7 @@ describe('createBroadcastRequest', () => {
         });
     });
 
-    it("400 blank form submitted", async () => {
+    it("should redirect to the 400 error page if a blank form is submitted", async () => {
         req.body.branded_drugs = [];
         await createBroadcastRequest(req, res);
         expect(res.render).toHaveBeenCalledWith('400', {
@@ -62,7 +62,7 @@ describe('createBroadcastRequest', () => {
     });
 });
 
-describe('send customer request 200 OK', () => {
+describe('should redirect to customer home if request was successfully sent', () => {
 
     beforeEach(async () => {
         server = require('../../../../index');
@@ -92,7 +92,7 @@ describe('send customer request 200 OK', () => {
         redirect:jest.fn()
     }
 
-    it("sending the broadcast", async () => {
+    it("should redirect to customer home if request was successfully sent", async () => {
         await createBroadcastRequest(req, res);
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });

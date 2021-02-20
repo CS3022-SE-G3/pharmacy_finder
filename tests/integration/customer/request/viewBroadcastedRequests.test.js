@@ -18,7 +18,7 @@ describe('customer/request test cases', () => {
         render:jest.fn()
     }
 
-    it("Has responded pharmacies", async () => {
+    it("should display all the pharmacies that replied to that request", async () => {
         req.params.requestId = 60004;
         await viewBroadcastedRequests(req, res);
         expect(res.render).toHaveBeenCalledWith('customer/view_requests', {
@@ -47,7 +47,7 @@ describe('customer/request test cases', () => {
         });
     });
 
-    it("No responded pharmacies", async () => {
+    it("should indicate that there are no pharmacies that replied to a specific request", async () => {
         req.params.requestId = 60003;
         await viewBroadcastedRequests(req, res);
         expect(res.render).toHaveBeenCalledWith('customer/view_requests', {
@@ -63,7 +63,7 @@ describe('customer/request test cases', () => {
         });
     });
 
-    it("400 invalid customer ID", async () => {
+    it("should redirect to the 400 error page if the request ID is invalid", async () => {
         req.params.requestId = 1;
         await viewBroadcastedRequests(req, res);
         expect(res.render).toHaveBeenCalledWith('400', {

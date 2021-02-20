@@ -24,7 +24,7 @@ describe('customer/pharmacy test cases', () => {
         });
         
 
-        it("200 OK route", async () => {
+        it("should display pharmacy details if pharmacy name was valid", async () => {
             const expectedResult = {
                 pharmacyInformation: {
                     pharmacy_id: 30001,
@@ -40,7 +40,7 @@ describe('customer/pharmacy test cases', () => {
         });
 
 
-        it("400 - Invalid pharmacy name provided", async () => {
+        it("should display the 400 error page if pharmacy name was invalid", async () => {
             req.params.pharmacy_name = "as";
             const expectedResult = {
                     err_data: "Invalid pharmacy name provided",
@@ -52,7 +52,7 @@ describe('customer/pharmacy test cases', () => {
             expect(res.render).toHaveBeenCalledWith("400", expectedResult);
         });
 
-        it("404 - Pharmacy not found", async () => {
+        it("should display the 404 error page if pharmacy name was not found", async () => {
             req.params.pharmacy_name = new Array(10).join("asd"); //autogenerates a string
             await viewPharmacyInformation(req, res);
             expect(res.render).toHaveBeenCalledWith("404");

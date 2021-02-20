@@ -23,7 +23,7 @@ describe('customer/request', () => {
         render:jest.fn()
     }
 
-    it("viewAllRequests", async () => {
+    it("should display all the customer requests on the home page", async () => {
         const result = [{
             request_id: 60006,
             date_created: '2021-02-18'

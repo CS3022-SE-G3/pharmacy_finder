@@ -21,7 +21,7 @@ describe('customer/report test case', () => {
         await server.close();
     });
 
-    it("200 Report successful ", async () => {
+    it("should redirect to the home page once the request was sent successfully", async () => {
         const req = {
             body: {
                 "pharmacy_id": "30001",
@@ -37,7 +37,7 @@ describe('customer/report test case', () => {
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 
-    it("400 error invalid report ", async () => {
+    it("should display the 400 error page if report was invalid ", async () => {
         const req = {
             session: {
                 user: {
