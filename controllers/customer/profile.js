@@ -104,7 +104,6 @@ const editProfileInformation = async (request, response) => {
                 "contact_no"
             ]
         ));
-        console.log(result);
     return response.redirect('/customer/profile/view');
 
     }

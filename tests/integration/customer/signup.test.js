@@ -33,7 +33,7 @@ describe('customer/signup test cases', () => {
             render: jest.fn()
         }
         
-        it("400 Invalid sign up information", async () => {
+        it("should display the 400 error page if sign up information was invalid", async () => {
             req.body.confirm_password = "654321";
 
             const expectedResult = {
@@ -45,7 +45,7 @@ describe('customer/signup test cases', () => {
 
         });
 
-        it("400 Email already registered", async () => {
+        it("should display the 400 error page if email was already registered", async () => {
             req.body.email = "nimal1@gmail.com";
             req.body.confirm_password = "123456";
 
@@ -90,7 +90,7 @@ describe('customer/signup test cases', () => {
             await server.close();
         });
 
-        it("200 Customer sign up", async () => {
+        it("should successfully register the customer and redirect to home page if sign up was successful ", async () => {
             await signupCustomer(req, res);
             expect(res.redirect).toHaveBeenCalledWith('/customer/login');
         });

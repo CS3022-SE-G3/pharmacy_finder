@@ -1,6 +1,8 @@
+const { viewAllRequests } = require('../../../../controllers/customer/request');
+
 let server;
 
-describe('Main suite description', () => {
+describe('customer/request', () => {
     beforeEach(() => {
         server = require('../../../../index');
     });
@@ -10,9 +12,26 @@ describe('Main suite description', () => {
 
     });
 
-    describe('Suite description', () => {
-        it("Test description", async () => {
+    const req = {
+        session: {
+            user: {
+                id:10001
+            }
+        }
+    }
+    const res = {
+        render:jest.fn()
+    }
 
+    it("should display all the customer requests on the home page", async () => {
+        const result = [{
+            request_id: 60006,
+            date_created: '2021-02-18'
+        }];
+        await viewAllRequests(req, res);
+        expect(res.render).toHaveBeenCalledWith('customer/home', {
+            all_requests: result,
+            pageTitle: 'Requests'
         });
     });
 });

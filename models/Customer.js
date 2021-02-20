@@ -91,11 +91,8 @@ class Customer{
                     [requestID],
                     function (error, results) {
                         if (error) {
-                            console.log(result.sql)
                             reject(error);
                         }
-                        console.log(result.sql);
-                        console.log(results);
                         resolve(results);
                     }
                 )
@@ -115,7 +112,6 @@ class Customer{
                     if (error) {
                         reject (error);
                     }
-                    console.log(results);
                     resolve(results);
                 }
                 )
@@ -123,7 +119,6 @@ class Customer{
         }catch(error){
             console.log(error)
         }
-            
     }
 
     static deleteRequest(requestID) {
@@ -135,7 +130,6 @@ class Customer{
                         if (error) {
                             reject(error);
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
@@ -143,7 +137,6 @@ class Customer{
         } catch(error) {
             console.log(error)
         }
-        
     }
     static getRespondedPharmacies(requestId) {
         console.log("Getting responded pharmacies");
@@ -155,10 +148,8 @@ class Customer{
                     ],
                     function (error, results) {
                         if (error) {
-                            console.log(error);
                             reject(new Error(error.message));
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
@@ -179,10 +170,8 @@ class Customer{
                             return resolve(60001);
                         }
                         else {
-                            console.log(results[0].id);
                             resolve(results[0].id);
                         }
-                        
                     }
                 )
             })
@@ -198,7 +187,6 @@ class Customer{
                     [requestID, customerID, Lookup.getDate()],
                     function (error, results) {
                         if (error) {
-                            console.log(result.sql);
                             reject(new Error(error.message));
                         }
                         resolve(true);
@@ -211,69 +199,48 @@ class Customer{
     }
 
     static enterPharmacies(pharmacies) {
-        try {
             return new Promise((resolve, reject) => {
                 const result = pool.query('INSERT INTO requests_and_associated_pharmacies (request_id,pharmacy_id) VALUES ?',
                     [pharmacies],
                     function (error, results) {
                         if (error) {
-                            console.log(result.sql);
                             reject(new Error(error.message));
                         }
                         resolve(results);
                     }
                 )
             })
-        } catch {
-            console.log(error)
-        }
-    }
+        } 
 
     //drug types
     static enterDrugTypes(drugTypes) {
-        try {
             return new Promise((resolve, reject) => {
                 const result = pool.query('INSERT INTO requests_and_associated_drug_types  (request_id,drug_type_id) VALUES ?',
                     [drugTypes],
                     function (error, results) {
                         if (error) {
-                            console.log(result.sql);
-
                             reject(new Error(error.message));
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
-
             })
-        } catch (error) {
-            console.log(error)
-        }
-    }
+        } 
 
     //branded drugs
     static enterBrandedDrugs(brandedDrugs) {
-        try {
             return new Promise((resolve, reject) => {
                 const result = pool.query('INSERT INTO requests_and_associated_branded_drugs  (request_id,branded_drug_id) VALUES ?',
                     [brandedDrugs],
                     function (error, results) {
                         if (error) {
-                            console.log(result.sql);
-
                             reject(new Error(error.message));
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
             })
-        } catch {
-            console.log(error)
-        }
     }
-
 
     static getBroadcastedRequests(customerId) {
         try {
@@ -284,7 +251,6 @@ class Customer{
                         if (error) {
                             reject(new Error(error.message));
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
@@ -292,11 +258,7 @@ class Customer{
         } catch {
             console.log(error)
         }
-
-
     }
-    
-    
 
     static getLocation(customerID) {
         return new Promise((resolve, reject) => {
@@ -305,10 +267,7 @@ class Customer{
                 function (error, results) {
                     if (error) {
                         reject(new Error(error.message));
-                        console.log(error);
                     }
-                    console.log("Customer Location");
-                    console.log(results);
                     resolve(results[0]);
                 }
             )

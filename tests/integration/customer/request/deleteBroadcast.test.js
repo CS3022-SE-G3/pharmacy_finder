@@ -27,7 +27,7 @@ describe('customer/request test case', () => {
         redirect:jest.fn()
     }
 
-    it("deleting broadcasts", async () => {
+    it("should redirect to customer home if request was successfully deleted", async () => {
         await deleteBroadcast(req, res);
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
