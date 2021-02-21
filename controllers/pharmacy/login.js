@@ -64,11 +64,11 @@ const loginPharmacy = async (request, response) => {
 
     }
     catch (error) {
-        var err_msg = "Internal server error" + error.message;
+        // var err_msg = "Internal server error" + error.message;
 
-        return response.render('500', {
-            err_data: err_msg
-        });
+        // return response.render('500', {
+        //     err_data: err_msg
+        // });
     }
 
     return response.redirect('/pharmacy/home');

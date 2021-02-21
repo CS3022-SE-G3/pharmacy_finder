@@ -8,10 +8,20 @@ const path = require('path');
 const getPharmacyDrugs = async (request, response) => {
     try{
         const pharmacy_id = request.session.user.id;
-        const drug= await Pharmacy.getDrugTypes(pharmacy_id);
-        const brand = await Pharmacy.getBrandedDrugs(pharmacy_id);
-        
-        response.render('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
+        if (pharmacy_id !== undefined){
+            if (request.session.user.class === 1){
+                const drug= await Pharmacy.getDrugTypes(pharmacy_id);
+                const brand = await Pharmacy.getBrandedDrugs(pharmacy_id);
+                
+                response.render('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
+            }else if (request.session.user.class === 0){
+                response.redirect('/system_admin/home');
+            }else{
+                response.redirect('/customer/home');
+            }
+        }else{
+            response.redirect('/');
+        }
     }
     catch(err){
         // console.log(err);
@@ -20,20 +30,31 @@ const getPharmacyDrugs = async (request, response) => {
 
 const updatePharmacyDrugs = (request, response) => {
     const pharmacy_id = request.session.user.id;
-    const result= Object.keys(request.body);
-    const drug_type_data=[];
-    const branded_drug_data= [];
 
-    for(var i=0; i<result.length;i++){
-        if(result[i][0]==="4"){
-            drug_type_data.push(result[i]);
+    if (pharmacy_id !== undefined){
+        if (request.session.user.class === 1){
+            const result= Object.keys(request.body);
+            const drug_type_data=[];
+            const branded_drug_data= [];
+
+            for(var i=0; i<result.length;i++){
+                if(result[i][0]==="4"){
+                    drug_type_data.push(result[i]);
+                }else{
+                    branded_drug_data.push(result[i]);
+                }
+            }
+            insertPharmacyDrugTypes(pharmacy_id, drug_type_data);
+            insertPharmacyBrandedDrugs(pharmacy_id, branded_drug_data);
+            insertDrugTypesOfSelectedPharmacyBrandedDrugs(pharmacy_id, branded_drug_data, response);
+        }else if (request.session.user.class === 0){
+            response.redirect('/system_admin/home');
         }else{
-            branded_drug_data.push(result[i]);
+            response.redirect('/customer/home');
         }
+    }else{
+        response.redirect('/');
     }
-    insertPharmacyDrugTypes(pharmacy_id, drug_type_data);
-    insertPharmacyBrandedDrugs(pharmacy_id, branded_drug_data);
-    insertDrugTypesOfSelectedPharmacyBrandedDrugs(pharmacy_id, branded_drug_data, response);
 
 }
 

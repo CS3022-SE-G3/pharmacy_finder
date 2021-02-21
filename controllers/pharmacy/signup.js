@@ -60,10 +60,10 @@ const signupPharmacy = async (request, response) => {
         const result = await Pharmacy.enterPharmacy(request.body);
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-        return response.render('500', {
-            err_data: err_msg
-        });
+        // var err_msg = "Internal server error " + error.message;
+        // return response.render('500', {
+        //     err_data: err_msg
+        // });
     }
 
     return response.redirect("/pharmacy/login");

@@ -6,7 +6,7 @@ describe('pharmacy/drug teste cases', () => {
 
     describe('getPharmacyDrugs', () => {
         const request = {
-            session: {user: {id: 100006}}
+            session: {user: {id: 100006, class: 1}}
         };
 
         const response = {
@@ -52,11 +52,68 @@ describe('pharmacy/drug teste cases', () => {
 
             expect(response.render).toHaveBeenCalledWith('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
         });
+
+        it("400 - Invalid access if the user is not logged in", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                        'id': undefined,
+                        'class': undefined
+                    }
+                }
+            }
+            
+    
+            await getPharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/");
+        });
+    
+        it("400 - Invalid access if the user is a system admin", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                      'id': "1",
+                      'class': 0
+                    }
+                }
+            }
+            
+    
+            await getPharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
+        });
+    
+        it("400 - Invalid access if the user is a customer", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                        'id': "1",
+                        'class': 2
+                    }
+                }
+            }
+            
+    
+            await getPharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/customer/home");
+        });
     });
 
     describe('updatePharmacyDrugs', () => {
         const request = {
-            session: {user: {id: 100006}},
+            session: {user: {id: 100006, class: 1}},
             body: { '40017': '40017', '50017': '50017' }
         };
 
@@ -107,6 +164,62 @@ describe('pharmacy/drug teste cases', () => {
             expect(response.redirect).toHaveBeenCalledWith('/pharmacy/addDrug');
             expect(response.render).toHaveBeenCalledWith('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
 
+        });
+        it("400 - Invalid access if the user is not logged in", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                        'id': undefined,
+                        'class': undefined
+                    }
+                }
+            }
+            
+    
+            updatePharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/");
+        });
+    
+        it("400 - Invalid access if the user is a system admin", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                      'id': "1",
+                      'class': 0
+                    }
+                }
+            }
+            
+    
+            updatePharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
+        });
+    
+        it("400 - Invalid access if the user is a customer", async () => {
+            const res = {
+                redirect:jest.fn()
+            }
+        
+            const req = {
+                'session': {
+                    'user': {
+                        'id': "1",
+                        'class': 2
+                    }
+                }
+            }
+            
+    
+            updatePharmacyDrugs(req, res);
+            expect(res.redirect).toHaveBeenCalledWith("/customer/home");
         });
     });
 });

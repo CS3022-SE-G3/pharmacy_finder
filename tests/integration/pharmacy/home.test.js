@@ -3,17 +3,6 @@ const { viewHome } = require('../../../controllers/pharmacy/home');
 let server;
 
 describe('pharmacyHome', () => {
-    const res = {
-        render:jest.fn()
-    }
-
-    const req = {
-        'session': {
-            'user': {
-                'id': "100006"
-            }
-        }
-    }
     beforeEach(() => {
         server = require('../../../index');
     });
@@ -24,6 +13,19 @@ describe('pharmacyHome', () => {
     });
 
     it("200 - Pharmacy home returned", async () => {
+        const res = {
+            render:jest.fn()
+        }
+    
+        const req = {
+            'session': {
+                'user': {
+                    'id': "100006",
+                    'class': 1
+                }
+            }
+        }
+
         const data = {
             requests: [
                 {
@@ -54,5 +56,60 @@ describe('pharmacyHome', () => {
         expect(res.render).toHaveBeenCalledWith("pharmacy/dashboard", {
             data: data
         });
+    });
+
+    it("400 - Invalid access if the user is not logged in", async () => {
+        const res = {
+            redirect:jest.fn()
+        }
+    
+        const req = {
+            'session': {
+                'user': {
+                    'id': undefined,
+                    'class': undefined
+                }
+            }
+        }
+        
+
+        await viewHome(req, res);
+        expect(res.redirect).toHaveBeenCalledWith("/");
+    });
+
+    it("400 - Invalid access if the user is a system admin", async () => {
+        const res = {
+            redirect:jest.fn()
+        }
+    
+        const req = {
+            'session': {
+                'user': {
+                    'class': 0
+                }
+            }
+        }
+        
+
+        await viewHome(req, res);
+        expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
+    });
+
+    it("400 - Invalid access if the user is a customer", async () => {
+        const res = {
+            redirect:jest.fn()
+        }
+    
+        const req = {
+            'session': {
+                'user': {
+                    'class': 2
+                }
+            }
+        }
+        
+
+        await viewHome(req, res);
+        expect(res.redirect).toHaveBeenCalledWith("/customer/home");
     });
 });

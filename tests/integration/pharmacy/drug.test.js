@@ -6,7 +6,7 @@ describe('pharmacy/drug teste cases', () => {
 
     describe('getPharmacyDrugs', () => {
         const request = {
-            session: {user: {id: 100006}}
+            session: {user: {id: 100006, class: 1}}
         };
 
         const response = {
@@ -57,11 +57,68 @@ describe('pharmacy/drug teste cases', () => {
 
             expect(response.render).toHaveBeenCalledWith('pharmacy/drugList',{drug_types: drug, branded_drugs: brand});
         });
+
+        it("400 - Invalid access if the user is not logged in", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                      'id': undefined,
+                      'class': undefined
+                  }
+              }
+          }
+          
+  
+          await getPharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/");
+      });
+  
+      it("400 - Invalid access if the user is a system admin", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                    'id': "1",
+                    'class': 0
+                  }
+              }
+          }
+          
+  
+          await getPharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
+      });
+  
+      it("400 - Invalid access if the user is a customer", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                      'id': "1",
+                      'class': 2
+                  }
+              }
+          }
+          
+  
+          await getPharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/customer/home");
+      });
     });
 
     describe('deletePharmacyDrugs', () => {
         const request = {
-            session: {user: {id: 100006}},
+            session: {user: {id: 100006, class: 1}},
             body: {delete_drug_type: undefined, delete_branded_drug: 50016}
         };
 
@@ -119,5 +176,62 @@ describe('pharmacy/drug teste cases', () => {
             expect(response.render).toHaveBeenCalledWith('pharmacy/drugList',{drug_types: drug, branded_drugs: brand});
 
         });
+
+        it("400 - Invalid access if the user is not logged in", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                      'id': undefined,
+                      'class': undefined
+                  }
+              }
+          }
+          
+  
+          deletePharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/");
+      });
+  
+      it("400 - Invalid access if the user is a system admin", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                    'id': "1",
+                    'class': 0
+                  }
+              }
+          }
+          
+  
+          deletePharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
+      });
+  
+      it("400 - Invalid access if the user is a customer", async () => {
+          const res = {
+              redirect:jest.fn()
+          }
+      
+          const req = {
+              'session': {
+                  'user': {
+                      'id': "1",
+                      'class': 2
+                  }
+              }
+          }
+          
+  
+          deletePharmacyDrugs(req, res);
+          expect(res.redirect).toHaveBeenCalledWith("/customer/home");
+      });
     });
 });

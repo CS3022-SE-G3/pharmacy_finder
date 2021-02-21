@@ -13,12 +13,13 @@ describe("Pharmacy Response", () => {
   });
 
   describe("displayRequestInfo", () => {
-    const res = {
-      json: jest.fn(),
-      redirect: jest.fn()
-    }
 
     it("200 Successful request info display", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
       let info = [];
       const request_id = 60019;
 
@@ -54,15 +55,30 @@ describe("Pharmacy Response", () => {
         info: info
       });
     });
+
+    it("400 Invalid request_id", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
+      let info = [];
+      const request_id = undefined;
+
+      await response.displayRequestInfo(info, res, request_id);
+
+      expect(res.redirect).toHaveBeenCalledWith('/pharmacy/home');
+    });
   });
 
   describe("displayResponseInfo", () => {
-    const res = {
-      json: jest.fn(),
-      redirect: jest.fn()
-    }
 
     it("200 Successful response info display", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
       let info = [];
       const pharmacy_id = 100006;
       const request_id = 60020;
@@ -86,35 +102,51 @@ describe("Pharmacy Response", () => {
             drug_type_name: 'Paracetamol'
           }
         ],
-        [ { branded_drug_id: 50015, brand_name: 'Panadol' } ],
-        [ { drug_type_id: 40016 } ],
-        [ { branded_drug_id: 50015 } ]
+        [{ branded_drug_id: 50015, brand_name: 'Panadol' }],
+        [{ drug_type_id: 40016 }],
+        [{ branded_drug_id: 50015 }]
       ];
 
       expect(res.json).toHaveBeenCalledWith({
         info: info
       });
     });
+
+    it("400 Invalid request_id", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
+      let info = [];
+      const request_id = undefined;
+      const pharmacy_id = 100006;
+
+      await response.displayResponseInfo(info, res, pharmacy_id, request_id);
+
+      expect(res.redirect).toHaveBeenCalledWith('/pharmacy/home');
+    });
   });
 
   describe("storeResponseInfo", () => {
-    const res = {
-      json: jest.fn(),
-      redirect: jest.fn()
-    }
 
     beforeEach(async () => {
-        server = require('../../../index');
-        await pool.query("SET autocommit = OFF");
-        await pool.query("BEGIN");
+      server = require('../../../index');
+      await pool.query("SET autocommit = OFF");
+      await pool.query("BEGIN");
     });
 
     afterEach(async () => {
-        await pool.query("ROLLBACK");
-        await server.close();
+      await pool.query("ROLLBACK");
+      await server.close();
     });
 
     it("200 Successful response info store", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
       const drug_type_ids = [40014];
       const branded_drug_ids = [50014];
       const pharmacy_id = 100006;
@@ -126,26 +158,43 @@ describe("Pharmacy Response", () => {
         "/pharmacy/home"
       );
     });
+
+    it("400 Invalid request_id", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
+      const drug_type_ids = [40014];
+      const branded_drug_ids = [50014];
+      const request_id = undefined;
+      const pharmacy_id = 100006;
+
+      await response.storeResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
+
+      expect(res.redirect).toHaveBeenCalledWith('/pharmacy/home');
+    });
   });
 
   describe("storeEditedResponseInfo", () => {
-    const res = {
-      json: jest.fn(),
-      redirect: jest.fn()
-    }
     beforeEach(async () => {
-        server = require('../../../index');
-        await pool.query("SET autocommit = OFF");
-        await pool.query("BEGIN");
+      server = require('../../../index');
+      await pool.query("SET autocommit = OFF");
+      await pool.query("BEGIN");
     });
 
     afterEach(async () => {
-        await pool.query("ROLLBACK");
-        await pool.end();
-        await server.close();
+      await pool.query("ROLLBACK");
+      await pool.end();
+      await server.close();
     });
 
     it("200 Successful edited response info store", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
       const drug_type_ids = undefined;
       const branded_drug_ids = [50015];
       const pharmacy_id = 100006;
@@ -156,6 +205,22 @@ describe("Pharmacy Response", () => {
       expect(res.redirect).toHaveBeenCalledWith(
         "/pharmacy/home"
       );
+    });
+
+    it("400 Invalid request_id", async () => {
+      const res = {
+        json: jest.fn(),
+        redirect: jest.fn()
+      };
+
+      const drug_type_ids = undefined;
+      const branded_drug_ids = [50015];
+      const request_id = undefined;
+      const pharmacy_id = 100006;
+
+      await response.storeEditedResponseInfo(res, drug_type_ids, branded_drug_ids, pharmacy_id, request_id);
+
+      expect(res.redirect).toHaveBeenCalledWith('/pharmacy/home');
     });
   });
 });
