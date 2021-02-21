@@ -169,7 +169,7 @@ describe('system_admin/pharmacy test cases', () => {
         });
         afterEach(async () => {
             await pool.query("ROLLBACK");
-            await pool.end();
+            //await pool.end();
             await server.close();
         });
 
