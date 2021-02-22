@@ -4,7 +4,7 @@ let server;
 
 describe('pharmacy/drug teste cases', () => {
 
-    describe('getPharmacyDrugs', () => {
+    describe('getDrugsNotInPharmacy', () => {
         const request = {
             session: {user: {id: 100006, class: 1}}
         };
@@ -22,7 +22,7 @@ describe('pharmacy/drug teste cases', () => {
     
         });
     
-        it('should return 200 with pharmacy drug data',async  () => {
+        it('should return 200 with drug data that are not in pharmacy\'s drug list',async  () => {
             const drug = [
                 { drug_type_id: 40018, drug_type_name: 'test1' },
                 { drug_type_id: 40020, drug_type_name: 'test2' },
