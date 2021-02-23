@@ -12,6 +12,7 @@ describe('customer/pharmacy test cases', () => {
         };
 
         const res = {
+            status:jest.fn(()=>res),
             render: jest.fn()
         };
 
@@ -36,7 +37,8 @@ describe('customer/pharmacy test cases', () => {
                 pageTitle: 'Pharmacy Information'
             }
             await viewPharmacyInformation(req, res);
-            expect(res.render).toHaveBeenCalledWith("customer/view_pharmacy", expectedResult);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.render).toHaveBeenCalledWith("customer/view_pharmacy", expectedResult);
         });
 
 
@@ -49,19 +51,19 @@ describe('customer/pharmacy test cases', () => {
                     form_method: "GET"
             }
             await viewPharmacyInformation(req, res);
-            expect(res.render).toHaveBeenCalledWith("400", expectedResult);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.render).toHaveBeenCalledWith("400", expectedResult);
         });
 
         it("should display the 404 error page if pharmacy name was not found", async () => {
             req.params.pharmacy_name = new Array(10).join("asd"); //autogenerates a string
             await viewPharmacyInformation(req, res);
-            expect(res.render).toHaveBeenCalledWith("404");
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.render).toHaveBeenCalledWith("404");
         });
 
         it("500 - Internal server error", async () => {
-            /**
-             * @todo internal server error testing
-             */
+
         });
     });
 

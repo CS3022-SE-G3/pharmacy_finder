@@ -20,7 +20,6 @@ class Customer{
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(result.sql);
                         reject(error);
                         return;
                     };
@@ -53,7 +52,6 @@ class Customer{
                     if (error) {
                         reject(new Error(error.message));
                     }
-                    console.log(results);
                     resolve(results);
                 }
             )
@@ -69,10 +67,8 @@ class Customer{
                 [],
                 function (error, results) {
                     if (error) {
-                        console.log(result.sql)
                         reject (error);
                     }
-                    console.log(results);
                     resolve(results);
                 }
                 )
@@ -139,7 +135,6 @@ class Customer{
         }
     }
     static getRespondedPharmacies(requestId) {
-        console.log("Getting responded pharmacies");
             return new Promise((resolve, reject) => {
                 const result = pool.query('SELECT pharmacy_id, name, address FROM (SELECT * FROM pharmacy NATURAL JOIN response) AS T WHERE approved_state=? AND request_id=?',
                     [
@@ -306,16 +301,13 @@ class Customer{
 
     //profile
     static getProfileDetails(customerId) {
-        console.log("Getting profile details");
             return new Promise((resolve, reject) => {
                 const result = pool.query('SELECT * FROM customer WHERE customer_id=?',
                     [customerId],
                     function (error, results) {
                         if (error) {
-                            console.log(error);
                             reject(new Error(error.message));
                         }
-                        console.log(results);
                         resolve(results);
                     }
                 )
@@ -323,7 +315,6 @@ class Customer{
             );
     }
     static editProfileDetails(customers) {
-        console.log("Editing profile details");
             return new Promise((resolve, reject) => {
                 const result = pool.query('UPDATE `customer` SET `full_name`=?,`nic`=?,`email`=?,`address`=?,`latitude`=?,`longitude`=?,`gender`=?,`dob`=?,`contact_no`=? WHERE customer_id=?;',
                 [
@@ -340,11 +331,9 @@ class Customer{
                 ],
                     function (error, results) {
                         if (error) {
-                            console.log(error);
                             reject(new Error(error.message));
                         }
-                        console.log('OK');
-                        resolve(console.log("Done"));
+                        resolve();
                     }
                 )
             }

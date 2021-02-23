@@ -55,7 +55,7 @@ const signupCustomer = async (request, response) => {
 
     catch (error) {
         var err_msg = error.message;
-        return response.render('customer/signup_error', {
+        return response.status(400).render('customer/signup_error', {
             error_msg: err_msg,
             post_body: request.body
         });
@@ -63,7 +63,7 @@ const signupCustomer = async (request, response) => {
 
     if (await Customer.isEmailRegistered(request.body.email)){
         var err_msg = "This email address has already been registered";
-        return response.render('customer/signup_error', {
+        return response.status(400).render('customer/signup_error', {
             error_msg: err_msg,
             post_body: request.body
         });
@@ -77,11 +77,11 @@ const signupCustomer = async (request, response) => {
     catch (error) {
         var err_msg = "Internal server error " + error.message;
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
-    return response.redirect('/customer/login');
+    return response.status(200).redirect('/customer/login');
 }
 
 exports.signupCustomer = signupCustomer;

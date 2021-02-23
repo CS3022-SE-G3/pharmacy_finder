@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <form action="/logout" method="GET">
-                        <input type="submit" value="LOG OUT" class="btn btn-secondary my-2 my-sm-0" role="button">
+                        <input type="submit" value="LOG OUT" id="logout" class="btn btn-secondary my-2 my-sm-0" role="button">
                     </form>
                 </ul>
             </div>
@@ -49,13 +49,13 @@
                 <h1 style="font-style: italic;">Welcome.</h1>
                 <div class="row mt-2 mb-3" role="group" style="justify-content: center;">
                     <form action="/customer/pharmacy/search" method="get">
-                        <input type="submit" value="Search for Pharmacy" class="btn btn-secondary">
+                        <input type="submit" id="search_for_pharmacy" value="Search for Pharmacy" class="btn btn-secondary">
                     </form>
                     <form action="/customer/profile/view" method="get">
-                        <input type="submit" value="View Profile" class="btn btn-primary ml-3 mr-3">
+                        <input type="submit" id="view_profile" value="View Profile" class="btn btn-primary ml-3 mr-3">
                     </form>
                     <form action="/customer/request/broadcast" method="get">
-                        <input type="submit" value="Create New Request" class="btn btn-secondary">
+                        <input type="submit" id="create_new_request" value="Create New Request" class="btn btn-secondary">
                     </form>
                 </div>
                 <h5>Previous Requests</h5>
@@ -74,13 +74,13 @@
                                     <td><%= (all_requests[i].date_created).slice(0,11)%></td>
                                 <td>
                                     <form action='/customer/request/view/req/<%= all_requests[i].request_id %>' method="GET">
-                                        <input type="submit" value="View" class="btn btn-sm btn-outline-primary">
+                                        <input type="submit" value="View" id = "view_<%= all_requests[i].request_id %>" class="btn btn-sm btn-outline-primary">
                                     </form>
                                 </td>
                                 <td>
                                     <form action='/customer/request/delete' method="POST">
                                         <input type="text" name="requestID" id="requestID" value=<%= all_requests[i].request_id %> hidden readonly>
-                                        <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger">
+                                        <input type="submit" value="Delete" id="delete_<%= all_requests[i].request_id %>" class="btn btn-sm btn-outline-danger">
                                     </form>
                                 </td>
                             <% } %>

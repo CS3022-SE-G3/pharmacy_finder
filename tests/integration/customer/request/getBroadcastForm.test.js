@@ -20,11 +20,14 @@ describe('customer/request test case', () => {
     const req = {}
 
     const res = {
+        status: jest.fn(() => res),
         render:jest.fn()
     }
 
     it("getting broadcast form", async () => {
         await getBroadcastForm(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+
         expect(res.render).toHaveBeenCalled();
     });
 });

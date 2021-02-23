@@ -18,11 +18,10 @@ class Pharmacy{
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(result.sql);
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve();
                 }
             )
         })
@@ -262,8 +261,6 @@ class Pharmacy{
         )
         })
 
-        // console.log(responded_requests)
-
         var requests = await new Promise((resolve,reject)=>{
             const result = pool.query('SELECT request_id, full_name AS customer_name, date_created FROM requests NATURAL JOIN customer WHERE request_id IN (SELECT request_id FROM requests_and_associated_pharmacies WHERE request_id NOT IN (SELECT request_id FROM response WHERE pharmacy_id = ?) AND pharmacy_id = ?); ',
             [pharmacy_id, pharmacy_id],
@@ -275,9 +272,6 @@ class Pharmacy{
             }
         )
         })
-
-        // console.log(requests)
-
 
         return [responded_requests, requests];
     }
@@ -308,7 +302,6 @@ class Pharmacy{
         });
     }
     static deletePreviousRespone(response_id) {
-        console.log(response_id);
         return new Promise((resolve, reject) => {
             const result = pool.query("DELETE FROM response WHERE response_id = ?", [response_id], (err, rows, fields) => {
                 if (err) {

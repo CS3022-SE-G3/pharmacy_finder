@@ -25,7 +25,7 @@ const viewPharmacyInformation = async(req, res) => {
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
 
     if (error) {
-        return res.render('400', {
+        return res.status(400).render('400', {
             err_data: "Invalid pharmacy name provided",
             redirect_to: "/customer/pharmacy",
             button_message: "Try Again",
@@ -37,26 +37,25 @@ const viewPharmacyInformation = async(req, res) => {
     try {
         const pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
         if(pharmacyInformation.length === 0){
-            return res.render('404');
+            return res.status(404).render('404');
         }
         
         // send data to front end
         
-        return res.render('customer/view_pharmacy',{
+        return res.status(200).render('customer/view_pharmacy',{
             pharmacyInformation: pharmacyInformation[0],
             pageTitle: 'Pharmacy Information'
         });
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-        return res.render('500', {
-            err_data: err_msg
+        return res.status(500).render('500', {
+            err_data: "Internal server error " + error.message
         });
     }
 }
 const getCustomerSearchPharmacy = async (req,res)=>{
 
-    res.render('customer/search_pharmacy',{
+    res.status(200).render('customer/search_pharmacy',{
         pageTitle: "Search Pharmacy",
         pharmacyInformation: [],
         hasErrors: false
@@ -68,7 +67,7 @@ const postCustomerSearchPharmacy = async(req,res)=>{
     const pharmacyName = req.body.pharmacyName;
     const {error} = validatePharmacyName({pharmacyName:pharmacyName});
     if (error){
-        return res.render('customer/search_pharmacy', {
+        return res.status(400).render('customer/search_pharmacy', {
             pageTitle: "Search Pharmacy",
             pharmacyInformation: [],
             hasErrors: true,
@@ -78,23 +77,22 @@ const postCustomerSearchPharmacy = async(req,res)=>{
     try{
         pharmacyInformation = await Customer.getPharmacyInformation(pharmacyName);
         if (pharmacyInformation.length===0){
-            return res.render('customer/search_pharmacy',{
+            return res.status(404).render('customer/search_pharmacy',{
                 pageTitle: "Search Pharmacy",
                 pharmacyInformation: [],
                 hasErrors: true,
                 errors: "Pharmacy not registered"
             });
         }
-        return res.render('customer/view_pharmacy',{
+        return res.status(200).render('customer/view_pharmacy',{
             pageTitle: "Search Pharmacy",
             pharmacyInformation: pharmacyInformation[0],
             hasErrors: false
         });
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-        return response.render('500', {
-            err_data: err_msg
+        return res.status(500).render('500', {
+            err_data: "Internal server error " + error.message
         });
     }
 }

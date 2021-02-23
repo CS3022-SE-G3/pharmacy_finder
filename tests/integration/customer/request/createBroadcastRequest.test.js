@@ -24,12 +24,14 @@ describe('createBroadcastRequest', () => {
         }
     }
     const res = {
+        status: jest.fn(() => res),
         render:jest.fn()
     }
 
     it("should redirect to the 400 error page if all pharmacies are out of range", async () => {
         req.body.drug_types = "40004";
         await createBroadcastRequest(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('400', {
             err_data: "There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results",
             redirect_to: "/customer/request/broadcast",
@@ -42,6 +44,7 @@ describe('createBroadcastRequest', () => {
         req.body.drug_types = [];
         req.body.branded_drugs = "50009";
         await createBroadcastRequest(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('400', {
             err_data: "No pharmacies have the available drugs",
             redirect_to: "/customer/home",
@@ -53,6 +56,7 @@ describe('createBroadcastRequest', () => {
     it("should redirect to the 400 error page if a blank form is submitted", async () => {
         req.body.branded_drugs = [];
         await createBroadcastRequest(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('400', {
         err_data: "You have not selected any drugs. Please select at least one brand/drug type",
         redirect_to: "/customer/request/broadcast",
@@ -88,12 +92,14 @@ describe('should redirect to customer home if request was successfully sent', ()
         }
     }
     const res = {
+        status: jest.fn(() => res),
         render: jest.fn(),
         redirect:jest.fn()
     }
 
     it("should redirect to customer home if request was successfully sent", async () => {
         await createBroadcastRequest(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 });

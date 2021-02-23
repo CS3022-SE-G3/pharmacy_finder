@@ -9,6 +9,7 @@ describe('viewPharmacyInformation', () => {
     };
 
     const res = {
+        status: jest.fn(() => res),
         render: jest.fn()
     };
 
@@ -20,7 +21,7 @@ describe('viewPharmacyInformation', () => {
         server.close();
     });
 
-    it("200 OK route", async () => {
+    it("should display the pharmacy information if the view request was successful", async () => {
         const expectedResult = {
             pharmacyInformation: {
                 pharmacy_id: 30001,
@@ -32,11 +33,12 @@ describe('viewPharmacyInformation', () => {
             pageTitle: 'Pharmacy Information'
         }
         await viewPharmacyInformation(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.render).toHaveBeenCalledWith("customer/view_pharmacy", expectedResult);
     });
 
 
-    it("400 - Invalid pharmacy name provided", async () => {
+    it("should display 400 error page if the pharmacy name is invalid", async () => {
         req.params.pharmacy_name = "as";
         const expectedResult = {
             err_data: "Invalid pharmacy name provided",
@@ -45,12 +47,14 @@ describe('viewPharmacyInformation', () => {
             form_method: "GET"
         }
         await viewPharmacyInformation(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith("400", expectedResult);
     });
 
-    it("404 - Pharmacy not found", async () => {
+    it("should display 404 error page if the pharmacy is not found", async () => {
         req.params.pharmacy_name = new Array(10).join("asd"); //autogenerates a string
         await viewPharmacyInformation(req, res);
+        expect(res.status).toHaveBeenCalledWith(404);
         expect(res.render).toHaveBeenCalledWith("404");
     });
 

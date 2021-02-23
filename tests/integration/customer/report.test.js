@@ -5,6 +5,7 @@ let server;
 describe('customer/report test case', () => {
 
     const res = {
+        status: jest.fn(() => res),
         redirect: jest.fn(),
         render: jest.fn()
         
@@ -21,7 +22,7 @@ describe('customer/report test case', () => {
         await server.close();
     });
 
-    it("should redirect to the home page once the request was sent successfully", async () => {
+    it("should redirect to the home page once the report was sent successfully", async () => {
         const req = {
             body: {
                 "pharmacy_id": "30001",
@@ -34,6 +35,8 @@ describe('customer/report test case', () => {
             }
         }
         await reportPharmacy(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 
@@ -52,6 +55,7 @@ describe('customer/report test case', () => {
             form_method: "GET"
         }
         await reportPharmacy(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('400', expectedResult);
     });
 });
