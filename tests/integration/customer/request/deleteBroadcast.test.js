@@ -24,11 +24,14 @@ describe('customer/request test case', () => {
     }
 
     const res = {
+        status: jest.fn(() => res),
         redirect:jest.fn()
     }
 
     it("should redirect to customer home if request was successfully deleted", async () => {
         await deleteBroadcast(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 });

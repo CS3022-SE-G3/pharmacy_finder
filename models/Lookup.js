@@ -76,12 +76,9 @@ class Lookup{
                 [],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(result.sql);
                         reject(error);
                         return;
                     };
-                    console.log(results);
-                    console.log(result.sql);
                     resolve(results);
                 }
             )
@@ -96,12 +93,9 @@ class Lookup{
                 [up,down,left,right],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(result.sql);
                         reject(error);
                         return;
                     };
-                    console.log(results);
-                    console.log(result.sql);
                     resolve(results);
                 }
             )

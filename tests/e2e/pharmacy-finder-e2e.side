@@ -1,0 +1,1093 @@
+{
+  "id": "8977b274-ed39-4e73-8e69-108d99d79cf9",
+  "version": "2.0",
+  "name": "pharmacy-finder-e2e",
+  "url": "http://localhost:3000/",
+  "tests": [{
+    "id": "c521550e-431c-4d13-baaf-87e8421097e4",
+    "name": "customer complete workflow",
+    "commands": [{
+      "id": "ef210870-aaf2-46f5-aacf-05803d704897",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fafe0446-05ac-4727-8ad3-e6587cd98de6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1056x709",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e192693b-06dc-4ded-9cd0-24a5a4affbaf",
+      "comment": "",
+      "command": "click",
+      "target": "id=customer_button",
+      "targets": [
+        ["id=customer_button", "id"],
+        ["css=#customer_button", "css:finder"],
+        ["xpath=//a[@id='customer_button']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3155046-7315-4458-b902-6870b5144c6f",
+      "comment": "",
+      "command": "click",
+      "target": "id=customer_login",
+      "targets": [
+        ["id=customer_login", "id"],
+        ["linkText=Log In", "linkText"],
+        ["css=#customer_login", "css:finder"],
+        ["xpath=//a[contains(text(),'Log In')]", "xpath:link"],
+        ["xpath=//a[@id='customer_login']", "xpath:attributes"],
+        ["xpath=//div[@id='customerModal']/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/customer/login')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Log In')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2383d953-9852-4699-bda6-08602d528d9d",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "26b2ee61-e0f5-4750-a20f-491e9fd1531e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "nimal1@gmail.com"
+    }, {
+      "id": "780f95d3-d059-4cde-babe-fa755b7a20e2",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f4f837a-0ace-4e30-b470-d1106a2c35fa",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "8aaad150-20a7-4340-b42b-5a001582937c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.solid",
+      "targets": [
+        ["css=.solid", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7091a672-6a76-4df8-83cb-d1a6d4f700e1",
+      "comment": "",
+      "command": "click",
+      "target": "id=search_for_pharmacy",
+      "targets": [
+        ["id=search_for_pharmacy", "id"],
+        ["css=#search_for_pharmacy", "css:finder"],
+        ["xpath=//input[@id='search_for_pharmacy']", "xpath:attributes"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf6ad246-a800-4cc7-b14e-3060abc0e88c",
+      "comment": "",
+      "command": "click",
+      "target": "id=pharmacyName",
+      "targets": [
+        ["id=pharmacyName", "id"],
+        ["name=pharmacyName", "name"],
+        ["css=#pharmacyName", "css:finder"],
+        ["xpath=//input[@id='pharmacyName']", "xpath:attributes"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d772ee2-4138-4e85-add6-97e0446e7289",
+      "comment": "",
+      "command": "type",
+      "target": "id=pharmacyName",
+      "targets": [
+        ["id=pharmacyName", "id"],
+        ["name=pharmacyName", "name"],
+        ["css=#pharmacyName", "css:finder"],
+        ["xpath=//input[@id='pharmacyName']", "xpath:attributes"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": "Helix Pharmacy"
+    }, {
+      "id": "cbe7c74b-b606-423c-b215-0a9f2cc8a22e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-primary",
+      "targets": [
+        ["css=.btn-outline-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ed1b8eb-f08c-4f1e-a20e-e7c4ea82d414",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//input[@value='Home']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "279876ec-e4f2-40f2-a1f8-959e6e2cb0b6",
+      "comment": "",
+      "command": "click",
+      "target": "id=view_profile",
+      "targets": [
+        ["id=view_profile", "id"],
+        ["css=#view_profile", "css:finder"],
+        ["xpath=//input[@id='view_profile']", "xpath:attributes"],
+        ["xpath=//form[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "32102877-9eed-4f74-8ed1-8e1240ae7103",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//input[@value='Home']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cec0bfbf-b371-4402-94cc-9808bbf57d70",
+      "comment": "",
+      "command": "click",
+      "target": "id=create_new_request",
+      "targets": [
+        ["id=create_new_request", "id"],
+        ["css=#create_new_request", "css:finder"],
+        ["xpath=//input[@id='create_new_request']", "xpath:attributes"],
+        ["xpath=//form[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b94984f-762b-4c0a-98e3-098ef5666a19",
+      "comment": "",
+      "command": "click",
+      "target": "id=drug_types",
+      "targets": [
+        ["id=drug_types", "id"],
+        ["name=drug_types", "name"],
+        ["css=tr:nth-child(1) #drug_types", "css:finder"],
+        ["xpath=//input[@id='drug_types']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a0e3f16-9cc5-41c8-9242-92501da7687c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.table-responsive:nth-child(1) tr:nth-child(2) > td:nth-child(2)",
+      "targets": [
+        ["css=.table-responsive:nth-child(1) tr:nth-child(2) > td:nth-child(2)", "css:finder"],
+        ["xpath=//tr[2]/td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7dd76b0c-8656-4be7-a185-242a9ba5ad77",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) #drug_types",
+      "targets": [
+        ["css=tr:nth-child(2) #drug_types", "css:finder"],
+        ["xpath=(//input[@id='drug_types'])[2]", "xpath:attributes"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "feae0762-a46c-400a-8062-4b0bc5198f5a",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) #branded_drugs",
+      "targets": [
+        ["css=tr:nth-child(3) #branded_drugs", "css:finder"],
+        ["xpath=(//input[@id='branded_drugs'])[3]", "xpath:attributes"],
+        ["xpath=//div[2]/table/tbody/tr[3]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de120738-5beb-4a8a-ab9c-6284bf966018",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(4) #branded_drugs",
+      "targets": [
+        ["css=tr:nth-child(4) #branded_drugs", "css:finder"],
+        ["xpath=(//input[@id='branded_drugs'])[4]", "xpath:attributes"],
+        ["xpath=//div[2]/table/tbody/tr[4]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "858a9138-c5b2-4546-bbe4-e2f1d4bc19fc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=(//input[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8454f7f4-5076-4f5f-9ed6-4fd60be81425",
+      "comment": "",
+      "command": "click",
+      "target": "id=logout",
+      "targets": [
+        ["id=logout", "id"],
+        ["css=#logout", "css:finder"],
+        ["xpath=//input[@id='logout']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "fd59658c-b8bc-4cfa-af8a-497d573a3e98",
+    "name": "pharmacy complete workflow",
+    "commands": [{
+      "id": "a3cd013c-bb7e-4fe0-ab8f-bac0e8391167",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "83c5d545-66e0-4cbd-acbe-40b975c97768",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x705",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bd801a06-c507-40c3-830b-793fae012fc3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-clinic-medical",
+      "targets": [
+        ["css=.fa-clinic-medical", "css:finder"],
+        ["xpath=//a[@id='pharmacy_button']/i", "xpath:idRelative"],
+        ["xpath=//a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f54400bf-1a4c-459e-a6ab-4960e1a047a5",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.fa-clinic-medical",
+      "targets": [
+        ["css=.fa-clinic-medical", "css:finder"],
+        ["xpath=//a[@id='pharmacy_button']/i", "xpath:idRelative"],
+        ["xpath=//a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4fce2701-d551-4eb4-82c4-cbafe6392ea8",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.fa-clinic-medical",
+      "targets": [
+        ["css=.fa-clinic-medical", "css:finder"],
+        ["xpath=//a[@id='pharmacy_button']/i", "xpath:idRelative"],
+        ["xpath=//a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "945e98c8-e91f-482d-bb92-a4a3811b8968",
+      "comment": "",
+      "command": "click",
+      "target": "id=pharmacy_login",
+      "targets": [
+        ["id=pharmacy_login", "id"],
+        ["linkText=Log In", "linkText"],
+        ["css=#pharmacy_login", "css:finder"],
+        ["xpath=(//a[contains(text(),'Log In')])[2]", "xpath:link"],
+        ["xpath=//a[@id='pharmacy_login']", "xpath:attributes"],
+        ["xpath=//div[@id='pharmacyModal']/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/pharmacy/login')]", "xpath:href"],
+        ["xpath=//div[3]/div/div/div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "312832c5-2f62-4c58-a7dd-dde4dd2d2dee",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "51b7d811-5529-4223-8863-40041ee1902e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "info@helixpharm.com"
+    }, {
+      "id": "6157e7ed-6389-4eb4-9ade-68c350703f66",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "86faaae8-d975-4a3f-a713-a2a548c988af",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "82c316e0-d7c2-40e1-89c6-53eb06e72986",
+      "comment": "",
+      "command": "click",
+      "target": "css=.solid",
+      "targets": [
+        ["css=.solid", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c886622e-455b-4d87-893b-9aa42194d07e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=View Drugs",
+      "targets": [
+        ["linkText=View Drugs", "linkText"],
+        ["css=p:nth-child(3) > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'View Drugs')]", "xpath:link"],
+        ["xpath=//a[@type='button']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '/pharmacy/drug')]", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'View Drugs')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "66cabd5b-e71f-4ba4-9c74-aa83d9c497c7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-info",
+      "targets": [
+        ["css=.btn-info", "css:finder"],
+        ["xpath=//a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'ADD A NEW DRUG')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4b749eda-811f-49be-a35f-f45ba6ad9dbf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//a[@type='button']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '/pharmacy/drug')]", "xpath:href"],
+        ["xpath=//div[2]/a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "098bbfef-e3b6-4211-84c2-73815b050dd3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//input[@value='Home']", "xpath:attributes"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02077127-d715-4bb8-859a-e8cd225f5859",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=LOG OUT",
+      "targets": [
+        ["linkText=LOG OUT", "linkText"],
+        ["css=.btn-secondary", "css:finder"],
+        ["xpath=//a[contains(text(),'LOG OUT')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//ul/a", "xpath:position"],
+        ["xpath=//a[contains(.,'LOG OUT')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c0c24880-4964-442c-a0ad-aa1fe0a78b65",
+    "name": "system admin complete workflow",
+    "commands": [{
+      "id": "b83e5a8c-175a-44dd-ab47-5a6426732396",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "84fc3019-4d3f-4477-adab-f8c0473bdaf9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1054x707",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1e2db30d-956c-49df-a543-933fdda94064",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-user-cog",
+      "targets": [
+        ["css=.fa-user-cog", "css:finder"],
+        ["xpath=//a[@id='system_admin_button']/i", "xpath:idRelative"],
+        ["xpath=//a[3]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "275e2c16-6eec-463b-b24f-f227aff4981a",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "040d26f2-2cc3-4cc8-96b3-237eb4e28f34",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "sysad"
+    }, {
+      "id": "14dce266-c71b-4370-b6d3-bbfd4468f664",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "224ff827-6e91-4583-a4a4-41469135a97d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "c0cf38d3-2495-40ba-add9-952e7424b720",
+      "comment": "",
+      "command": "click",
+      "target": "css=.solid",
+      "targets": [
+        ["css=.solid", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "57aa033d-dfee-4d6f-a327-d3cf9da174e5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(4) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(4) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View Drug Types')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "946bc328-6d3f-45f2-b498-d2745b1deefd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eaf8fd97-29a7-4eb4-b91d-414803706c99",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(5) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(5) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View Branded drugs')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ec4ba469-2499-4001-9ec4-47f9d6b1f493",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "10def741-1baa-472e-bc55-664049f70007",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(6) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(6) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[3]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search for Pharmacy')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "891aa72b-1e8d-479c-b167-764f0c79245c",
+      "comment": "",
+      "command": "click",
+      "target": "id=pharmacyId",
+      "targets": [
+        ["id=pharmacyId", "id"],
+        ["name=pharmacyId", "name"],
+        ["css=#pharmacyId", "css:finder"],
+        ["xpath=//input[@id='pharmacyId']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e94d86ac-a85f-4734-9f6d-55e6332c402b",
+      "comment": "",
+      "command": "type",
+      "target": "id=pharmacyId",
+      "targets": [
+        ["id=pharmacyId", "id"],
+        ["name=pharmacyId", "name"],
+        ["css=#pharmacyId", "css:finder"],
+        ["xpath=//input[@id='pharmacyId']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "20001"
+    }, {
+      "id": "3cef8a95-b9f1-4edf-81da-d7b57831febd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//input[@value='Search']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cbede59-5690-434a-9a31-edba8097d65a",
+      "comment": "",
+      "command": "click",
+      "target": "id=pharmacyId",
+      "targets": [
+        ["id=pharmacyId", "id"],
+        ["name=pharmacyId", "name"],
+        ["css=#pharmacyId", "css:finder"],
+        ["xpath=//input[@id='pharmacyId']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c3539d4-32ec-4afd-a831-54fd9a38fcb2",
+      "comment": "",
+      "command": "type",
+      "target": "id=pharmacyId",
+      "targets": [
+        ["id=pharmacyId", "id"],
+        ["name=pharmacyId", "name"],
+        ["css=#pharmacyId", "css:finder"],
+        ["xpath=//input[@id='pharmacyId']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "30001"
+    }, {
+      "id": "258f46ef-5e68-42d7-b9f6-84c83c526b61",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//input[@value='Search']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "df17ed67-4df8-44dc-b09b-3ee7261069c8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=View Details",
+      "targets": [
+        ["linkText=View Details", "linkText"],
+        ["css=.btn-info", "css:finder"],
+        ["xpath=//a[contains(@href, '/system_admin/pharmacy/view/30001')]", "xpath:href"],
+        ["xpath=//td[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' View Details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "857043c2-4445-45e1-91a5-c1a541a42b9e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "73cbeffb-6414-4172-86fb-0a43db94bfbe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(7) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(7) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//div[4]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Approval Pending Pharmacies')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e0eb5a45-c81c-47c0-a00c-42d984617533",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "42ca1c1b-34e3-4181-ab47-c7ca89fd2dcf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(8) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(8) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[5]", "xpath:attributes"],
+        ["xpath=//div[5]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View Reported Pharmacies')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e211f106-60e7-4c74-9481-008fac72273d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1560fe9f-fbfc-49bd-b114-1395394baca8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-md-2:nth-child(9) .btn",
+      "targets": [
+        ["css=.col-md-2:nth-child(9) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[6]", "xpath:attributes"],
+        ["xpath=//div[6]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search for Customer')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f9c557fe-bbaa-4392-955a-6fd503bde357",
+      "comment": "",
+      "command": "click",
+      "target": "id=customer_id",
+      "targets": [
+        ["id=customer_id", "id"],
+        ["name=customer_id", "name"],
+        ["css=#customer_id", "css:finder"],
+        ["xpath=//input[@id='customer_id']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "649a1d61-166a-497c-b53c-e61a73bb76bb",
+      "comment": "",
+      "command": "type",
+      "target": "id=customer_id",
+      "targets": [
+        ["id=customer_id", "id"],
+        ["name=customer_id", "name"],
+        ["css=#customer_id", "css:finder"],
+        ["xpath=//input[@id='customer_id']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "10001"
+    }, {
+      "id": "3338f9aa-1e57-4234-9d7d-23411b761609",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "91ae03ee-9525-46af-a882-8debe74cdaec",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1120a0d5-0c07-479d-86bf-defe2b04a81e",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'View details')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f396fd0a-bd50-49c5-bdaf-35a2a5e059c7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74b5bcef-5e3a-4e15-bf7d-7acf3a8f6e94",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Drug",
+      "targets": [
+        ["linkText=Drug", "linkText"],
+        ["css=.dropdown:nth-child(1) > .dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Drug')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Drug ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0573b8da-522f-4a41-b50c-e64645029056",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Branded Drugs",
+      "targets": [
+        ["linkText=Branded Drugs", "linkText"],
+        ["css=.open li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Branded Drugs')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/system_admin/drug')])[2]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Branded Drugs')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "db98e0c3-da45-4890-829c-901e0068a70e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Drug",
+      "targets": [
+        ["linkText=Drug", "linkText"],
+        ["css=.dropdown:nth-child(1) > .dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Drug')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Drug ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "34f39ca5-19ef-408d-bbb0-e13665d89805",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Drug Types",
+      "targets": [
+        ["linkText=Drug Types", "linkText"],
+        ["css=.open li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Drug Types')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/system_admin/drug_type')]", "xpath:href"],
+        ["xpath=//li/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Drug Types')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd99dd14-7d35-459a-b978-6d7806d3fdf5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dropdown:nth-child(2) .caret",
+      "targets": [
+        ["css=.dropdown:nth-child(2) .caret", "css:finder"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/a/span", "xpath:idRelative"],
+        ["xpath=//li[2]/a/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd878532-220c-4a78-9101-81b14f84b90c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Search for Pharmacy",
+      "targets": [
+        ["linkText=Search for Pharmacy", "linkText"],
+        ["css=.open li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Search for Pharmacy')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/system_admin/pharmacy/search')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Search for Pharmacy')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "89ee603d-dee9-455f-898a-eddb1d49b855",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Pharmacy",
+      "targets": [
+        ["linkText=Pharmacy", "linkText"],
+        ["css=.dropdown:nth-child(2) > .dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Pharmacy')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//div[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Pharmacy ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f82a481d-36ba-4b44-a8fd-7f00094b7fff",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Approval Pending Pharmacies",
+      "targets": [
+        ["linkText=Approval Pending Pharmacies", "linkText"],
+        ["css=.open li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Approval Pending Pharmacies')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/system_admin/pharmacy/pending')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Approval Pending Pharmacies')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "de6b8fdc-1528-4300-ba4e-09efa7771c9b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Pharmacy",
+      "targets": [
+        ["linkText=Pharmacy", "linkText"],
+        ["css=.dropdown:nth-child(2) > .dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Pharmacy')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//div[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Pharmacy ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "579618cb-3292-4ed3-8d7d-2915975b4102",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Reported Pharmacies",
+      "targets": [
+        ["linkText=Reported Pharmacies", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Reported Pharmacies')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[2]/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/system_admin/report/view/reportedPharmacies')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Reported Pharmacies')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f559540-2519-4af4-b56a-450504df22b6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Search for Customer",
+      "targets": [
+        ["linkText=Search for Customer", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Search for Customer')]", "xpath:link"],
+        ["xpath=//div[@id='main_menu']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/system_admin/customer/search')]", "xpath:href"],
+        ["xpath=//div[2]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Search for Customer')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc43eed6-1275-49bc-9b99-7898b70d986f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/system_admin/home')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f860b563-3093-427a-a9f4-aa6232de3f29",
+      "comment": "",
+      "command": "click",
+      "target": "id=logout",
+      "targets": [
+        ["id=logout", "id"],
+        ["linkText=LOGOUT", "linkText"],
+        ["css=#logout", "css:finder"],
+        ["xpath=//a[contains(text(),'LOGOUT')]", "xpath:link"],
+        ["xpath=//a[@id='logout']", "xpath:attributes"],
+        ["xpath=//div[@id='main_menu']/ul[2]/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/logout')]", "xpath:href"],
+        ["xpath=//ul[2]/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'LOGOUT')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e16925bc-88aa-4d76-8a3a-8596875037c5",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}

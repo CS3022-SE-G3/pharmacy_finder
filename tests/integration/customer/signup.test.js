@@ -30,6 +30,7 @@ describe('customer/signup test cases', () => {
             }
         }
         const res = {
+            status: jest.fn(() => res),
             render: jest.fn()
         }
         
@@ -41,6 +42,7 @@ describe('customer/signup test cases', () => {
                     post_body: req.body
             }
             await signupCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
             expect(res.render).toHaveBeenCalledWith('customer/signup_error', expectedResult);
 
         });
@@ -54,6 +56,7 @@ describe('customer/signup test cases', () => {
                 post_body: req.body
             }
             await signupCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
             expect(res.render).toHaveBeenCalledWith('customer/signup_error', expectedResult);
 
         });
@@ -76,6 +79,7 @@ describe('customer/signup test cases', () => {
             }
         }
         const res = {
+            status: jest.fn(() => res),
             redirect: jest.fn()
         }
         beforeEach(async () => {
@@ -92,6 +96,8 @@ describe('customer/signup test cases', () => {
 
         it("should successfully register the customer and redirect to home page if sign up was successful ", async () => {
             await signupCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+
             expect(res.redirect).toHaveBeenCalledWith('/customer/login');
         });
     });

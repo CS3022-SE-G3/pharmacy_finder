@@ -24,21 +24,21 @@ const loginCustomer = async (request, response) => {
 
     if (error) {
         var err_msg = "Customer Login error validation " + error.message;
-        return response.render('customer/login_error', { err_data: err_msg });
+        return response.status(400).render('customer/login_error', { err_data: err_msg });
     }
 
     try {
         const result = await Customer.getCustomerInfoByEmail(request.body.email);
         if (!result[0]) {
             var err_msg = "Email is not registered";
-            return response.render('customer/login_error', { err_data: err_msg });
+            return response.status(400).render('customer/login_error', { err_data: err_msg });
         }
 
         const hashedPassword = result[0].password;
         const passwordCorrect = await bcrypt.compare(request.body.password, hashedPassword);
         if (!passwordCorrect) {
             var err_msg = "Invalid email or password";
-            return response.render('customer/login_error', { err_data: err_msg });
+            return response.status(400).render('customer/login_error', { err_data: err_msg });
         }
         request.session.user = {};
         request.session.user.email = result[0].email;
@@ -46,12 +46,12 @@ const loginCustomer = async (request, response) => {
         request.session.user.class = 2;
     }
     catch (error) {
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: "Internal server error " + error.message
         });
     }
 
-    return response.redirect('/customer/home');
+    return response.status(200).redirect('/customer/home');
 
 }
 

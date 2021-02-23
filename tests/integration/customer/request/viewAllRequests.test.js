@@ -20,6 +20,7 @@ describe('customer/request', () => {
         }
     }
     const res = {
+        status: jest.fn(() => res),
         render:jest.fn()
     }
 
@@ -29,6 +30,7 @@ describe('customer/request', () => {
             date_created: '2021-02-18'
         }];
         await viewAllRequests(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.render).toHaveBeenCalledWith('customer/home', {
             all_requests: result,
             pageTitle: 'Requests'
