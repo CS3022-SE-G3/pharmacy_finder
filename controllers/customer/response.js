@@ -31,6 +31,9 @@ const viewRespondedPharmacies = async (req, res) => {
 
     if (error) {
 
+        // log the error
+        console.error('ValidationError:customer-requestId: '+error.details[0].message)
+
         // send bad request
         return response.status(400).render('400', {
             err_data: "Invalid ID",
@@ -44,6 +47,7 @@ const viewRespondedPharmacies = async (req, res) => {
     try
     {
         const result = await Customer.getRespondedPharmacies(requestId);
+        console.log(result);
         if (result.length === 0) {
             return res.status(404).render('404');
         }
@@ -55,10 +59,14 @@ const viewRespondedPharmacies = async (req, res) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
         return response.render('500', {
             err_data: err_msg
         });
+        
     }
+
 }
 
 exports.viewRespondedPharmacies = viewRespondedPharmacies;

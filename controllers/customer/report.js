@@ -9,11 +9,11 @@ const reportPharmacy = async (req, res) => {
         const reasons = req.body.reasons;
         const customer_id = req.session.user.id;
         const result = await Customer.reportPharmacy(pharmacy_id, customer_id, reasons);
-        return res.status(200).redirect('/customer/home');
+        return res.redirect('/customer/home');
         
     }
     catch (error) {
-        return res.status(400).render('400', {
+        return res.render('400', {
             err_data: "Pharmacy report unsuccessful",
             redirect_to: "/customer/pharmacy/search",
             button_message: "Try Again",

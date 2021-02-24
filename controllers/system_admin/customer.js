@@ -6,11 +6,15 @@ const systemAdmin = require('../../models/SystemAdmin');
  * @param {number} accountId - customerId
  */
 function validateAccountId(accountId){
+
+    // schema to validate
     const schema = Joi.object({
         
         "accountId"    : Joi.number().integer().min(10001).required(),
         
     });
+
+    // return valid or not
     return schema.validate(accountId)
 }
 
@@ -23,10 +27,16 @@ function validateAccountId(accountId){
  */
 const viewCustomerInformation = (req, res) => {
 
+    // get accountId from URL
     const accountId = req.params.accountId; 
+
+    // validating
     const {error} = validateAccountId({accountId:accountId});
 
     if (error) {
+
+        // log the error
+        console.error('ValidationError:system_admin-customer_account_id: '+error.details[0].message)
 
         return response.status(400).render('400', {
             err_data: "Invalid Account Information Provided",
@@ -40,6 +50,7 @@ const viewCustomerInformation = (req, res) => {
     const result = systemAdmin.getCustomerAccountInformation(accountId);
 
     result.then((data) => {
+
         if(data.length === 0){
             return res.status(400).render('400', {
                 err_data: "Account ID was not found.",
@@ -50,11 +61,16 @@ const viewCustomerInformation = (req, res) => {
         }
         
         // send data to front end
-        return res.status(200).json(data[0]);
+        res.status(200).json(data[0])
+        res.end()
     })
     .catch(error => {
+        console.log(error)
+
         // send 'internal server error'
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
+
         return response.render('500', {
             err_data: err_msg
         });

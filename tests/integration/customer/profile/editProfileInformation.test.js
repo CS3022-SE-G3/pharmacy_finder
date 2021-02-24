@@ -13,7 +13,6 @@ describe('editProfileInformation', () => {
     });
 
     const res = {
-        status: jest.fn(() => res),
         render: jest.fn()
     }
 
@@ -30,7 +29,7 @@ describe('editProfileInformation', () => {
             contact_no: 712222222,
         }
     }
-    it("should display 400 error page if the customer ID is invalid", async () => {
+    it("400 - Invalid customer ID in session", async () => {
         req.body.email = "123123";
         const expectedResult = {
             err_data: "\"email\" must be a valid email",
@@ -39,8 +38,6 @@ describe('editProfileInformation', () => {
             form_method: "GET"
         }
         await editProfileInformation(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
-
         expect(res.render).toHaveBeenCalledWith("400", expectedResult);
     });
 });
@@ -48,7 +45,6 @@ describe('editProfileInformation', () => {
 describe('Actual Profile Editing', () => {
 
     const res = {
-        status: jest.fn(()=>res),
         render: jest.fn(),
         redirect: jest.fn()
     }
@@ -82,10 +78,8 @@ describe('Actual Profile Editing', () => {
         await server.close();
     });
 
-    it("should redirect to the customer profile view if editing was successful", async () => {
+    it("200 Customer profile information edited", async () => {
         await editProfileInformation(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
-
         expect(res.redirect).toHaveBeenCalledWith('/customer/profile/view');
     });
 });

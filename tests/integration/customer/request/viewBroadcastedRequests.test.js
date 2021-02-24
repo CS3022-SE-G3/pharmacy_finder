@@ -15,15 +15,12 @@ describe('customer/request test cases', () => {
         }
     }
     const res = {
-        status: jest.fn(() => res),
         render:jest.fn()
     }
 
-    it("should display all the pharmacies that replied to that request", async () => {
+    it("Has responded pharmacies", async () => {
         req.params.requestId = 60004;
         await viewBroadcastedRequests(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
-
         expect(res.render).toHaveBeenCalledWith('customer/view_requests', {
             drug_types: [{
                 drug_type_id: 40002,
@@ -50,10 +47,9 @@ describe('customer/request test cases', () => {
         });
     });
 
-    it("should indicate that there are no pharmacies that replied to a specific request", async () => {
+    it("No responded pharmacies", async () => {
         req.params.requestId = 60003;
         await viewBroadcastedRequests(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('customer/view_requests', {
             drug_types: [
                 {
@@ -67,10 +63,9 @@ describe('customer/request test cases', () => {
         });
     });
 
-    it("should redirect to the 400 error page if the request ID is invalid", async () => {
+    it("400 invalid customer ID", async () => {
         req.params.requestId = 1;
         await viewBroadcastedRequests(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('400', {
             err_data: "Invalid Request",
             redirect_to: "/customer/home",

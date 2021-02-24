@@ -10,7 +10,6 @@ describe('postCustomerSearchPharmacy', () => {
     };
 
     const res = {
-        status: jest.fn(() => res),
         render: jest.fn()
     };
 
@@ -23,7 +22,7 @@ describe('postCustomerSearchPharmacy', () => {
     });
 
 
-    it("should display the pharmacy information if the search was successful", async () => {
+    it("200 OK route", async () => {
         const expectedResult = {
             pageTitle: "Search Pharmacy",
             pharmacyInformation: {
@@ -36,11 +35,11 @@ describe('postCustomerSearchPharmacy', () => {
             hasErrors: false
         }
         await postCustomerSearchPharmacy(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.render).toHaveBeenCalledWith("customer/view_pharmacy", expectedResult);
     });
 
-    it("should display 400 error page if the name searched for is invalid", async () => {
+
+    it("400 - Invalid pharmacy name provided", async () => {
         req.body.pharmacyName = "as";
         const expectedResult = {
             pageTitle: "Search Pharmacy",
@@ -49,11 +48,10 @@ describe('postCustomerSearchPharmacy', () => {
             errors: "Pharmacy not registered"
         }
         await postCustomerSearchPharmacy(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith("customer/search_pharmacy", expectedResult);
     });
 
-    it("should display 404 error page if the pharmacy name is not found", async () => {
+    it("404 - Pharmacy not found", async () => {
         req.body.pharmacyName = new Array(10).join("asd"); //autogenerates a string
         const expectedResult = {
             pageTitle: "Search Pharmacy",
@@ -63,7 +61,6 @@ describe('postCustomerSearchPharmacy', () => {
         }
 
         await postCustomerSearchPharmacy(req, res);
-        expect(res.status).toHaveBeenCalledWith(404);
         expect(res.render).toHaveBeenCalledWith("customer/search_pharmacy", expectedResult);
     });
 

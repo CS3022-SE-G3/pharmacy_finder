@@ -4,7 +4,6 @@ let server;
 
 describe('viewProfileInformation', () => {
     const res = {
-        status: jest.fn(() => res),
         render:jest.fn()
     }
 
@@ -24,7 +23,7 @@ describe('viewProfileInformation', () => {
 
     });
 
-    it("should display the customer profile", async () => {
+    it("200 - Customer profile returned", async () => {
         const result = [
             {
                 customer_id: 10001,
@@ -40,14 +39,13 @@ describe('viewProfileInformation', () => {
                 password: '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO'}
         ]
         await viewProfileInformation(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.render).toHaveBeenCalledWith("customer/view_profile", {
             res_profile_info: result,
             pageTitle: 'My profile'
         });
     });
 
-    it("should display 400 error page if the customer ID is not valid", async () => {
+    it("400 - Invalid customer ID in session", async () => {
         req.session.user.id = '1';
         const expectedResult = {
             err_data: "Invalid customer ID",
@@ -56,16 +54,12 @@ describe('viewProfileInformation', () => {
             form_method: "GET"
         }
         await viewProfileInformation(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
-
         expect(res.render).toHaveBeenCalledWith("400", expectedResult);
     });
 
-    it("should display 400 error page if the customer ID is not found", async () => {
+    it("400 - Customer ID not found", async () => {
         req.session.user.id = '10003';
         await viewProfileInformation(req, res);
-        expect(res.status).toHaveBeenCalledWith(404);
-
         expect(res.render).toHaveBeenCalledWith("404");
     });
 });

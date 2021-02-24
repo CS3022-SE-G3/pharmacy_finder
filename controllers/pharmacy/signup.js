@@ -38,7 +38,6 @@ const signupPharmacy = async (request, response) => {
 
     if (error) {
         var err_msg = error.message;
-        console.log(err_msg);
 
         return response.render('pharmacy/signup_error', {
             error_msg: err_msg,
@@ -48,7 +47,6 @@ const signupPharmacy = async (request, response) => {
 
     if (await Pharmacy.isEmailRegistered(request.body.email)){
         var err_msg = "This email has already been registered";
-        console.log(err_msg);
         
         return response.render('pharmacy/signup_error', {
             error_msg: err_msg,
@@ -62,17 +60,13 @@ const signupPharmacy = async (request, response) => {
         const result = await Pharmacy.enterPharmacy(request.body);
     }
     catch (error) {
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
-
-        return response.render('500', {
-            err_data: err_msg
-        });
+        // var err_msg = "Internal server error " + error.message;
+        // return response.render('500', {
+        //     err_data: err_msg
+        // });
     }
 
-    return response.status(200).redirect("/pharmacy/login");
+    return response.redirect("/pharmacy/login");
 
 }
 

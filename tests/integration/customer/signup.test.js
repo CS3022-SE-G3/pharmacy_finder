@@ -30,11 +30,10 @@ describe('customer/signup test cases', () => {
             }
         }
         const res = {
-            status: jest.fn(() => res),
             render: jest.fn()
         }
         
-        it("should display the 400 error page if sign up information was invalid", async () => {
+        it("400 Invalid sign up information", async () => {
             req.body.confirm_password = "654321";
 
             const expectedResult = {
@@ -42,12 +41,11 @@ describe('customer/signup test cases', () => {
                     post_body: req.body
             }
             await signupCustomer(req, res);
-            expect(res.status).toHaveBeenCalledWith(400);
             expect(res.render).toHaveBeenCalledWith('customer/signup_error', expectedResult);
 
         });
 
-        it("should display the 400 error page if email was already registered", async () => {
+        it("400 Email already registered", async () => {
             req.body.email = "nimal1@gmail.com";
             req.body.confirm_password = "123456";
 
@@ -56,7 +54,6 @@ describe('customer/signup test cases', () => {
                 post_body: req.body
             }
             await signupCustomer(req, res);
-            expect(res.status).toHaveBeenCalledWith(400);
             expect(res.render).toHaveBeenCalledWith('customer/signup_error', expectedResult);
 
         });
@@ -79,7 +76,6 @@ describe('customer/signup test cases', () => {
             }
         }
         const res = {
-            status: jest.fn(() => res),
             redirect: jest.fn()
         }
         beforeEach(async () => {
@@ -94,10 +90,8 @@ describe('customer/signup test cases', () => {
             await server.close();
         });
 
-        it("should successfully register the customer and redirect to home page if sign up was successful ", async () => {
+        it("200 Customer sign up", async () => {
             await signupCustomer(req, res);
-            expect(res.status).toHaveBeenCalledWith(200);
-
             expect(res.redirect).toHaveBeenCalledWith('/customer/login');
         });
     });

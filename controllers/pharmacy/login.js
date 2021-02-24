@@ -29,8 +29,6 @@ const loginPharmacy = async (request, response) => {
 
     if (error) {
         var err_msg = "Pharmacy Login error validation " + error.message;
-        console.log(err_msg);
-        // return response.status(400).send(error.message);
 
         return response.render('pharmacy/login_error', { err_data: err_msg });
     }
@@ -40,18 +38,12 @@ const loginPharmacy = async (request, response) => {
 
         if (!result[0]) {
             var err_msg = "Email is not registered";
-            console.log(err_msg);
-
-            // return response.status(401).send(err_msg);
 
             return response.render('pharmacy/login_error', { err_data: err_msg });
         }
 
         if (result[0].approved_state == "Not Approved"){
             var err_msg = "Your pharmacy have not been approved";
-            console.log(err_msg);
-
-            // return response.status(401).send(err_msg);
 
             return response.render('pharmacy/login_error', { err_data: err_msg });
         }
@@ -60,9 +52,6 @@ const loginPharmacy = async (request, response) => {
         const passwordCorrect = await bcrypt.compare(request.body.password, hashedPassword);
         if (!passwordCorrect) {
             var err_msg = "Invalid email or password";
-            console.log(err_msg);
-
-            // return response.status(401).send(err_msg);
 
             return response.render('pharmacy/login_error', { err_data: err_msg });
         }
@@ -75,17 +64,14 @@ const loginPharmacy = async (request, response) => {
 
     }
     catch (error) {
-        var err_msg = "Internal server error" + error.message;
-        console.log(error);
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        // var err_msg = "Internal server error" + error.message;
 
-        return response.render('500', {
-            err_data: err_msg
-        });
+        // return response.render('500', {
+        //     err_data: err_msg
+        // });
     }
 
-    return response.status(200).redirect('/pharmacy/home');
+    return response.redirect('/pharmacy/home');
 
 }
 

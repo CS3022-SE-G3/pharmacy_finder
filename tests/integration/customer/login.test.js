@@ -13,7 +13,6 @@ describe('customer/login test cases', () => {
     });
 
     var res = {
-        status: jest.fn(() => res),
         render: jest.fn(),
         redirect:jest.fn()
     }
@@ -25,37 +24,31 @@ describe('customer/login test cases', () => {
         },
         session: {}
     }
-    it("should redirect to customer home page if log in was successful", async () => {
+    it("200 Successful customer login", async () => {
         await loginCustomer(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.redirect).toHaveBeenCalledWith('/customer/home');
     });
 
-    it("should display the 400 error page if email was invalid", async () => {
+    it("400 Invalid customer login", async () => {
         req.body.email = "klkml";
         await loginCustomer(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
-
         expect(res.render).toHaveBeenCalledWith('customer/login_error', {
             err_data: "Customer Login error validation \"email\" must be a valid email"
         });
     });
 
-     it("should display the 400 error page if email was unregistered", async () => {
+     it("400 Email not registered", async () => {
          req.body.email = "klkml@gmail.com";
          await loginCustomer(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
-
          expect(res.render).toHaveBeenCalledWith('customer/login_error', {
              err_data: "Email is not registered"
          });
      });
     
-    it("should display the 400 error page if password was incorrect", async () => {
+    it("400 Password incorrect", async () => {
         req.body.email="s@gmail.com"
         req.body.password = "654321";
         await loginCustomer(req, res);
-        expect(res.status).toHaveBeenCalledWith(400);
         expect(res.render).toHaveBeenCalledWith('customer/login_error', {
             err_data: "Invalid email or password"
         });

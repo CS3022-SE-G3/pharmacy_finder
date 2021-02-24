@@ -16,7 +16,7 @@ const getBroadcastForm = async (request, response) => {
     const drug_types = await SystemAdmin.getAllDrugTypes();
     const branded_drugs = await SystemAdmin.getAllDrugs();
 
-    return response.status(200).render('customer/broadcastForm', {
+    return response.render('customer/broadcastForm', {
         pageTitle: "Broadcast Form",
         drug_types: drug_types,
         branded_drugs: branded_drugs,
@@ -46,7 +46,7 @@ const createBroadcastRequest = async (request, response) => {
     }
     if (tempDrugTypesBeforeProcessing.length == 0 && tempBrandedDrugsBeforeProcessing.length == 0) {
         {
-            return response.status(400).render('400', {
+            return response.render('400', {
                 err_data: "You have not selected any drugs. Please select at least one brand/drug type",
                 redirect_to: "/customer/request/broadcast",
                 button_message: "Try Again",
@@ -87,7 +87,7 @@ const createBroadcastRequest = async (request, response) => {
         {
             const pharmacies = await Lookup.lookupPharmacies(left, right, up, down, pharmaciesToLookUp);    //returns pharmacies within the 30 km range
             if (!pharmacies || pharmacies.length == 0) {
-                return response.status(400).render('400', {
+                return response.render('400', {
                     err_data: "There are no approved pharmacies within 30km of your location that sell the medicine you require. Consider editing your location under your profile to get better search results",
                     redirect_to: "/customer/request/broadcast",
                     button_message: "Try Again",
@@ -123,17 +123,19 @@ const createBroadcastRequest = async (request, response) => {
             {
                 const id3 = await Customer.enterBrandedDrugs(brandedDrugs);
             }
-            return response.status(200).redirect('/customer/home');
+            return response.redirect('/customer/home');
             
         }
         catch (error) {
-            return response.status(500).render('500', {
-                err_data: "Internal server error " + error.message
+            var err_msg = "Internal server error " + error.message;
+
+            return response.render('500', {
+                err_data: err_msg
             });
             }
     }
     else {
-        return response.status(400).render('400', {
+        return response.render('400', {
             err_data: "No pharmacies have the available drugs",
             redirect_to: "/customer/home",
             button_message: "Return to home page",
@@ -168,7 +170,7 @@ const viewBroadcastedRequests = async(req, res) => {
     const {error} = validateRequestId({requestId:requestID});
 
     if (error) {
-        return res.status(400).render('400', {
+        return res.render('400', {
             err_data: "Invalid Request",
             redirect_to: "/customer/home",
             button_message: "Return to home page",
@@ -181,10 +183,10 @@ const viewBroadcastedRequests = async(req, res) => {
     
     try{
         if(drug_types.length === 0 && branded_drugs.length===0){
-            return res.status(404).render('404');
+            return res.render('404');
         }
         if (responded_pharmacies.length === 0) {
-            return res.status(400).render('customer/view_requests', {
+            return res.render('customer/view_requests', {
                 drug_types: drug_types,
                 branded_drugs: branded_drugs,
                 hasPharmacies:false,
@@ -192,7 +194,7 @@ const viewBroadcastedRequests = async(req, res) => {
             });
         }
         else {
-            return res.status(200).render('customer/view_requests', {
+            return res.render('customer/view_requests', {
                 drug_types: drug_types,
                 branded_drugs: branded_drugs,
                 hasPharmacies: true,
@@ -202,7 +204,7 @@ const viewBroadcastedRequests = async(req, res) => {
         }
     }
     catch(error){
-        return res.status(500).render('500', {
+        return res.render('500', {
             err_data: "Internal server error " + error.message
         });
     }
@@ -210,6 +212,20 @@ const viewBroadcastedRequests = async(req, res) => {
 
 // ====================================================END OF USE CASE======================================================//
 // ======================================USE CASE: VIEW ALL REQUESTS==================================================//
+/**
+ * 
+ * @param {number} customerId
+ */
+function validateCustomerId(customerId){
+    
+    // schema to validate
+    const schema = Joi.object({
+        "customerId"    : Joi.number().integer().min(10001).required(),
+    });
+
+    // return valid or not
+    return schema.validate(customerId)
+}
 
 const viewAllRequests = async(req, res) => {
 
@@ -218,15 +234,16 @@ const viewAllRequests = async(req, res) => {
     
     try {
         let result = await Customer.getAllRequests(customerId);
-        return res.status(200).render('customer/home',{
+        return res.render('customer/home',{
             all_requests: result,
             pageTitle: 'Requests'
         });
     }
     catch(error){
+        var err_msg = "Internal server error " + error.message;
 
-        return response.status(500).render('500', {
-            err_data: "Internal server error " + error.message
+        return response.render('500', {
+            err_data: err_msg
         });
     }
    
@@ -238,7 +255,7 @@ const viewAllRequests = async(req, res) => {
 const deleteBroadcast = async (req, res) => {
     const requestID = req.body.requestID;
     result = await Customer.deleteRequest(requestID);
-    res.status(200).redirect('/customer/home');
+    res.redirect('/customer/home');
 }
 
 module.exports.viewBroadcastedRequests = viewBroadcastedRequests;

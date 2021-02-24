@@ -2,7 +2,6 @@ const ifNotLoggedIn = (req, res, next) => {
     if (!req.session.user) {//if not logged in
         next();
     }else{
-        console.log("Already logged in");
         if (req.session.user.class == 0){
             res.redirect('/system_admin/home');
         } else if (req.session.user.class == 1){

@@ -35,13 +35,15 @@ const viewPharmacyInfo = async(req,res)=>{
     const pharmacyId = req.params.pharmacyid;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error) {
+        console.error('Validation Error: pharmacy_id: '+error.details[0].message);
         res.status(400).send("Invalid Account ID provided");
         res.end();
         return;
     }
 
+    const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
+    console.log(pharmacyInfo);
     try{
-        const pharmacyInfo = await Pharmacy.getPharmacyInfo(pharmacyId);
         if (pharmacyInfo.length===0){
             return res.status(404).render('404');
         }
@@ -52,8 +54,9 @@ const viewPharmacyInfo = async(req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        return res.status(500).render('500', {
+        return response.render('500', {
             err_data: err_msg
         });
     }
@@ -62,6 +65,13 @@ const viewPharmacyInfo = async(req,res)=>{
 const viewPendingPharmacies = async(req,res)=>{
     try{
         const pendingPharmacies = await Pharmacy.getPendingPharmacies();
+        console.log(pendingPharmacies);
+        if (pendingPharmacies.length===0){
+            return res.status(200).render('system_admin/pending-pharmacies',{
+                pendingPharmacies: pendingPharmacies,
+                pageTitle: 'Approval Pending Pharmacies'
+            });  //404 or 200?
+        }
         return res.status(200).render('system_admin/pending-pharmacies',{
             pendingPharmacies: pendingPharmacies,
             pageTitle: 'Approval Pending Pharmacies'
@@ -69,8 +79,9 @@ const viewPendingPharmacies = async(req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        return res.status(500).render('500', {
+        return response.render('500', {
             err_data: err_msg
         });
     }
@@ -80,6 +91,7 @@ const approvePharmacy = async (req,res)=>{
     const pharmacyId = req.body.pharmacyId;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error) {
+        console.error('Validation Error: pharmacy_id: '+error.details[0].message);
         res.status(400).send("Invalid Account ID provided");
         res.end();
         return;
@@ -98,8 +110,9 @@ const approvePharmacy = async (req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        return res.status(500).render('500', {
+        return response.render('500', {
             err_data: err_msg
         });
     }
@@ -119,6 +132,7 @@ const postSearchPharmacy = async(req,res)=>{
     const pharmacyId = req.body.pharmacyId;
     const {error} = validatePharmacyId({pharmacyId:pharmacyId});
     if (error){
+        console.log(error);
         return res.status(400).render('system_admin/search-pharmacy',{
             pageTitle: "Search Pharmacy",
             pharmacyInfo: [],
@@ -144,8 +158,9 @@ const postSearchPharmacy = async(req,res)=>{
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
+        console.log(error);
 
-        return res.status(500).render('500', {
+        return response.render('500', {
             err_data: err_msg
         });
     }
