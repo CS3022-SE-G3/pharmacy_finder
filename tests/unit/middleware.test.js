@@ -18,7 +18,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should call redirect() if the user is not logged in', () => {
+        it('should call redirect() with 401 status if the user is not logged in', () => {
             const req = {session: {user: undefined}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -44,7 +44,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to system admin\'s home if the user is logged in as a system admin', () => {
+        it('should redirect to system admin\'s home with 401 status if the user is logged in as a system admin', () => {
             const req = {session: {user: {class: 0}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -57,7 +57,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to pharmacy\'s home if the user is logged in as a pharmacy', () => {
+        it('should redirect to pharmacy\'s home with 401 status if the user is logged in as a pharmacy', () => {
             const req = {session: {user: {class: 1}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -70,7 +70,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to system customer\'s home if the user is logged in as a customer', () => {
+        it('should redirect to system customer\'s home with 401 status if the user is logged in as a customer', () => {
             const req = {session: {user: {class: 2}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -97,7 +97,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to system admin\'s home if the user is logged in as a system admin', () => {
+        it('should redirect to system admin\'s home with 401 status if the user is logged in as a system admin', () => {
             const req = {session: {user: {class: 0}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -110,7 +110,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to pharmacy\'s home if the user is logged in as a pharmacy', () => {
+        it('should redirect to pharmacy\'s home with 401 status if the user is logged in as a pharmacy', () => {
             const req = {session: {user: {class: 1}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -123,7 +123,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to home if the user is not logged in', () => {
+        it('should redirect to home with 401 status if the user is not logged in', () => {
             const req = {session: {user: undefined}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -150,7 +150,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to system admin\'s home if the user is logged in as a system admin', () => {
+        it('should redirect to system admin\'s home with 401 status if the user is logged in as a system admin', () => {
             const req = {session: {user: {class: 0}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -163,7 +163,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to customer\'s home if the user is logged in as a customer', () => {
+        it('should redirect to customer\'s home with 401 status if the user is logged in as a customer', () => {
             const req = {session: {user: {class: 2}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -176,7 +176,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to home if the user is not logged in', () => {
+        it('should redirect to home with 401 status if the user is not logged in', () => {
             const req = {session: {user: undefined}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -203,7 +203,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to pharmacy\'s home if the user is logged in as a pharmacy', () => {
+        it('should redirect to pharmacy\'s home with 401 status if the user is logged in as a pharmacy', () => {
             const req = {session: {user: {class: 1}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -216,7 +216,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to customer\'s home if the user is logged in as a customer', () => {
+        it('should redirect to customer\'s home with 401 status if the user is logged in as a customer', () => {
             const req = {session: {user: {class: 2}}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();
@@ -229,7 +229,7 @@ describe ('middleware', () => {
 
         });
 
-        it('should redirect to home if the user is not logged in', () => {
+        it('should redirect to home with 401 status if the user is not logged in', () => {
             const req = {session: {user: undefined}};
             const res = {redirect: jest.fn()};
             const next = jest.fn();

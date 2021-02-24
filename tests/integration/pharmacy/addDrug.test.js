@@ -53,7 +53,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(response.render).toHaveBeenCalledWith('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
         });
 
-        it("400 - Invalid access if the user is not logged in", async () => {
+        it("401 - Invalid access if the user is not logged in", async () => {
             const res = {
                 redirect:jest.fn()
             }
@@ -72,7 +72,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(res.redirect).toHaveBeenCalledWith("/");
         });
     
-        it("400 - Invalid access if the user is a system admin", async () => {
+        it("401 - Invalid access if the user is a system admin", async () => {
             const res = {
                 redirect:jest.fn()
             }
@@ -91,7 +91,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
         });
     
-        it("400 - Invalid access if the user is a customer", async () => {
+        it("401 - Invalid access if the user is a customer", async () => {
             const res = {
                 redirect:jest.fn()
             }
@@ -165,7 +165,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(response.render).toHaveBeenCalledWith('pharmacy/addDrugPage',{drug_types: drug, branded_drugs: brand});
 
         });
-        it("400 - Invalid access if the user is not logged in", async () => {
+        it("401 - Invalid access if the user is not logged in", async () => {
             const res = {
                 redirect:jest.fn()
             }
@@ -184,7 +184,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(res.redirect).toHaveBeenCalledWith("/");
         });
     
-        it("400 - Invalid access if the user is a system admin", async () => {
+        it("401 - Invalid access if the user is a system admin", async () => {
             const res = {
                 redirect:jest.fn()
             }
@@ -203,7 +203,7 @@ describe('pharmacy/drug teste cases', () => {
             expect(res.redirect).toHaveBeenCalledWith("/system_admin/home");
         });
     
-        it("400 - Invalid access if the user is a customer", async () => {
+        it("401 - Invalid access if the user is a customer", async () => {
             const res = {
                 redirect:jest.fn()
             }
