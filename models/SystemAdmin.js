@@ -18,11 +18,11 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve();
                 }
             )
         })
@@ -43,7 +43,7 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve();
                 }
             )
         })
@@ -58,7 +58,7 @@ class SystemAdmin {
                 [false],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
@@ -124,11 +124,12 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
+                        //console.log(error.message);
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve();
                 }
             )
         })
@@ -146,7 +147,7 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
@@ -168,11 +169,11 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve(results);
                 }
             )
         })
@@ -191,7 +192,7 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
