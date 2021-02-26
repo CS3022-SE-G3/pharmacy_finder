@@ -30,9 +30,9 @@ const addNewDrugType = async (request, response) => {
 
 
     } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
         return response.status(500).render('500', {
             err_data: err_msg
@@ -54,9 +54,9 @@ const viewAllDrugTypes = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -77,9 +77,9 @@ const viewDrugType = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     } 
@@ -138,9 +138,9 @@ const updateDrugTypeDetails = async (request, response) => {
 
     } catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -170,13 +170,25 @@ const deleteDrugType = async (request, response) => {
                 "drug_type_id"
             ]
         ));
-        return response.status(200).redirect('/system_admin/drug_type');
-    } catch (error) {
-        console.log(error.message);
-        var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
-        return response.render('500', {
+        console.log(result);
+        if (result.affectedRows > 0) {
+            return response.status(200).redirect('/system_admin/drug_type');
+        }
+        else {
+            var err_msg = "Invalid request: invalid drug_type_id";
+            //console.log(error);
+
+            return response.status(500).render('500', {
+                err_data: err_msg
+            });
+        }
+    } catch (error) {
+        //console.log(error.message);
+        var err_msg = "Internal server error " + error.message;
+        //console.log(error);
+
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }

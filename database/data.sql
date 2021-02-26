@@ -1,10 +1,12 @@
 
+DELETE FROM drug_type;
 INSERT INTO drug_type(`drug_type_name`) VALUES ('Atorvastatin 10mg + Fenofibrate 160mg');
 INSERT INTO drug_type(`drug_type_name`) VALUES ('Amlodipine 10mg');
 INSERT INTO drug_type(`drug_type_name`) VALUES ('Paracetamol');
 INSERT INTO drug_type(`drug_type_name`) VALUES ('Verapamil');
 
 
+DELETE FROM branded_drug;
 INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES ('TONACT TG 10MG TAB','Star Drugs PLC','40001');
 INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES ('OZOVAS F TAB','Azure drugs PLC','40001');
 INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES ('ATROLET F 10MG TAB','Roche','40001');
@@ -16,6 +18,7 @@ INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES ('Ve
 INSERT INTO branded_drug(`brand_name`,`manufacturer`,`drug_type_id`) VALUES ('Verelan','Pfizer','40004');
 
 
+DELETE FROM pharmacy;
 INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`password`) VALUES ('Approved', 'Helix Pharmacy', '433/2, Galedanda, Gonawala.', 79.931838, 6.965203, 'info@helixpharm.com', 0112911280, '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`password`) VALUES ('Approved', 'Vought Pharmacy', '56/1, Kandy Rd, Kiribathgoda.', 79.923704, 6.974803, 'info@voughtpharm.com', 0112920380, '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`email`,`contact_no`,`password`) VALUES ('Approved', 'Avalon Pharmacy', '112/2, Kandy Rd, Kadawatha.', 79.947587, 6.995826, 'info@avalonpharm.com', 0112811370, '$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
@@ -32,7 +35,7 @@ INSERT INTO pharmacy(`approved_state`,`name`,`address`,`longitude`,`latitude`,`e
 
 
 
-
+DELETE FROM customer;
 INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Nimal Kalansooriya','951234567V','nimal1@gmail.com','12/3,first lane,Borella','6.9134329','79.8785155','MALE','1995-10-08','0712222222','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
 
 INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,`gender`,`dob`,`contact_no`,`password`) VALUES ('Kasuni Perera','975143265V','kasuni@gmail.com','23/5,second lane,Nugegoda','6.871311', '79.895603','FEMALE','1997-08-04','0773333333','$2a$04$Yc07OfjN5Vu5zXOtuwiiUeBjZpOGz6iS0cg./6piqZjBbRjpLl/lO');
@@ -55,7 +58,7 @@ INSERT INTO customer(`full_name`,`nic`,`email`,`address`,`latitude`,`longitude`,
 
 
 
-
+DELETE FROM pharmacy_branded_drugs;
 INSERT INTO `pharmacy_branded_drugs` (`pharmacy_id`, `branded_drug_id`) VALUES
 (30001, 50001),
 (30001, 50002),
@@ -85,6 +88,7 @@ INSERT INTO `pharmacy_branded_drugs` (`pharmacy_id`, `branded_drug_id`) VALUES
 (30009, 50009);
 
 
+DELETE FROM pharmacy_drug_types;
 INSERT INTO `pharmacy_drug_types` (`pharmacy_id`, `drug_type_id`) VALUES
 (30001, 40001),
 (30001, 40003),

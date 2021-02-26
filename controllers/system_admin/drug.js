@@ -34,7 +34,6 @@ const addNewDrug = async (request, response) => {
 
     } catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
 
         return response.status(500).render('500', {
             err_data: err_msg
@@ -49,6 +48,7 @@ const addNewDrug = async (request, response) => {
 const viewAllDrugs = async (request, response) => {
     try {
         const result = await SystemAdmin.getAllDrugs();
+
         return response.status(200).render('system_admin/drugs', {
             drugs: result,
             pageTitle: 'Drugs'
@@ -56,7 +56,7 @@ const viewAllDrugs = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
         return response.render('500', {
             err_data: err_msg
@@ -78,7 +78,7 @@ const viewAddDrugForm = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
         return response.render('500', {
             err_data: err_msg
@@ -108,7 +108,7 @@ const viewUpdateDrugForm = async (request, response) => {
     }
     catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
         return response.render('500', {
             err_data: err_msg
@@ -146,9 +146,9 @@ const updateDrugDetails = async (request, response) => {
 
     } catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
@@ -178,12 +178,22 @@ const deleteDrug = async (request, response) => {
                 "branded_drug_id"
             ]
         ));
-        return response.status(200).redirect('system_admin/drug');
+        if (result.affectedRows > 0) {
+            return response.status(200).redirect('system_admin/drug');
+        }
+        else {
+            var err_msg = "Invalid request: invalid branded_Drug_id";
+            //console.log(error);
+
+            return response.status(500).render('500', {
+                err_data: err_msg
+            });
+        }
     } catch (error) {
         var err_msg = "Internal server error " + error.message;
-        console.log(error);
+        //console.log(error);
 
-        return response.render('500', {
+        return response.status(500).render('500', {
             err_data: err_msg
         });
     }
