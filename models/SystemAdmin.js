@@ -39,7 +39,7 @@ class SystemAdmin {
                 ],
                 function (error, results, fields) {
                     if (error) {
-                        console.log(query.sql);
+                        //console.log(query.sql);
                         reject(error);
                         return;
                     };
@@ -196,7 +196,7 @@ class SystemAdmin {
                         reject(error);
                         return;
                     };
-                    resolve(console.log("Done"));
+                    resolve(results);
                 }
             )
         })

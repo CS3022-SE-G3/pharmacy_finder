@@ -10,7 +10,7 @@ const {
 } = require('../../../controllers/system_admin/drug');
 const { pool } = require('../../../database/connection');
 let server;
-let connection;
+
 
 describe('/system_admin/drug test cases', () => {
     beforeEach(async () => {
@@ -240,7 +240,7 @@ describe('/system_admin/drug test cases', () => {
 
     describe('viewUpdateDrugForm', () => {
 
-        it("should return status code 200 and render the add drug form with a list of drug types from the database", async () => {
+        it("should return status code 200 and render the update drug form with a list of drug types from the database", async () => {
             const drugTypes = [
                 {
                     "drug_type_id": 40002,
@@ -393,7 +393,7 @@ describe('/system_admin/drug test cases', () => {
 
     describe('viewDeleteDrugPrompt', () => {
 
-        it("should return status code 200 and render the deleted drug prompt", async () => {
+        it("should return status code 200 and render the delete drug prompt", async () => {
 
             let req = {
                 params: {
