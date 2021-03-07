@@ -251,15 +251,15 @@ class SystemAdmin {
                     }
                     // else
                     // testing -pass
-                    console.log('qry reault')
-                    console.log(res)
+                    // console.log('qry reault')
+                    // console.log(res)
                     resolve(res);
                 })
             })
 
             // testing - pass
-            console.log(`response to view reported pharamcy qry `)
-            console.log(response)
+            // console.log(`response to view reported pharamcy qry `)
+            // console.log(response)
             return response;
 
         } catch (error) {

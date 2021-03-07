@@ -21,7 +21,7 @@ function validateAccountId(accountId){
  *
  *  
  */
-const viewCustomerInformation = (req, res) => {
+const viewCustomerInformation = async (req, res) => {
 
     const accountId = req.params.accountId; 
     const {error} = validateAccountId({accountId:accountId});
@@ -36,11 +36,14 @@ const viewCustomerInformation = (req, res) => {
         });
     }
 
-    // get the account information of the customer as requested
-    const result = systemAdmin.getCustomerAccountInformation(accountId);
+    
+    
 
-    result.then((data) => {
-        if(data.length === 0){
+    try{
+        // get the account information of the customer as requested
+        const result = await systemAdmin.getCustomerAccountInformation(accountId);
+
+        if(result.length === 0){
             return res.status(400).render('400', {
                 err_data: "Account ID was not found.",
                 redirect_to: "/system_admin/search",
@@ -50,15 +53,16 @@ const viewCustomerInformation = (req, res) => {
         }
         
         // send data to front end
-        return res.status(200).json(data[0]);
-    })
-    .catch(error => {
+        return res.status(200).json(result[0]);
+    }
+    catch(error){
         // send 'internal server error'
         var err_msg = "Internal server error " + error.message;
-        return response.render('500', {
+        console.log(error)
+        return res.render('500', {
             err_data: err_msg
         });
-    })
+    }
 
 }
 

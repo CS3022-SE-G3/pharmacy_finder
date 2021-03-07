@@ -75,37 +75,39 @@ const deleteRecordOfReportedPharmacy = async (req, res) => {
  *
  *  
  */
-const viewAllReportedPharmacies = (req, res) => {
+const viewAllReportedPharmacies = async (req, res) => {
 
     // get the reported pharamacy information of the pharamacy as requested
-    const result = SystemAdmin.getReportedPharmaciesInformation();
 
-    result.then((data) => {
+    try {
+        const result = await SystemAdmin.getReportedPharmaciesInformation();
+
+        console.log(result)
 
         // send no reported pharamacies
-        if(data.length === 0){
-            return res.render('system_admin/viewpharmaciesreprted', {
+        if(result.length === 0){
+            return res.status(200).render('system_admin/viewpharmaciesreprted', {
                 title: 'welcome',
                 hasPharmacies: false
             });
         }
         
         // send data to front end
-        return res.render('system_admin/viewpharmaciesreprted',
+        return res.status(200).render('system_admin/viewpharmaciesreprted',
             {
                 title: 'welcome',
-                data: data,
+                data: result,
                 hasPharmacies:true
             });
-    })
-    .catch(error => {
+    }
+    catch(error)  {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
-    })
+    }
 
 }
 
@@ -119,7 +121,6 @@ const deletePharmacy = async (req, res) => {
     const pharmacyID = req.body.pharmacyID;
     const customerID = req.body.customerID;
 
-    console.log(req.body)
 
     const { error } = validateIds(pharmacyID,customerID)
 
@@ -172,7 +173,7 @@ const deletePharmacy = async (req, res) => {
         var err_msg = "Internal server error " + error.message;
         console.log(error);
 
-        return response.render('500', {
+        return res.render('500', {
             err_data: err_msg
         });
     }
