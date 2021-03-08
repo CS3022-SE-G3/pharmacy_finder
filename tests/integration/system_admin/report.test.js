@@ -1,7 +1,8 @@
 const c = require('config');
 const {
     viewAllReportedPharmacies,
-    deletePharmacy
+    deletePharmacy,
+    deleteRecordOfReportedPharmacy
 } = require('../../../controllers/system_admin/report');
 const { pool } = require('../../../database/connection');
 let server;
@@ -25,6 +26,7 @@ describe('/system_admin/report test cases', () => {
         send: jest.fn(),
         redirect: jest.fn()
     };
+
 
     
     describe('viewAllReportedPharmacies', () => {
@@ -56,22 +58,23 @@ describe('/system_admin/report test cases', () => {
 
         });
 
-        // it("should return status code 500 if database is not properly connected", async () => { //TODO: clarify
+        it("should return status code 200 and hasPharmacies : false if reported pharmacies in the database", async () => {
+            
+            await pool.query("DELETE FROM reported_pharmacies WHERE pharmacy_id=? AND customer_id=?",[30009, 10004])
 
-        // });
-    });
+            const result = await viewAllReportedPharmacies(req, res);
+            await expect(res.status).toHaveBeenLastCalledWith(200);
+            await expect(res.render).toHaveBeenLastCalledWith(
+                'system_admin/viewpharmaciesreprted',
+                {
+                        title: 'welcome',
+                        "hasPharmacies": false,
+                })
+
+        });
 
 
-
-
-
-
-
-
-
-
-
-
+        
 
     describe('deletePharmacy', () => {
             let req = {
@@ -80,6 +83,33 @@ describe('/system_admin/report test cases', () => {
                     customerID : 10004
                 }
             };
+
+            it("should return status code 200 and a message that indicating invalid pharmacyID or customerID", async () => {
+                let req = {
+                body:{
+                    pharmacyID : "invalid",
+                    customerID : 10004
+                }
+            };
+                const result = await deleteRecordOfReportedPharmacy(req, res);
+                await expect(res.status).toHaveBeenLastCalledWith(400);
+                await expect(res.send).toHaveBeenLastCalledWith("\"pharmacyID\" must be a number")
+
+            });
+            
+            it("should return status code 200 and a message that indicating invalid pharmacyID or customerID", async () => {
+                let req = {
+                body:{
+                    pharmacyID : 30009,
+                    customerID : "invalid"
+                }
+            };
+                const result = await deleteRecordOfReportedPharmacy(req, res);
+                await expect(res.status).toHaveBeenLastCalledWith(400);
+                await expect(res.send).toHaveBeenLastCalledWith("\"customerID\" must be a number")
+
+            });
+
 
             it("should return status code 200 and a message that indicating deleting is success", async () => {
 
@@ -91,25 +121,50 @@ describe('/system_admin/report test cases', () => {
         });
 
 
+        
+        describe('deleteRecordOfReportedPharmacy', () => {
+
+            it("should return status code 200 and a message that indicating invalid pharmacyID or customerID", async () => {
+                let req = {
+                body:{
+                    pharmacyID : "invalid",
+                    customerID : 10004
+                }
+            };
+                const result = await deleteRecordOfReportedPharmacy(req, res);
+                await expect(res.status).toHaveBeenLastCalledWith(400);
+                await expect(res.send).toHaveBeenLastCalledWith("\"pharmacyID\" must be a number")
+
+            });
+            
+            it("should return status code 200 and a message that indicating invalid pharmacyID or customerID", async () => {
+                let req = {
+                body:{
+                    pharmacyID : 30009,
+                    customerID : "invalid"
+                }
+            };
+                const result = await deleteRecordOfReportedPharmacy(req, res);
+                await expect(res.status).toHaveBeenLastCalledWith(400);
+                await expect(res.send).toHaveBeenLastCalledWith("\"customerID\" must be a number")
+
+            });
+
+            it("should return status code 200 and a message that indicating deleting is success", async () => {
+                let req = {
+                body:{
+                    pharmacyID : 30009,
+                    customerID : 10004
+                }
+            };
+                const result = await deleteRecordOfReportedPharmacy(req, res);
+                await expect(res.status).toHaveBeenLastCalledWith(200);
+                await expect(res.send).toHaveBeenLastCalledWith({"affectedRows": 1, "changedRows": 0, "fieldCount": 0, "insertId": 0, "message": "", "protocol41": true, "serverStatus": 1, "warningCount": 0})
+
+            });
+        });
+        
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-});
+    });
+})
