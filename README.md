@@ -26,4 +26,4 @@ Go to [http://localhost:3000](http://localhost:3000) to start using the applicat
 
 ## Deployment
 
-https://shrouded-mesa-38805.herokuapp.com
+https://finderpharmacy.herokuapp.com/
