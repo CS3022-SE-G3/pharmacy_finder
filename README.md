@@ -35,3 +35,4 @@ npm start
 ```
 Go to [http://localhost:3000](http://localhost:3000) to start using the application.
 
+Instruction manuals can be found under the Instruction Manuals folder.
